@@ -1,5 +1,5 @@
-DisenoDeSistemas
-================
-Blanco, Martín
-Donda, Jorge
-Sanchez, Mauricio
+Diseño De Sistemas
+===================
+Blanco, Martín.
+Donda, Jorge.
+Sanchez, Mauricio.
