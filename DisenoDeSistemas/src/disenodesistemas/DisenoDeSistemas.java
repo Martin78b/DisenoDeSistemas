@@ -8,7 +8,7 @@ package disenodesistemas;
 
 /**
  *
- * @author Mauricio
+ * @author Martin
  */
 public class DisenoDeSistemas {
 
