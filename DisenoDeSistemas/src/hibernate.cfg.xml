@@ -6,7 +6,7 @@
     <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
     <property name="hibernate.connection.url">jdbc:postgresql://127.0.0.1:5432/DisenoDeSistemas</property>
     <property name="hibernate.connection.username">postgres</property>
-    <property name="hibernate.connection.password">paolaestefania</property>
+    <property name="hibernate.connection.password">kosovo9090</property>
     <mapping resource="entidades/Vendedor.hbm.xml"/>
     <mapping resource="entidades/Localidad.hbm.xml"/>
     <mapping resource="entidades/Subasta.hbm.xml"/>
