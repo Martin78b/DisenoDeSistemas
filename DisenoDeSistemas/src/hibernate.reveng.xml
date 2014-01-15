@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-catalog="DisenoDeSistemas" match-schema="public"/>
+  <table-filter match-name="metodopagosubasta"/>
+  <table-filter match-name="vendedor"/>
+  <table-filter match-name="subcategoria"/>
+  <table-filter match-name="metododepago"/>
+  <table-filter match-name="pais"/>
+  <table-filter match-name="categoria"/>
+  <table-filter match-name="provincia"/>
+  <table-filter match-name="localidad"/>
+  <table-filter match-name="transaccion"/>
+  <table-filter match-name="comprador"/>
+  <table-filter match-name="subasta"/>
+  <table-filter match-name="tiposubasta"/>
+  <table-filter match-name="puja"/>
+</hibernate-reverse-engineering>

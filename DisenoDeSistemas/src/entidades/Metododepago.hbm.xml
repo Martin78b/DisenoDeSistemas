@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15-ene-2014 11:08:04 by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="entidades.Metododepago" table="metododepago" schema="public">
+        <id name="cod" type="int">
+            <column name="cod" />
+            <generator class="assigned" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="nombre" not-null="true" />
+        </property>
+        <set name="subastas" table="metodopagosubasta" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="codpago" not-null="true" />
+            </key>
+            <many-to-many entity-name="entidades.Subasta">
+                <column name="nrosubasta" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

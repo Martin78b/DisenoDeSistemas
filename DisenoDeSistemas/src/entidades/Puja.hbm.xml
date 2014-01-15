@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15-ene-2014 11:08:04 by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="entidades.Puja" table="puja" schema="public">
+        <id name="idpuja" type="int">
+            <column name="idpuja" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="comprador" class="entidades.Comprador" fetch="select">
+            <column name="dnicomprador" not-null="true" />
+        </many-to-one>
+        <many-to-one name="subasta" class="entidades.Subasta" fetch="select">
+            <column name="nrosubasta" not-null="true" />
+        </many-to-one>
+        <property name="monto" type="float">
+            <column name="monto" precision="8" scale="8" not-null="true" />
+        </property>
+        <property name="fecha" type="date">
+            <column name="fecha" length="13" not-null="true" />
+        </property>
+        <property name="hora" type="time">
+            <column name="hora" length="15" not-null="true" />
+        </property>
+        <property name="nroarticulos" type="int">
+            <column name="nroarticulos" not-null="true" />
+        </property>
+        <property name="topeaut" type="java.lang.Float">
+            <column name="topeaut" precision="8" scale="8" />
+        </property>
+        <property name="estado" type="boolean">
+            <column name="estado" not-null="true" />
+        </property>
+        <property name="incremento" type="java.lang.Float">
+            <column name="incremento" precision="8" scale="8" />
+        </property>
+    </class>
+</hibernate-mapping>

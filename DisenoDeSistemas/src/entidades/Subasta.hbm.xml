@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15-ene-2014 11:08:04 by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="entidades.Subasta" table="subasta" schema="public">
+        <id name="nro" type="int">
+            <column name="nro" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="subcategoria" class="entidades.Subcategoria" fetch="select">
+            <column name="idsubcategoria" not-null="true" />
+            <column name="idcategoria" not-null="true" />
+        </many-to-one>
+        <many-to-one name="vendedor" class="entidades.Vendedor" fetch="select">
+            <column name="dni" not-null="true" />
+        </many-to-one>
+        <many-to-one name="tiposubasta" class="entidades.Tiposubasta" fetch="select">
+            <column name="codtipo" not-null="true" />
+        </many-to-one>
+        <property name="titulo" type="string">
+            <column name="titulo" not-null="true" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="descripcion" not-null="true" />
+        </property>
+        <property name="preciobase" type="float">
+            <column name="preciobase" precision="8" scale="8" not-null="true" />
+        </property>
+        <property name="precioactual" type="java.lang.Float">
+            <column name="precioactual" precision="8" scale="8" />
+        </property>
+        <property name="fechainicio" type="date">
+            <column name="fechainicio" length="13" not-null="true" />
+        </property>
+        <property name="fechafin" type="date">
+            <column name="fechafin" length="13" not-null="true" />
+        </property>
+        <property name="url" type="string">
+            <column name="url" />
+        </property>
+        <property name="estado" type="boolean">
+            <column name="estado" not-null="true" />
+        </property>
+        <property name="cantarticulos" type="int">
+            <column name="cantarticulos" not-null="true" />
+        </property>
+        <property name="preciominimo" type="java.lang.Float">
+            <column name="preciominimo" precision="8" scale="8" />
+        </property>
+        <set name="transaccions" table="transaccion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="subasta" />
+            </key>
+            <one-to-many class="entidades.Transaccion" />
+        </set>
+        <set name="pujas" table="puja" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="nrosubasta" not-null="true" />
+            </key>
+            <one-to-many class="entidades.Puja" />
+        </set>
+        <set name="metododepagos" table="metodopagosubasta" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="nrosubasta" not-null="true" />
+            </key>
+            <many-to-many entity-name="entidades.Metododepago">
+                <column name="codpago" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

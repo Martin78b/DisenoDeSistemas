@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15-ene-2014 11:08:04 by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="entidades.Comprador" table="comprador" schema="public">
+        <id name="dni" type="int">
+            <column name="dni" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="localidad" class="entidades.Localidad" fetch="select">
+            <column name="cp" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" not-null="true" />
+        </property>
+        <property name="apellido" type="string">
+            <column name="apellido" not-null="true" />
+        </property>
+        <property name="email" type="serializable">
+            <column name="email" not-null="true" />
+        </property>
+        <property name="fechanac" type="date">
+            <column name="fechanac" length="13" not-null="true" />
+        </property>
+        <property name="contrasenia" type="string">
+            <column name="contrasenia" not-null="true" />
+        </property>
+        <property name="sexo" type="char">
+            <column name="sexo" length="1" not-null="true" />
+        </property>
+        <property name="puntuacion" type="int">
+            <column name="puntuacion" not-null="true" />
+        </property>
+        <property name="votos" type="int">
+            <column name="votos" not-null="true" />
+        </property>
+        <property name="estado" type="java.lang.Boolean">
+            <column name="estado" />
+        </property>
+        <property name="fecharegistro" type="date">
+            <column name="fecharegistro" length="13" not-null="true" />
+        </property>
+        <property name="username" type="string">
+            <column name="username" />
+        </property>
+        <set name="pujas" table="puja" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="dnicomprador" not-null="true" />
+            </key>
+            <one-to-many class="entidades.Puja" />
+        </set>
+        <set name="transaccions" table="transaccion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="comprador" />
+            </key>
+            <one-to-many class="entidades.Transaccion" />
+        </set>
+        <one-to-one name="vendedor" class="entidades.Vendedor"></one-to-one>
+    </class>
+</hibernate-mapping>
