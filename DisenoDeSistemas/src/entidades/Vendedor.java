@@ -2,7 +2,6 @@ package entidades;
 // Generated 15-ene-2014 11:08:03 by Hibernate Tools 3.6.0
 
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +13,7 @@ public class Vendedor  implements java.io.Serializable {
 
      private int dni;
      private Comprador comprador;
-     private Serializable cuil;
+     private String cuil;
      private Boolean estado;
      private Set subastas = new HashSet(0);
 
@@ -22,11 +21,11 @@ public class Vendedor  implements java.io.Serializable {
     }
 
 	
-    public Vendedor(Comprador comprador, Serializable cuil) {
+    public Vendedor(Comprador comprador, String cuil) {
         this.comprador = comprador;
         this.cuil = cuil;
     }
-    public Vendedor(Comprador comprador, Serializable cuil, Boolean estado, Set subastas) {
+    public Vendedor(Comprador comprador, String cuil, Boolean estado, Set subastas) {
        this.comprador = comprador;
        this.cuil = cuil;
        this.estado = estado;
@@ -47,11 +46,11 @@ public class Vendedor  implements java.io.Serializable {
     public void setComprador(Comprador comprador) {
         this.comprador = comprador;
     }
-    public Serializable getCuil() {
+    public String getCuil() {
         return this.cuil;
     }
     
-    public void setCuil(Serializable cuil) {
+    public void setCuil(String cuil) {
         this.cuil = cuil;
     }
     public Boolean getEstado() {

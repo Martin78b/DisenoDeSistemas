@@ -17,7 +17,7 @@
         <property name="apellido" type="string">
             <column name="apellido" not-null="true" />
         </property>
-        <property name="email" type="serializable">
+        <property name="email" type="string">
             <column name="email" not-null="true" />
         </property>
         <property name="fechanac" type="date">

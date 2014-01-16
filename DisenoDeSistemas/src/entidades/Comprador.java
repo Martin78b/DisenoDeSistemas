@@ -2,8 +2,8 @@ package entidades;
 // Generated 15-ene-2014 11:08:03 by Hibernate Tools 3.6.0
 
 
-import java.io.Serializable;
-import java.util.Date;
+
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +17,7 @@ public class Comprador  implements java.io.Serializable {
      private Localidad localidad;
      private String nombre;
      private String apellido;
-     private Serializable email;
+     private String email;
      private Date fechanac;
      private String contrasenia;
      private char sexo;
@@ -34,7 +34,7 @@ public class Comprador  implements java.io.Serializable {
     }
 
 	
-    public Comprador(int dni, Localidad localidad, String nombre, String apellido, Serializable email, Date fechanac, String contrasenia, char sexo, int puntuacion, int votos, Date fecharegistro) {
+    public Comprador(int dni, Localidad localidad, String nombre, String apellido, String email, Date fechanac, String contrasenia, char sexo, int puntuacion, int votos, Date fecharegistro) {
         this.dni = dni;
         this.localidad = localidad;
         this.nombre = nombre;
@@ -47,7 +47,7 @@ public class Comprador  implements java.io.Serializable {
         this.votos = votos;
         this.fecharegistro = fecharegistro;
     }
-    public Comprador(int dni, Localidad localidad, String nombre, String apellido, Serializable email, Date fechanac, String contrasenia, char sexo, int puntuacion, int votos, Boolean estado, Date fecharegistro, String username, Set pujas, Set transaccions, Vendedor vendedor) {
+    public Comprador(int dni, Localidad localidad, String nombre, String apellido, String email, Date fechanac, String contrasenia, char sexo, int puntuacion, int votos, Boolean estado, Date fecharegistro, String username, Set pujas, Set transaccions, Vendedor vendedor) {
        this.dni = dni;
        this.localidad = localidad;
        this.nombre = nombre;
@@ -94,11 +94,11 @@ public class Comprador  implements java.io.Serializable {
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
-    public Serializable getEmail() {
+    public String getEmail() {
         return this.email;
     }
     
-    public void setEmail(Serializable email) {
+    public void setEmail(String email) {
         this.email = email;
     }
     public Date getFechanac() {
