@@ -7,10 +7,10 @@
 package utility;
 import org.hibernate.Session;
 import entidades.Comprador;
-import org.hibernate.Hibernate;
+import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
 
 /**
@@ -28,9 +28,13 @@ public class Test {
         SessionFactory factory = cfg.buildSessionFactory();
         Session session = factory.openSession();
         Transaction tx = session.beginTransaction();
-        Comprador p = (Comprador) session.load(Comprador.class, 35116194);
+        String hql = "FROM Comprador E WHERE E.dni = 34666777";
+        //Comprador u = (Comprador) session.Employee
+        Query query = session.createQuery(hql);
+        List list= query.list();
         tx.commit();
-        System.out.println(p.getNombre());
+        System.out.println(list.size());
+        //System.out.println(u.getNombre());
         
     }
     
