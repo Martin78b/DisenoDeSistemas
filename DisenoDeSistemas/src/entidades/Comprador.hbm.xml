@@ -7,7 +7,7 @@
         <id name="dni" type="int">
             <column name="dni" />
             <generator class="assigned" />
-        </id>
+        </id>  
         <many-to-one name="localidad" class="entidades.Localidad" fetch="select">
             <column name="cp" not-null="true" />
         </many-to-one>

@@ -28,9 +28,9 @@ public class Test {
         SessionFactory factory = cfg.buildSessionFactory();
         Session session = factory.openSession();
         Transaction tx = session.beginTransaction();
-        Comprador usuario = (Comprador) session.load(Comprador.class, 34666777);
+        Comprador p = (Comprador) session.load(Comprador.class, 35116194);
         tx.commit();
-        System.out.println(usuario.getNombre());
+        System.out.println(p.getNombre());
         
     }
     
