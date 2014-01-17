@@ -47,27 +47,7 @@ public class Anuncio  implements java.io.Serializable {
         this.estado = estado;
         this.cantarticulos = cantarticulos;
     }
-    public Anuncio(int nro, Subcategoria subcategoria, Vendedor vendedor, Tipoanuncio tipoanuncio, String titulo, String descripcion, float preciobase, Float precioactual, Date fechainicio, Date fechafin, boolean estado, int cantarticulos, Float preciominimo, Set transaccions, Set imagens, Set enlaces, Set pujas, Set metododepagos) {
-       this.nro = nro;
-       this.subcategoria = subcategoria;
-       this.vendedor = vendedor;
-       this.tipoanuncio = tipoanuncio;
-       this.titulo = titulo;
-       this.descripcion = descripcion;
-       this.preciobase = preciobase;
-       this.precioactual = precioactual;
-       this.fechainicio = fechainicio;
-       this.fechafin = fechafin;
-       this.estado = estado;
-       this.cantarticulos = cantarticulos;
-       this.preciominimo = preciominimo;
-       this.transaccions = transaccions;
-       this.imagens = imagens;
-       this.enlaces = enlaces;
-       this.pujas = pujas;
-       this.metododepagos = metododepagos;
-    }
-   
+    
     public int getNro() {
         return this.nro;
     }
