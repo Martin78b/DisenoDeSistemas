@@ -6,6 +6,7 @@
 
 package FrameworkDePersistencia;
 
+import excepciones.BaseDatosException;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -56,6 +57,16 @@ public class BaseDatosUtil implements DBAccess{
 
     @Override
     public List<Object> get(String consulta) {
-        return null;
+        List<Object> lista=null;
+        try{
+            Session session = getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+            Query query = session.createQuery(consulta);
+            lista = query.list();
+        }
+        catch (BaseDatosException ex){
+            
+        }
+        return lista;
     }
 }
