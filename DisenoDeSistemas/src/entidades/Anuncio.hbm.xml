@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 15-ene-2014 11:08:04 by Hibernate Tools 3.6.0 -->
+<!-- Generated 17-ene-2014 16:28:32 by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="entidades.Subasta" table="subasta" schema="public">
+    <class name="entidades.Anuncio" table="anuncio" schema="public">
         <id name="nro" type="int">
             <column name="nro" />
             <generator class="assigned" />
@@ -15,7 +15,7 @@
         <many-to-one name="vendedor" class="entidades.Vendedor" fetch="select">
             <column name="dni" not-null="true" />
         </many-to-one>
-        <many-to-one name="tiposubasta" class="entidades.Tiposubasta" fetch="select">
+        <many-to-one name="tipoanuncio" class="entidades.Tipoanuncio" fetch="select">
             <column name="codtipo" not-null="true" />
         </many-to-one>
         <property name="titulo" type="string">
@@ -36,9 +36,6 @@
         <property name="fechafin" type="date">
             <column name="fechafin" length="13" not-null="true" />
         </property>
-        <property name="url" type="string">
-            <column name="url" />
-        </property>
         <property name="estado" type="boolean">
             <column name="estado" not-null="true" />
         </property>
@@ -54,15 +51,27 @@
             </key>
             <one-to-many class="entidades.Transaccion" />
         </set>
+        <set name="imagens" table="imagen" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="anuncio" not-null="true" />
+            </key>
+            <one-to-many class="entidades.Imagen" />
+        </set>
+        <set name="enlaces" table="enlace" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="anuncio" not-null="true" />
+            </key>
+            <one-to-many class="entidades.Enlace" />
+        </set>
         <set name="pujas" table="puja" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="nrosubasta" not-null="true" />
             </key>
             <one-to-many class="entidades.Puja" />
         </set>
-        <set name="metododepagos" table="metodopagosubasta" inverse="false" lazy="true" fetch="select">
+        <set name="metododepagos" table="metodopagoanuncio" inverse="false" lazy="true" fetch="select">
             <key>
-                <column name="nrosubasta" not-null="true" />
+                <column name="nroanuncio" not-null="true" />
             </key>
             <many-to-many entity-name="entidades.Metododepago">
                 <column name="codpago" not-null="true" />

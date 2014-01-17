@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 15-ene-2014 11:08:04 by Hibernate Tools 3.6.0 -->
+<!-- Generated 17-ene-2014 16:28:32 by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="entidades.Tiposubasta" table="tiposubasta" schema="public">
+    <class name="entidades.Tipoanuncio" table="tipoanuncio" schema="public">
         <id name="cod" type="int">
             <column name="cod" />
             <generator class="assigned" />
@@ -11,11 +11,11 @@
         <property name="nombre" type="string">
             <column name="nombre" not-null="true" />
         </property>
-        <set name="subastas" table="subasta" inverse="true" lazy="true" fetch="select">
+        <set name="anuncios" table="anuncio" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="codtipo" not-null="true" />
             </key>
-            <one-to-many class="entidades.Subasta" />
+            <one-to-many class="entidades.Anuncio" />
         </set>
     </class>
 </hibernate-mapping>

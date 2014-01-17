@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
     <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
     <property name="hibernate.connection.url">jdbc:postgresql://127.0.0.1:5432/DisenoDeSistemas</property>
     <property name="hibernate.connection.username">postgres</property>
-    <property name="hibernate.connection.password">kosovo9090</property>
+    <property name="hibernate.connection.password">paolaestefania</property>
+    <mapping resource="entidades/Imagen.hbm.xml"/>
     <mapping resource="entidades/Vendedor.hbm.xml"/>
     <mapping resource="entidades/Localidad.hbm.xml"/>
-    <mapping resource="entidades/Subasta.hbm.xml"/>
     <mapping resource="entidades/Transaccion.hbm.xml"/>
+    <mapping resource="entidades/Enlace.hbm.xml"/>
     <mapping resource="entidades/Categoria.hbm.xml"/>
+    <mapping resource="entidades/Tipoanuncio.hbm.xml"/>
     <mapping resource="entidades/Comprador.hbm.xml"/>
     <mapping resource="entidades/Puja.hbm.xml"/>
+    <mapping resource="entidades/Anuncio.hbm.xml"/>
     <mapping resource="entidades/Provincia.hbm.xml"/>
-    <mapping resource="entidades/Tiposubasta.hbm.xml"/>
     <mapping resource="entidades/Pais.hbm.xml"/>
     <mapping resource="entidades/Subcategoria.hbm.xml"/>
     <mapping resource="entidades/Metododepago.hbm.xml"/>

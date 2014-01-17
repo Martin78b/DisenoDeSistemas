@@ -1,5 +1,5 @@
 package entidades;
-// Generated 15-ene-2014 11:08:03 by Hibernate Tools 3.6.0
+// Generated 17-ene-2014 16:28:31 by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;
@@ -13,7 +13,7 @@ public class Metododepago  implements java.io.Serializable {
 
      private int cod;
      private String nombre;
-     private Set subastas = new HashSet(0);
+     private Set anuncios = new HashSet(0);
 
     public Metododepago() {
     }
@@ -23,10 +23,10 @@ public class Metododepago  implements java.io.Serializable {
         this.cod = cod;
         this.nombre = nombre;
     }
-    public Metododepago(int cod, String nombre, Set subastas) {
+    public Metododepago(int cod, String nombre, Set anuncios) {
        this.cod = cod;
        this.nombre = nombre;
-       this.subastas = subastas;
+       this.anuncios = anuncios;
     }
    
     public int getCod() {
@@ -43,12 +43,12 @@ public class Metododepago  implements java.io.Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    public Set getSubastas() {
-        return this.subastas;
+    public Set getAnuncios() {
+        return this.anuncios;
     }
     
-    public void setSubastas(Set subastas) {
-        this.subastas = subastas;
+    public void setAnuncios(Set anuncios) {
+        this.anuncios = anuncios;
     }
 
 

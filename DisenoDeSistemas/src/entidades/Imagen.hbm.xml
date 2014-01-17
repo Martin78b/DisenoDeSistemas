@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 17-ene-2014 16:28:32 by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="entidades.Imagen" table="imagen" schema="public">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="anuncio" class="entidades.Anuncio" fetch="select">
+            <column name="anuncio" not-null="true" />
+        </many-to-one>
+        <property name="archivo" type="binary">
+            <column name="archivo" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
