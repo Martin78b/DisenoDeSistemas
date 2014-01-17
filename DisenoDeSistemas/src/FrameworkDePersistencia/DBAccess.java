@@ -6,6 +6,8 @@
 
 package FrameworkDePersistencia;
 
+import java.util.List;
+
 /**
  *
  * @author martin
@@ -14,5 +16,9 @@ public interface DBAccess {
     
     public void save(Object object);
     
-    public void update();
+    public void update(Object object);
+    
+    public void delete(Object object);
+    
+    public List<Object> get(String consulta);
 }

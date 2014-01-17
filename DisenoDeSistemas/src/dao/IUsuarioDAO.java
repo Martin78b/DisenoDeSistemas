@@ -23,6 +23,6 @@ public interface IUsuarioDAO {
     
     public void update(Vendedor usuario);
     
-    public void validate(String user, String pass);
+    public boolean validate(String user, String pass);
     
 }
