@@ -28,7 +28,7 @@ public class Test {
         SessionFactory factory = cfg.buildSessionFactory();
         Session session = factory.openSession();
         Transaction tx = session.beginTransaction();
-        String hql = "FROM Comprador E WHERE E.username = 'caca' and E.contrasenia = 'nandito'";
+        String hql = "FROM Comprador E WHERE E.dni = 34666777";
         //Comprador u = (Comprador) session.load(Comprador.class, 35116194);
         Query query = session.createQuery(hql);
         Comprador c= (Comprador) query.list().get(0);

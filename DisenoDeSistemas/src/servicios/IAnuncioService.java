@@ -7,27 +7,23 @@
 package servicios;
 
 import java.util.List;
+import entidades.Subasta;
 
 /**
  *
  * @author martin
  */
 public interface IAnuncioService {
+        
     
-    /**
-     * Faltan agregar algunos cambios.
-     * Hay que hacerlo cuando estén creadas las entidades.
-     */
+    public void agregar(Subasta subasta); //agregar(Anuncio anuncio)
     
+    public List<Subasta> listar(); //List<Anuncio>
     
-    public void agregar(); //agregar(Anuncio anuncio)
+    public List<Subasta> buscar(String texto); //List<Anuncio>
     
-    public List listar(); //List<Anuncio>
+    public void comprar(int cantidad, Subasta subasta, int pago);
     
-    public List buscar(String texto); //List<Anuncio>
-    
-    public void comprar(int cantidad, /*Anuncio anuncio,*/ int pago);
-    
-    public void pujar(float monto/*, Anuncio unAnuncio*/);
+    public void pujar(float monto, Subasta unSubasta);
     
 }

@@ -6,10 +6,23 @@
 
 package dao;
 
+
+import entidades.Comprador;
+import entidades.Vendedor;
 /**
  *
  * @author martin
  */
 public interface IUsuarioDAO {
+    
+    public void save(Comprador usuario);
+    
+    public void save(Vendedor usuario);
+    
+    public void update(Comprador usuario);
+    
+    public void update(Vendedor usuario);
+    
+    public void validate(String user, String pass);
     
 }

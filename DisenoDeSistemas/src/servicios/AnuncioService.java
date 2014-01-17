@@ -7,6 +7,8 @@
 package servicios;
 
 import java.util.List;
+import entidades.Subasta;
+import entidades.Vendedor;
 
 /**
  *
@@ -15,37 +17,39 @@ import java.util.List;
 public class AnuncioService implements IAnuncioService{
 
     @Override
-    public void agregar() {
+    public void agregar(Subasta subasta) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List listar() {
+    public List<Subasta> listar() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List buscar(String texto) {
+    public List<Subasta> buscar(String texto) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void comprar(int cantidad, int pago) {
+    public void comprar(int cantidad, Subasta subasta, int pago) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void pujar(float monto) {
+    public void pujar(float monto, Subasta subasta) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     
-    private void validarFecha (/*Anuncio anuncio*/){
+    private void validarFecha (Subasta subasta){
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public void /*Vendedor*/ getVendedor (/*Anuncio anuncio*/){
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Vendedor getVendedor (Subasta subasta){
+        Vendedor v;
+        v = new Vendedor();
+        return v;
     }
     
     public void validarCompra(){
