@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 15-ene-2014 11:08:04 by Hibernate Tools 3.6.0 -->
+<!-- Generated 17-ene-2014 16:28:32 by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="entidades.Comprador" table="comprador" schema="public">
         <id name="dni" type="int">
             <column name="dni" />
             <generator class="assigned" />
-        </id>  
+        </id>
         <many-to-one name="localidad" class="entidades.Localidad" fetch="select">
             <column name="cp" not-null="true" />
         </many-to-one>

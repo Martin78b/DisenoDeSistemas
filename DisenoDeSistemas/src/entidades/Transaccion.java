@@ -1,5 +1,5 @@
 package entidades;
-// Generated 15-ene-2014 11:08:03 by Hibernate Tools 3.6.0
+// Generated 17-ene-2014 16:28:31 by Hibernate Tools 3.6.0
 
 
 import java.util.Date;
@@ -12,7 +12,7 @@ public class Transaccion  implements java.io.Serializable {
 
      private float nrotransaccion;
      private Comprador comprador;
-     private Subasta subasta;
+     private Anuncio anuncio;
      private String tipo;
      private Float monto;
      private Date fecha;
@@ -25,10 +25,10 @@ public class Transaccion  implements java.io.Serializable {
     public Transaccion(float nrotransaccion) {
         this.nrotransaccion = nrotransaccion;
     }
-    public Transaccion(float nrotransaccion, Comprador comprador, Subasta subasta, String tipo, Float monto, Date fecha, Date hora) {
+    public Transaccion(float nrotransaccion, Comprador comprador, Anuncio anuncio, String tipo, Float monto, Date fecha, Date hora) {
        this.nrotransaccion = nrotransaccion;
        this.comprador = comprador;
-       this.subasta = subasta;
+       this.anuncio = anuncio;
        this.tipo = tipo;
        this.monto = monto;
        this.fecha = fecha;
@@ -49,12 +49,12 @@ public class Transaccion  implements java.io.Serializable {
     public void setComprador(Comprador comprador) {
         this.comprador = comprador;
     }
-    public Subasta getSubasta() {
-        return this.subasta;
+    public Anuncio getAnuncio() {
+        return this.anuncio;
     }
     
-    public void setSubasta(Subasta subasta) {
-        this.subasta = subasta;
+    public void setAnuncio(Anuncio anuncio) {
+        this.anuncio = anuncio;
     }
     public String getTipo() {
         return this.tipo;

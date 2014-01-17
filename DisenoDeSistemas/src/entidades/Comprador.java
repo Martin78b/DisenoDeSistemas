@@ -1,9 +1,9 @@
 package entidades;
-// Generated 15-ene-2014 11:08:03 by Hibernate Tools 3.6.0
+// Generated 17-ene-2014 16:28:31 by Hibernate Tools 3.6.0
 
 
-
-import java.sql.Date;
+import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 

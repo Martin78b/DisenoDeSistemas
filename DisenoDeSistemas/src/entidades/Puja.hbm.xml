@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 15-ene-2014 11:08:04 by Hibernate Tools 3.6.0 -->
+<!-- Generated 17-ene-2014 16:28:32 by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="entidades.Puja" table="puja" schema="public">
         <id name="idpuja" type="int">
@@ -11,7 +11,7 @@
         <many-to-one name="comprador" class="entidades.Comprador" fetch="select">
             <column name="dnicomprador" not-null="true" />
         </many-to-one>
-        <many-to-one name="subasta" class="entidades.Subasta" fetch="select">
+        <many-to-one name="anuncio" class="entidades.Anuncio" fetch="select">
             <column name="nrosubasta" not-null="true" />
         </many-to-one>
         <property name="monto" type="float">

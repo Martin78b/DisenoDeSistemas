@@ -1,5 +1,5 @@
 package entidades;
-// Generated 15-ene-2014 11:08:03 by Hibernate Tools 3.6.0
+// Generated 17-ene-2014 16:28:31 by Hibernate Tools 3.6.0
 
 
 import java.util.Date;
@@ -12,7 +12,7 @@ public class Puja  implements java.io.Serializable {
 
      private int idpuja;
      private Comprador comprador;
-     private Subasta subasta;
+     private Anuncio anuncio;
      private float monto;
      private Date fecha;
      private Date hora;
@@ -25,20 +25,20 @@ public class Puja  implements java.io.Serializable {
     }
 
 	
-    public Puja(int idpuja, Comprador comprador, Subasta subasta, float monto, Date fecha, Date hora, int nroarticulos, boolean estado) {
+    public Puja(int idpuja, Comprador comprador, Anuncio anuncio, float monto, Date fecha, Date hora, int nroarticulos, boolean estado) {
         this.idpuja = idpuja;
         this.comprador = comprador;
-        this.subasta = subasta;
+        this.anuncio = anuncio;
         this.monto = monto;
         this.fecha = fecha;
         this.hora = hora;
         this.nroarticulos = nroarticulos;
         this.estado = estado;
     }
-    public Puja(int idpuja, Comprador comprador, Subasta subasta, float monto, Date fecha, Date hora, int nroarticulos, Float topeaut, boolean estado, Float incremento) {
+    public Puja(int idpuja, Comprador comprador, Anuncio anuncio, float monto, Date fecha, Date hora, int nroarticulos, Float topeaut, boolean estado, Float incremento) {
        this.idpuja = idpuja;
        this.comprador = comprador;
-       this.subasta = subasta;
+       this.anuncio = anuncio;
        this.monto = monto;
        this.fecha = fecha;
        this.hora = hora;
@@ -62,12 +62,12 @@ public class Puja  implements java.io.Serializable {
     public void setComprador(Comprador comprador) {
         this.comprador = comprador;
     }
-    public Subasta getSubasta() {
-        return this.subasta;
+    public Anuncio getAnuncio() {
+        return this.anuncio;
     }
     
-    public void setSubasta(Subasta subasta) {
-        this.subasta = subasta;
+    public void setAnuncio(Anuncio anuncio) {
+        this.anuncio = anuncio;
     }
     public float getMonto() {
         return this.monto;

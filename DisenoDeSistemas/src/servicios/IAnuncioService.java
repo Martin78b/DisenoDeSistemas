@@ -7,7 +7,7 @@
 package servicios;
 
 import java.util.List;
-import entidades.Subasta;
+import entidades.Anuncio;
 
 /**
  *
@@ -16,14 +16,14 @@ import entidades.Subasta;
 public interface IAnuncioService {
         
     
-    public void agregar(Subasta subasta); //agregar(Anuncio anuncio)
+    public void agregar(Anuncio anuncio); //agregar(Anuncio anuncio)
     
-    public List<Subasta> listar(); //List<Anuncio>
+    public List<Anuncio> listar(); //List<Anuncio>
     
-    public List<Subasta> buscar(String texto); //List<Anuncio>
+    public List<Anuncio> buscar(String texto); //List<Anuncio>
     
-    public void comprar(int cantidad, Subasta subasta, int pago);
+    public void comprar(int cantidad, Anuncio anuncio, int pago);
     
-    public void pujar(float monto, Subasta unSubasta);
+    public void pujar(float monto, Anuncio unAnuncio);
     
 }

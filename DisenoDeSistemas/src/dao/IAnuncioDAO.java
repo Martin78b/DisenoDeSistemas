@@ -7,7 +7,7 @@
 package dao;
 
 
-import entidades.Subasta;
+import entidades.Anuncio;
 import java.util.List;
 /**
  *
@@ -15,16 +15,16 @@ import java.util.List;
  */
 public interface IAnuncioDAO {
     
-    public void save(Subasta subasta);
+    public void save(Anuncio anuncio);
     
-    public void update(Subasta subasta);
+    public void update(Anuncio anuncio);
     
-    public void delete(Subasta subasta);
+    public void delete(Anuncio anuncio);
     
-    public List<Subasta> findAll();
+    public List<Anuncio> findAll();
     
-    public List<Subasta> find(Subasta subasta);
+    public List<Anuncio> find(Anuncio anuncio);
     
-    public boolean bid(Subasta subasta, float monto);
+    public boolean bid(Anuncio anuncio, float monto);
     
 }

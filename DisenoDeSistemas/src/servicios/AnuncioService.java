@@ -7,7 +7,7 @@
 package servicios;
 
 import java.util.List;
-import entidades.Subasta;
+import entidades.Anuncio;
 import entidades.Vendedor;
 
 /**
@@ -17,36 +17,36 @@ import entidades.Vendedor;
 public class AnuncioService implements IAnuncioService{
 
     @Override
-    public void agregar(Subasta subasta) {
+    public void agregar(Anuncio anuncio) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Subasta> listar() {
+    public List<Anuncio> listar() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Subasta> buscar(String texto) {
+    public List<Anuncio> buscar(String texto) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void comprar(int cantidad, Subasta subasta, int pago) {
+    public void comprar(int cantidad, Anuncio anuncio, int pago) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void pujar(float monto, Subasta subasta) {
+    public void pujar(float monto, Anuncio anuncio) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     
-    private void validarFecha (Subasta subasta){
+    private void validarFecha (Anuncio anuncio){
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public Vendedor getVendedor (Subasta subasta){
+    public Vendedor getVendedor (Anuncio anuncio){
         Vendedor v;
         v = new Vendedor();
         return v;
