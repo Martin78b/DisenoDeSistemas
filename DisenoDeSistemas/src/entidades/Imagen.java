@@ -16,8 +16,7 @@ public class Imagen  implements java.io.Serializable {
     public Imagen() {
     }
 
-    public Imagen(int id, Anuncio anuncio, byte[] archivo) {
-       this.id = id;
+    public Imagen(Anuncio anuncio, byte[] archivo) {
        this.anuncio = anuncio;
        this.archivo = archivo;
     }
