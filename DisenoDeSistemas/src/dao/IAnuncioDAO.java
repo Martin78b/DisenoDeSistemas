@@ -26,10 +26,12 @@ public interface IAnuncioDAO {
     
     public List<Anuncio> find(Anuncio anuncio);
     
+    public Anuncio find(int nro);
+    
     public boolean bid(Anuncio anuncio, float monto);
     
     public void imagen(Anuncio anuncio, Imagen imagen);
     
-    public Imagen imagen(Anuncio anuncio);
+    public List<Imagen>  imagen(Anuncio anuncio);
     
 }

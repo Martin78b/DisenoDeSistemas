@@ -8,22 +8,19 @@ package utility;
 
 import dao.AnuncioDAO;
 import entidades.Anuncio;
-import org.hibernate.Session;
-import entidades.Comprador;
 import entidades.Imagen;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.stream.FileImageOutputStream;
-import org.hibernate.Query;
+import java.io.Serializable;
+import java.util.Set;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.proxy.HibernateProxy;
 
 /**
  *
@@ -35,14 +32,15 @@ public class Test {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws FileNotFoundException, IOException {
-        FileInputStream fileInputStream = null;
-        FileOutputStream fos = new FileOutputStream("C:\\Users\\Mauricio\\Desktop\\db.jpg");
+        FileInputStream fileInputStream = null; //Para guardar una imagen
+        FileOutputStream fos = new FileOutputStream("C:\\Users\\Mauricio\\Desktop\\db.jpg"); //Para recueperar una imagen
         AnuncioDAO anunciodao = new AnuncioDAO();
         Anuncio anuncio;
         anuncio = (Anuncio) anunciodao.find(7);        
         Imagen imagen = new Imagen();
         File archivo;
       /*  try {
+  BUSCAR UN USUARIO      
             Configuration cfg = new Configuration().configure();
              SessionFactory factory = cfg.buildSessionFactory();
              Session session = factory.openSession();
@@ -54,7 +52,8 @@ public class Test {
              tx.commit();
              System.out.println(c.getNombre());
              //System.out.println(u.getApellido());
-             
+  
+  GUARDAR UNA IMAGEN EN LA BASE DE DATOS
             archivo = new File("C:\\Users\\Mauricio\\Desktop\\caca.jpg");
             byte[] bFile = new byte[(int) archivo.length()];
             fileInputStream = new FileInputStream(archivo);
@@ -65,11 +64,14 @@ public class Test {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-*/
-        imagen=anunciodao.imagen(anuncio);
-         
+ 
+
+        }
+              */
+        //
+        anuncio = (Anuncio) anunciodao.find(7);
+        imagen= anunciodao.imagen(anuncio).get(0);
         fos.write(imagen.getArchivo());
         fos.close();
-    }
+    }}
     
-}
