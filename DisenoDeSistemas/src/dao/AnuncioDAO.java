@@ -14,6 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.proxy.HibernateProxy;
 
 /**
  *
@@ -149,8 +150,10 @@ public class AnuncioDAO implements IAnuncioDAO {
             SessionFactory factory = cfg.buildSessionFactory();
             Session session = factory.openSession();
             Transaction tx = session.beginTransaction();
-            Serializable id = session.getIdentifier(anuncio);
-            String hql = "FROM Imagen E WHERE E.anuncio ="+ id;
+            int id = (int) session.getIdentifier(anuncio);
+            Serializable ca;
+            ca =((HibernateProxy) anuncio).getHibernateLazyInitializer().getIdentifier();
+            String hql = "FROM Imagen E WHERE E.anuncio ="+ca;
             Query query = session.createQuery(hql);
             imagen = (Imagen) query.list().get(0);
             tx.commit();
