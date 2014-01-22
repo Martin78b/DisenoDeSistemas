@@ -6,6 +6,7 @@
 package dao;
 
 import entidades.Anuncio;
+import entidades.Imagen;
 import java.io.Serializable;
 import java.util.List;
 import org.hibernate.Query;
@@ -106,6 +107,35 @@ public class AnuncioDAO implements IAnuncioDAO {
     @Override
     public boolean bid(Anuncio anuncio, float monto) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void imagen(Anuncio anuncio, Imagen imagen) {
+        try {
+            Configuration cfg = new Configuration().configure();
+            SessionFactory factory = cfg.buildSessionFactory();
+            Session session = factory.openSession();
+            Transaction tx = session.beginTransaction();
+            imagen.setAnuncio(anuncio);
+            session.save(imagen);
+            tx.commit();
+            session.close();
+        } catch (Exception ex) {
+
+        }
+    }
+
+    @Override
+    public Imagen imagen(Anuncio anuncio) {    
+            Imagen imagen;
+            Configuration cfg = new Configuration().configure();
+            SessionFactory factory = cfg.buildSessionFactory();
+            Session session = factory.openSession();
+            Transaction tx = session.beginTransaction();
+            imagen = (Imagen) session.load(Imagen.class, anuncio);
+            tx.commit();
+            session.close();
+            return imagen;
     }
 
 }

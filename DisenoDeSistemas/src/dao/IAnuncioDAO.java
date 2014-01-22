@@ -8,6 +8,7 @@ package dao;
 
 
 import entidades.Anuncio;
+import entidades.Imagen;
 import java.util.List;
 /**
  *
@@ -26,5 +27,9 @@ public interface IAnuncioDAO {
     public List<Anuncio> find(Anuncio anuncio);
     
     public boolean bid(Anuncio anuncio, float monto);
+    
+    public void imagen(Anuncio anuncio, Imagen imagen);
+    
+    public Imagen imagen(Anuncio anuncio);
     
 }
