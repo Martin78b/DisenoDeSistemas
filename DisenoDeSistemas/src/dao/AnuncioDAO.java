@@ -104,6 +104,7 @@ public class AnuncioDAO implements IAnuncioDAO {
         return lista;
     }
     
+    @Override
     public Anuncio find(int nro) {
         Anuncio  anuncio = null;
         try {
@@ -142,17 +143,17 @@ public class AnuncioDAO implements IAnuncioDAO {
     }
 
     @Override
-    public Imagen imagen(Anuncio anuncio) {    
-        Imagen imagen=null;
+    public List<Imagen> imagen(Anuncio anuncio) {    
+        List<Imagen> imagen=null;
         try{
             Configuration cfg = new Configuration().configure();
             SessionFactory factory = cfg.buildSessionFactory();
             Session session = factory.openSession();
             Transaction tx = session.beginTransaction();
-            Serializable id = session.getIdentifier(anuncio);
-            String hql = "FROM Imagen E WHERE E.anuncio ="+ id;
+            
+            String hql = "FROM Imagen E WHERE E.anuncio ="+ anuncio.getNro();
             Query query = session.createQuery(hql);
-            imagen = (Imagen) query.list().get(0);
+            imagen = query.list();
             tx.commit();
             session.close();
             }
