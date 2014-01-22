@@ -103,6 +103,22 @@ public class AnuncioDAO implements IAnuncioDAO {
         }
         return lista;
     }
+    
+    public Anuncio find(int nro) {
+        Anuncio  anuncio = null;
+        try {
+            Configuration cfg = new Configuration().configure();
+            SessionFactory factory = cfg.buildSessionFactory();
+            Session session = factory.openSession();
+            Transaction tx = session.beginTransaction();
+            anuncio= (Anuncio) session.get(Anuncio.class, nro);
+            tx.commit();
+            session.close();
+        } catch (Exception ex) {
+
+        }
+        return anuncio;
+    }
 
     @Override
     public boolean bid(Anuncio anuncio, float monto) {
@@ -127,14 +143,22 @@ public class AnuncioDAO implements IAnuncioDAO {
 
     @Override
     public Imagen imagen(Anuncio anuncio) {    
-            Imagen imagen;
+        Imagen imagen=null;
+        try{
             Configuration cfg = new Configuration().configure();
             SessionFactory factory = cfg.buildSessionFactory();
             Session session = factory.openSession();
             Transaction tx = session.beginTransaction();
-            imagen = (Imagen) session.load(Imagen.class, anuncio);
+            Serializable id = session.getIdentifier(anuncio);
+            String hql = "FROM Imagen E WHERE E.anuncio ="+ id;
+            Query query = session.createQuery(hql);
+            imagen = (Imagen) query.list().get(0);
             tx.commit();
             session.close();
+            }
+            catch (Exception ex){
+                
+            }
             return imagen;
     }
 
