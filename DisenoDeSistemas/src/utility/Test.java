@@ -69,7 +69,7 @@ public class Test {
         
         Anuncio anuncio;
         anuncio = (Anuncio) anunciodao.find(7);
-        imagen= anunciodao.imagen(anuncio).get(0);
+        //imagen= anunciodao.imagen(anuncio);
         fos.write(imagen.getArchivo());
         fos.close();
     }}

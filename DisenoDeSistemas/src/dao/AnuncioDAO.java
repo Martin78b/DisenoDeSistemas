@@ -8,6 +8,7 @@ package dao;
 import entidades.Anuncio;
 import entidades.Enlace;
 import entidades.Imagen;
+import entidades.Metododepago;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
@@ -16,7 +17,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.proxy.HibernateProxy;
 
 /**
  *
@@ -195,7 +195,15 @@ public class AnuncioDAO implements IAnuncioDAO {
         }
         return enlace;
     }
-    
-    
+
+    @Override
+    public void metododepago(Anuncio anuncio, Metododepago metododepago) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Metododepago> metododepago(Anuncio anuncio) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
 
