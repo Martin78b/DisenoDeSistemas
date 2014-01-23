@@ -31,10 +31,10 @@ public interface IAnuncioDAO {
     public Anuncio find(int nro);
     
     public boolean bid(Anuncio anuncio, float monto);
-    
+ 
     public void imagen(Anuncio anuncio, Imagen imagen);
     
-    public List<Imagen>  imagen(Anuncio anuncio);
+    public List<Imagen> imagen(Anuncio anuncio);
     
     public void enlace (Anuncio anuncio, Enlace enlace);
     
@@ -42,6 +42,5 @@ public interface IAnuncioDAO {
     
     public void metododepago (Anuncio anuncio, Metododepago metododepago);
     
-    public List<Metododepago> metododepago (Anuncio anuncio);
-    
+    public List<Metododepago> metododepago(Anuncio anuncio);
 }
