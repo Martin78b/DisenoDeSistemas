@@ -10,6 +10,7 @@ package dao;
 import entidades.Anuncio;
 import entidades.Enlace;
 import entidades.Imagen;
+import entidades.Metododepago;
 import java.util.List;
 /**
  *
@@ -38,5 +39,9 @@ public interface IAnuncioDAO {
     public void enlace (Anuncio anuncio, Enlace enlace);
     
     public Enlace enlace (Anuncio anuncio);
+    
+    public void metododepago (Anuncio anuncio, Metododepago metododepago);
+    
+    public List<Metododepago> metododepago (Anuncio anuncio);
     
 }
