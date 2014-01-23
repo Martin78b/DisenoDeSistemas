@@ -35,26 +35,23 @@ public class Test {
         FileInputStream fileInputStream = null; //Para guardar una imagen
         FileOutputStream fos = new FileOutputStream("C:\\Users\\Mauricio\\Desktop\\db.jpg"); //Para recueperar una imagen
         AnuncioDAO anunciodao = new AnuncioDAO();
-        Anuncio anuncio;
-        anuncio = (Anuncio) anunciodao.find(7);        
-        Imagen imagen = new Imagen();
-        File archivo;
-      /*  try {
-  BUSCAR UN USUARIO      
-            Configuration cfg = new Configuration().configure();
-             SessionFactory factory = cfg.buildSessionFactory();
-             Session session = factory.openSession();
-             Transaction tx = session.beginTransaction();
-             String hql = "FROM Comprador E WHERE E.dni = 34666777";
-             //Comprador u = (Comprador) session.load(Comprador.class, 35116194);
-             Query query = session.createQuery(hql);
-             Comprador c= (Comprador) query.list().get(0);
-             tx.commit();
-             System.out.println(c.getNombre());
-             //System.out.println(u.getApellido());
-  
-  GUARDAR UNA IMAGEN EN LA BASE DE DATOS
-            archivo = new File("C:\\Users\\Mauricio\\Desktop\\caca.jpg");
+            Imagen imagen = new Imagen();
+            File archivo;
+       /* try {
+            /*Configuration cfg = new Configuration().configure();
+            SessionFactory factory = cfg.buildSessionFactory();
+            Session session = factory.openSession();
+            Transaction tx = session.beginTransaction();
+            String hql = "FROM Comprador E WHERE E.dni = 34666777";
+            //Comprador u = (Comprador) session.load(Comprador.class, 35116194);
+            Query query = session.createQuery(hql);
+            Comprador c= (Comprador) query.list().get(0);
+            tx.commit();
+            System.out.println(c.getNombre());
+            //System.out.println(u.getApellido());
+             
+            
+            archivo = new File("/home/martin/Descargas/duster.jpg");
             byte[] bFile = new byte[(int) archivo.length()];
             fileInputStream = new FileInputStream(archivo);
             fileInputStream.read(bFile);
@@ -69,6 +66,8 @@ public class Test {
         }
               */
         //
+        
+        Anuncio anuncio;
         anuncio = (Anuncio) anunciodao.find(7);
         imagen= anunciodao.imagen(anuncio).get(0);
         fos.write(imagen.getArchivo());

@@ -8,6 +8,7 @@ package dao;
 
 
 import entidades.Anuncio;
+import entidades.Enlace;
 import entidades.Imagen;
 import java.util.List;
 /**
@@ -24,7 +25,7 @@ public interface IAnuncioDAO {
     
     public List<Anuncio> findAll();
     
-    public List<Anuncio> find(Anuncio anuncio);
+    public List<Anuncio> find(String anuncio);
     
     public Anuncio find(int nro);
     
@@ -33,5 +34,9 @@ public interface IAnuncioDAO {
     public void imagen(Anuncio anuncio, Imagen imagen);
     
     public List<Imagen>  imagen(Anuncio anuncio);
+    
+    public void enlace (Anuncio anuncio, Enlace enlace);
+    
+    public Enlace enlace (Anuncio anuncio);
     
 }

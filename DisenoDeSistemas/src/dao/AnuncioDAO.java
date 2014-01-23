@@ -6,8 +6,10 @@
 package dao;
 
 import entidades.Anuncio;
+import entidades.Enlace;
 import entidades.Imagen;
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -21,10 +23,8 @@ import org.hibernate.proxy.HibernateProxy;
  * @author martin
  */
 public class AnuncioDAO implements IAnuncioDAO {
-
     
     List<Anuncio> lista = null;
-    
     
     @Override
     public void save(Anuncio anuncio) {
@@ -37,10 +37,10 @@ public class AnuncioDAO implements IAnuncioDAO {
             tx.commit();
             session.close();
         } catch (Exception ex) {
-
+            
         }
     }
-
+    
     @Override
     public void update(Anuncio anuncio) {
         try {
@@ -52,10 +52,10 @@ public class AnuncioDAO implements IAnuncioDAO {
             tx.commit();
             session.close();
         } catch (Exception ex) {
-
+            
         }
     }
-
+    
     @Override
     public void delete(Anuncio anuncio) {
         try {
@@ -67,10 +67,10 @@ public class AnuncioDAO implements IAnuncioDAO {
             tx.commit();
             session.close();
         } catch (Exception ex) {
-
+            
         }
     }
-
+    
     @Override
     public List<Anuncio> findAll() {
         try {
@@ -82,51 +82,49 @@ public class AnuncioDAO implements IAnuncioDAO {
             lista = query.list();
             session.close();
         } catch (Exception ex) {
-
-        }
-        return lista;
-    }
-
-    @Override
-    public List<Anuncio> find(Anuncio anuncio) {
-        
-        try {
-            Configuration cfg = new Configuration().configure();
-            SessionFactory factory = cfg.buildSessionFactory();
-            Session session = factory.openSession();
-            Transaction tx = session.beginTransaction();
-            Serializable id = session.getIdentifier(anuncio);
-            lista.add((Anuncio) session.get(Anuncio.class, id));
-            tx.commit();
-            session.close();
-        } catch (Exception ex) {
-
+            
         }
         return lista;
     }
     
     @Override
+    public List<Anuncio> find(String anuncio) {
+        lista=this.findAll();
+        List<Anuncio> resultado = null;
+        Anuncio temporal;
+        Iterator iterador = lista.iterator();
+        while (iterador.hasNext()){
+            temporal= (Anuncio) iterador.next();
+            if (temporal.getTitulo().contains(anuncio) ||
+                    temporal.getDescripcion().contains(anuncio)){
+                resultado.add(temporal);
+            }
+        }
+        return resultado;
+    }
+    
+    @Override
     public Anuncio find(int nro) {
-        Anuncio  anuncio = null;
+        Anuncio anuncio = null;
         try {
             Configuration cfg = new Configuration().configure();
             SessionFactory factory = cfg.buildSessionFactory();
             Session session = factory.openSession();
             Transaction tx = session.beginTransaction();
-            anuncio= (Anuncio) session.get(Anuncio.class, nro);
+            anuncio = (Anuncio) session.get(Anuncio.class, nro);
             tx.commit();
             session.close();
         } catch (Exception ex) {
-
+            
         }
         return anuncio;
     }
-
+    
     @Override
     public boolean bid(Anuncio anuncio, float monto) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public void imagen(Anuncio anuncio, Imagen imagen) {
         try {
@@ -139,28 +137,65 @@ public class AnuncioDAO implements IAnuncioDAO {
             tx.commit();
             session.close();
         } catch (Exception ex) {
-
+            
         }
     }
-
+    
     @Override
-    public List<Imagen> imagen(Anuncio anuncio) {    
-        List<Imagen> imagen=null;
-        try{
+    public List<Imagen> imagen(Anuncio anuncio) {
+        List<Imagen> imagen = null;
+        try {
             Configuration cfg = new Configuration().configure();
             SessionFactory factory = cfg.buildSessionFactory();
             Session session = factory.openSession();
             Transaction tx = session.beginTransaction();
-            String hql = "FROM Imagen E WHERE E.anuncio ="+ anuncio.getNro();
+            
+            String hql = "FROM Imagen E WHERE E.anuncio =" + anuncio.getNro();
             Query query = session.createQuery(hql);
             imagen = query.list();
             tx.commit();
             session.close();
-            }
-            catch (Exception ex){
-                
-            }
-            return imagen;
+        } catch (Exception ex) {
+            
+        }
+        return imagen;
     }
-
+    
+    @Override
+    public void enlace(Anuncio anuncio, Enlace enlace) {
+        try {
+            Configuration cfg = new Configuration().configure();
+            SessionFactory factory = cfg.buildSessionFactory();
+            Session session = factory.openSession();
+            Transaction tx = session.beginTransaction();
+            enlace.setAnuncio(anuncio);
+            session.save(enlace);
+            tx.commit();
+            session.close();
+        } catch (Exception ex) {
+            
+        }
+    }
+    
+    @Override
+    public Enlace enlace(Anuncio anuncio) {
+        Enlace enlace = null;
+        try {
+            Configuration cfg = new Configuration().configure();
+            SessionFactory factory = cfg.buildSessionFactory();
+            Session session = factory.openSession();
+            Transaction tx = session.beginTransaction();
+            String hql = "FROM Enlace E WHERE E.anuncio =" + anuncio.getNro();
+            Query query = session.createQuery(hql);
+            enlace = (Enlace) query.list().get(0);
+            tx.commit();
+            session.close();
+        } catch (Exception ex) {
+            
+        }
+        return enlace;
+    }
+    
+    
 }
+
