@@ -8,21 +8,11 @@ package utility;
 import dao.AnuncioDAO;
 import entidades.Anuncio;
 import entidades.Imagen;
-import entidades.Metododepago;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.Serializable;
-import java.util.Iterator;
-import java.util.Set;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.proxy.HibernateProxy;
 
 /**
  *
@@ -63,9 +53,9 @@ public class Test {
          ex.printStackTrace();
          } */
         Anuncio anuncio;
-        anuncio = (Anuncio) anunciodao.find(7);
-        Set imagens = anuncio.getImagens();
-        System.out.println(imagens.size());
+        anuncio = (Anuncio) anunciodao.find(2);
+        //imagen =(Imagen) anuncio.getImagens().toArray()[0];
+        System.out.println(anunciodao.metododepago(anuncio).size());
         //fos.write(imagen.getArchivo());
         //fos.close();
     }
