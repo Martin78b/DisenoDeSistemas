@@ -9,7 +9,6 @@ import entidades.Anuncio;
 import entidades.Enlace;
 import entidades.Imagen;
 import entidades.Metododepago;
-import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 import org.hibernate.Query;
@@ -23,9 +22,9 @@ import org.hibernate.cfg.Configuration;
  * @author martin
  */
 public class AnuncioDAO implements IAnuncioDAO {
-    
-    List<Anuncio> lista = null;
-    
+
+    List<Anuncio> listaanuncio = null;
+
     @Override
     public void save(Anuncio anuncio) {
         try {
@@ -37,10 +36,10 @@ public class AnuncioDAO implements IAnuncioDAO {
             tx.commit();
             session.close();
         } catch (Exception ex) {
-            
+
         }
     }
-    
+
     @Override
     public void update(Anuncio anuncio) {
         try {
@@ -52,10 +51,10 @@ public class AnuncioDAO implements IAnuncioDAO {
             tx.commit();
             session.close();
         } catch (Exception ex) {
-            
+
         }
     }
-    
+
     @Override
     public void delete(Anuncio anuncio) {
         try {
@@ -67,10 +66,10 @@ public class AnuncioDAO implements IAnuncioDAO {
             tx.commit();
             session.close();
         } catch (Exception ex) {
-            
+
         }
     }
-    
+
     @Override
     public List<Anuncio> findAll() {
         try {
@@ -79,30 +78,30 @@ public class AnuncioDAO implements IAnuncioDAO {
             Session session = factory.openSession();
             Transaction tx = session.beginTransaction();
             Query query = session.createQuery("");
-            lista = query.list();
+            listaanuncio = query.list();
             session.close();
         } catch (Exception ex) {
-            
+
         }
-        return lista;
+        return listaanuncio;
     }
-    
+
     @Override
     public List<Anuncio> find(String anuncio) {
-        lista=this.findAll();
+        listaanuncio = this.findAll();
         List<Anuncio> resultado = null;
         Anuncio temporal;
-        Iterator iterador = lista.iterator();
-        while (iterador.hasNext()){
-            temporal= (Anuncio) iterador.next();
-            if (temporal.getTitulo().contains(anuncio) ||
-                    temporal.getDescripcion().contains(anuncio)){
+        Iterator iterador = listaanuncio.iterator();
+        while (iterador.hasNext()) {
+            temporal = (Anuncio) iterador.next();
+            if (temporal.getTitulo().contains(anuncio)
+                    || temporal.getDescripcion().contains(anuncio)) {
                 resultado.add(temporal);
             }
         }
         return resultado;
     }
-    
+
     @Override
     public Anuncio find(int nro) {
         Anuncio anuncio = null;
@@ -111,20 +110,21 @@ public class AnuncioDAO implements IAnuncioDAO {
             SessionFactory factory = cfg.buildSessionFactory();
             Session session = factory.openSession();
             Transaction tx = session.beginTransaction();
-            anuncio = (Anuncio) session.get(Anuncio.class, nro);
+            anuncio = (Anuncio) session.load(Anuncio.class, nro);
+            anuncio.getImagens();
             tx.commit();
             session.close();
         } catch (Exception ex) {
-            
+
         }
         return anuncio;
     }
-    
+
     @Override
     public boolean bid(Anuncio anuncio, float monto) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public void imagen(Anuncio anuncio, Imagen imagen) {
         try {
@@ -137,30 +137,29 @@ public class AnuncioDAO implements IAnuncioDAO {
             tx.commit();
             session.close();
         } catch (Exception ex) {
-            
+
         }
     }
-    
+
     @Override
     public List<Imagen> imagen(Anuncio anuncio) {
         List<Imagen> imagen = null;
+        Configuration cfg = new Configuration().configure();
+        SessionFactory factory = cfg.buildSessionFactory();
+        Session session = factory.openSession();
         try {
-            Configuration cfg = new Configuration().configure();
-            SessionFactory factory = cfg.buildSessionFactory();
-            Session session = factory.openSession();
             Transaction tx = session.beginTransaction();
-            
             String hql = "FROM Imagen E WHERE E.anuncio =" + anuncio.getNro();
             Query query = session.createQuery(hql);
             imagen = query.list();
             tx.commit();
             session.close();
         } catch (Exception ex) {
-            
+            session.getTransaction().rollback();
         }
         return imagen;
     }
-    
+
     @Override
     public void enlace(Anuncio anuncio, Enlace enlace) {
         try {
@@ -173,10 +172,10 @@ public class AnuncioDAO implements IAnuncioDAO {
             tx.commit();
             session.close();
         } catch (Exception ex) {
-            
+
         }
     }
-    
+
     @Override
     public Enlace enlace(Anuncio anuncio) {
         Enlace enlace = null;
@@ -191,7 +190,7 @@ public class AnuncioDAO implements IAnuncioDAO {
             tx.commit();
             session.close();
         } catch (Exception ex) {
-            
+
         }
         return enlace;
     }
@@ -203,7 +202,21 @@ public class AnuncioDAO implements IAnuncioDAO {
 
     @Override
     public List<Metododepago> metododepago(Anuncio anuncio) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        /*Configuration cfg = new Configuration().configure();
+        SessionFactory factory = cfg.buildSessionFactory();
+        Session session = factory.openSession();
+        try{
+            Transaction tx = session.beginTransaction();
+        anuncio = (Anuncio) session.get(Anuncio.class, anuncio.getNro());
+        listapago=(List)anuncio.getMetododepagos();
+        tx.commit();
+        session.close();
+        }
+        catch (Exception ex){
+            session.getTransaction().rollback();
+        }*/
+        return (List) anuncio.getMetododepagos();
     }
-}
 
+}
