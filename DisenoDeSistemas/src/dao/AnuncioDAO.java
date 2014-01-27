@@ -111,7 +111,10 @@ public class AnuncioDAO implements IAnuncioDAO {
         try {
 
             Transaction tx = session.beginTransaction();
-            anuncio = (Anuncio) session.load(Anuncio.class, nro);
+            String hql = "FROM Anuncio A WHERE A.nro =" + nro;
+            Query query = session.createQuery(hql);
+            anuncio = (Anuncio) query.list().get(0);
+            //anuncio = (Anuncio) session.load(Anuncio.class, nro);
             tx.commit();
         } catch (Exception ex) {
 
@@ -210,8 +213,9 @@ public class AnuncioDAO implements IAnuncioDAO {
         Session session = factory.openSession();
         try {
             Transaction tx = session.beginTransaction();
-            anuncio = (Anuncio) session.get(Anuncio.class, anuncio.getNro());
-            listapago = (List) anuncio.getMetododepagos();
+            String hql = "(FROM Metododepago M WHERE M.nroanuncio =" + anuncio.getNro();
+            Query query = session.createQuery(hql);
+            listapago = query.list();
             tx.commit();
         } catch (Exception ex) {
             session.getTransaction().rollback();

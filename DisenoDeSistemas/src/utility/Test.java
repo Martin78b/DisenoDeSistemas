@@ -54,8 +54,9 @@ public class Test {
          } */
         Anuncio anuncio;
         anuncio = (Anuncio) anunciodao.find(2);
-        //imagen =(Imagen) anuncio.getImagens().toArray()[0];
-        System.out.println(anunciodao.metododepago(anuncio).size());
+        System.out.print(anuncio.getMetododepagos().size());
+//imagen =(Imagen) anuncio.getImagens().toArray()[0];
+        //System.out.println(anunciodao.metododepago(anuncio).size());
         //fos.write(imagen.getArchivo());
         //fos.close();
     }
