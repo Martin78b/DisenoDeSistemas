@@ -111,7 +111,6 @@ public class AnuncioDAO implements IAnuncioDAO {
             Session session = factory.openSession();
             Transaction tx = session.beginTransaction();
             anuncio = (Anuncio) session.load(Anuncio.class, nro);
-            anuncio.getImagens();
             tx.commit();
             session.close();
         } catch (Exception ex) {

@@ -35,7 +35,7 @@ public class Test {
      */
     public static void main(String[] args) throws FileNotFoundException, IOException {
         FileInputStream fileInputStream = null;
-        FileOutputStream fos = new FileOutputStream("/home/martin/db.jpg");
+        FileOutputStream fos = new FileOutputStream("C:\\Users\\Mauricio\\Desktop\\DB.jpg");
         AnuncioDAO anunciodao = new AnuncioDAO();
         Imagen imagen = new Imagen();
         File archivo;
@@ -62,10 +62,11 @@ public class Test {
          } catch (Exception ex) {
          ex.printStackTrace();
          } */
-        Anuncio anuncio;
-        anuncio = (Anuncio) anunciodao.find(7);
-        Set imagens = anuncio.getImagens();
-        System.out.println(imagens.size());
+        
+        Anuncio anuncio = anunciodao.find(4);
+        System.out.print(anuncio.getMetododepagos().size());
+        //imagen = anunciodao.imagen(anuncio).get(0);
+        
         //fos.write(imagen.getArchivo());
         //fos.close();
     }
