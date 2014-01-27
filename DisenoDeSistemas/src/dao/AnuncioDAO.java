@@ -11,6 +11,8 @@ import entidades.Imagen;
 import entidades.Metododepago;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -35,7 +37,7 @@ public class AnuncioDAO implements IAnuncioDAO {
             session.save(anuncio);
             tx.commit();
             session.close();
-        } catch (Exception ex) {
+        } catch (HibernateException ex) {
 
         }
     }
@@ -50,7 +52,7 @@ public class AnuncioDAO implements IAnuncioDAO {
             session.update(anuncio);
             tx.commit();
             session.close();
-        } catch (Exception ex) {
+        } catch (HibernateException ex) {
 
         }
     }
@@ -65,7 +67,7 @@ public class AnuncioDAO implements IAnuncioDAO {
             session.delete(anuncio);
             tx.commit();
             session.close();
-        } catch (Exception ex) {
+        } catch (HibernateException ex) {
 
         }
     }
@@ -80,7 +82,7 @@ public class AnuncioDAO implements IAnuncioDAO {
             Query query = session.createQuery("");
             listaanuncio = query.list();
             session.close();
-        } catch (Exception ex) {
+        } catch (HibernateException ex) {
 
         }
         return listaanuncio;
@@ -113,7 +115,7 @@ public class AnuncioDAO implements IAnuncioDAO {
             Transaction tx = session.beginTransaction();
             anuncio = (Anuncio) session.load(Anuncio.class, nro);
             tx.commit();
-        } catch (Exception ex) {
+        } catch (HibernateException ex) {
 
         } finally {
             session.flush();
@@ -138,7 +140,7 @@ public class AnuncioDAO implements IAnuncioDAO {
             session.save(imagen);
             tx.commit();
             session.close();
-        } catch (Exception ex) {
+        } catch (HibernateException ex) {
 
         }
     }
@@ -156,7 +158,7 @@ public class AnuncioDAO implements IAnuncioDAO {
             imagen = query.list();
             tx.commit();
             session.close();
-        } catch (Exception ex) {
+        } catch (HibernateException ex) {
             session.getTransaction().rollback();
         }
         return imagen;
@@ -173,7 +175,7 @@ public class AnuncioDAO implements IAnuncioDAO {
             session.save(enlace);
             tx.commit();
             session.close();
-        } catch (Exception ex) {
+        } catch (HibernateException ex) {
 
         }
     }
@@ -191,7 +193,7 @@ public class AnuncioDAO implements IAnuncioDAO {
             enlace = (Enlace) query.uniqueResult();
             tx.commit();
             session.close();
-        } catch (Exception ex) {
+        } catch (HibernateException ex) {
 
         }
         return enlace;
@@ -203,20 +205,18 @@ public class AnuncioDAO implements IAnuncioDAO {
     }
 
     @Override
-    public List<Metododepago> metododepago(Anuncio anuncio) {
-        List<Metododepago> listapago = null;
+    public Set metododepago(Anuncio anuncio) {
+        Set listapago = null;
         Configuration cfg = new Configuration().configure();
         SessionFactory factory = cfg.buildSessionFactory();
         Session session = factory.openSession();
         try {
             Transaction tx = session.beginTransaction();
-            anuncio = (Anuncio) session.get(Anuncio.class, anuncio.getNro());
-            listapago = (List) anuncio.getMetododepagos();
+            listapago = anuncio.getMetododepagos();
             tx.commit();
-        } catch (Exception ex) {
+        } catch (HibernateException ex) {
             session.getTransaction().rollback();
-        }
-        finally{
+        } finally {
             session.flush();
             session.close();
         }
