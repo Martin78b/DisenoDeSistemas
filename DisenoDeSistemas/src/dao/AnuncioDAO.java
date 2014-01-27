@@ -105,16 +105,19 @@ public class AnuncioDAO implements IAnuncioDAO {
     @Override
     public Anuncio find(int nro) {
         Anuncio anuncio = null;
+        Configuration cfg = new Configuration().configure();
+        SessionFactory factory = cfg.buildSessionFactory();
+        Session session = factory.openSession();
         try {
-            Configuration cfg = new Configuration().configure();
-            SessionFactory factory = cfg.buildSessionFactory();
-            Session session = factory.openSession();
+
             Transaction tx = session.beginTransaction();
             anuncio = (Anuncio) session.load(Anuncio.class, nro);
             tx.commit();
-            session.close();
         } catch (Exception ex) {
 
+        } finally {
+            session.flush();
+            session.close();
         }
         return anuncio;
     }
@@ -185,7 +188,7 @@ public class AnuncioDAO implements IAnuncioDAO {
             Transaction tx = session.beginTransaction();
             String hql = "FROM Enlace E WHERE E.anuncio =" + anuncio.getNro();
             Query query = session.createQuery(hql);
-            enlace = (Enlace) query.list().get(0);
+            enlace = (Enlace) query.uniqueResult();
             tx.commit();
             session.close();
         } catch (Exception ex) {
@@ -201,21 +204,23 @@ public class AnuncioDAO implements IAnuncioDAO {
 
     @Override
     public List<Metododepago> metododepago(Anuncio anuncio) {
-        
-        /*Configuration cfg = new Configuration().configure();
+        List<Metododepago> listapago = null;
+        Configuration cfg = new Configuration().configure();
         SessionFactory factory = cfg.buildSessionFactory();
         Session session = factory.openSession();
-        try{
+        try {
             Transaction tx = session.beginTransaction();
-        anuncio = (Anuncio) session.get(Anuncio.class, anuncio.getNro());
-        listapago=(List)anuncio.getMetododepagos();
-        tx.commit();
-        session.close();
-        }
-        catch (Exception ex){
+            anuncio = (Anuncio) session.get(Anuncio.class, anuncio.getNro());
+            listapago = (List) anuncio.getMetododepagos();
+            tx.commit();
+        } catch (Exception ex) {
             session.getTransaction().rollback();
-        }*/
-        return (List) anuncio.getMetododepagos();
+        }
+        finally{
+            session.flush();
+            session.close();
+        }
+        return listapago;
     }
 
 }
