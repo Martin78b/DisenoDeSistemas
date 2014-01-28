@@ -8,14 +8,19 @@ package servicios;
 import dao.AnuncioDAO;
 import java.util.List;
 import entidades.Anuncio;
+import entidades.Categoria;
 import entidades.Imagen;
 import entidades.Subcategoria;
 import entidades.Tipoanuncio;
 import entidades.Vendedor;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -93,12 +98,37 @@ public class AnuncioService implements IAnuncioService {
         anunciodao.imagen(anuncio, imagen);
     }
     
-    public Imagen getImagen(Anuncio anuncio){
-        return anunciodao.imagen(anuncio).get(0);
+    public BufferedImage getImagen(Anuncio anuncio){
+        BufferedImage buff= null;
+        ByteArrayInputStream bais = new ByteArrayInputStream(anunciodao.imagen(anuncio).get(0).getArchivo());
+        try{
+        buff = ImageIO.read(bais);
+        } catch(IOException e){
+            //e.printStackTrace();
+        }
+        return buff;
         //FileInputStream fileInputStream = null;
         //FileOutputStream fos = new FileOutputStream("C:\\Users\\Mauricio\\Desktop\\DB.jpg");
         //fos.write(imagen.getArchivo());
         //fos.close();
+    }
+    
+    public List<String> tipoanuncios(){
+        List<Tipoanuncio> listatipos = anunciodao.tipoanuncio();
+        List<String> lista = new ArrayList<>();
+        for (int i = 0; i < listatipos.size(); i++) {
+            lista.add(listatipos.get(i).getNombre());
+        }
+        return lista;
+    }
+    
+    public List<String> categorias (){
+        List<Categoria> listacategoria = anunciodao.categorias();
+        List<String> lista = new ArrayList<>();
+        for (int i = 0; i < listacategoria.size(); i++) {
+            lista.add(listacategoria.get(i).getNombre());
+        }
+        return lista;
     }
 
 }
