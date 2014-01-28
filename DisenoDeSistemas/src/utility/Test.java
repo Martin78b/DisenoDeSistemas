@@ -18,6 +18,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -40,7 +42,7 @@ public class Test {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws FileNotFoundException, IOException {
+    public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
         //FileInputStream fileInputStream = null;
         //FileOutputStream fos = new FileOutputStream("C:\\Users\\Mauricio\\Desktop\\DB.jpg");
         //AnuncioDAO anunciodao = new AnuncioDAO();
@@ -81,16 +83,17 @@ public class Test {
         SubcategoriaId subcatego = new SubcategoriaId(2, 2);
         Subcategoria subca = (Subcategoria) session.load(Subcategoria.class, subcatego);
         Calendar cal = new GregorianCalendar(2014, 1, 31);
-        Date fechafin = (Date) cal.getTime();
-        System.out.println(fechafin.toString());
-//Metododepago metodo;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date fechafin = cal.getTime();
+        
+        //Metododepago metodo;
         //metodo = (Metododepago) session.load(Metododepago.class, 2);
         //anuncio = (Anuncio)session.createCriteria(Anuncio.class).add(Restrictions.idEq(2)).uniqueResult();
         tx.commit();
         session.flush();
         session.close();
         AnuncioService anuncioserv = new AnuncioService();
-        anuncioserv.agregar(subca, vendedor, tipo, "Yamaha", "Impecable", 50000, 0, fechafin, true, 1);
+        anuncioserv.agregar(subca, vendedor, tipo, "Yamaha", "Impecable", 50000, 0, sdf.parse("2014-1-31"), true, 1);
         
         //fos.write(imagen.getArchivo());
         //fos.close();

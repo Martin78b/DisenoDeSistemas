@@ -69,6 +69,7 @@ public class AnuncioService implements IAnuncioService {
         anuncio.setEstado(estado);
         anuncio.setCantarticulos(cantidadart);
         anuncio.setFechainicio(new Date());
+        anuncio.setFechafin(fechafin);
         anunciodao.save(anuncio);
         
         
