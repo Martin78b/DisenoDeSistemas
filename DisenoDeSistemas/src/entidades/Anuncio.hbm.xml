@@ -15,7 +15,7 @@
         <many-to-one name="vendedor" class="entidades.Vendedor" fetch="select">
             <column name="dni" not-null="true" />
         </many-to-one>
-        <many-to-one name="tipoanuncio" class="entidades.Tipoanuncio" fetch="select">
+        <many-to-one name="tipoanuncio" class="entidades.Tipoanuncio" fetch="join">
             <column name="codtipo" not-null="true" />
         </many-to-one>
         <property name="titulo" type="string">

@@ -68,10 +68,14 @@ public class Test {
         SessionFactory factory = cfg.buildSessionFactory();
         Session session = factory.openSession();
         Transaction tx = session.beginTransaction();
+        anuncio =(Anuncio) session.load(Anuncio.class, 2);
         //Metododepago metodo;
         //metodo = (Metododepago) session.load(Metododepago.class, 2);
-        anuncio = (Anuncio)session.createCriteria(Anuncio.class).add(Restrictions.idEq(2)).uniqueResult();
-        System.out.println(anunciodao.metododepago(anuncio).size());
+        //anuncio = (Anuncio)session.createCriteria(Anuncio.class).add(Restrictions.idEq(2)).uniqueResult();
+        System.out.println(anuncio.getTitulo() +"\n "
+                            +anuncio.getPrecioactual());
+        System.out.println(anuncio.isEstado() +"\n ");
+        System.out.println(anunciodao.tipoanuncio(anuncio).getNombre()+"\n ");
         tx.commit();
         session.flush();
         session.close();

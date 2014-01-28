@@ -11,6 +11,7 @@ import entidades.Anuncio;
 import entidades.Enlace;
 import entidades.Imagen;
 import entidades.Metododepago;
+import entidades.Tipoanuncio;
 import java.util.List;
 import java.util.Set;
 /**
@@ -44,4 +45,6 @@ public interface IAnuncioDAO {
     public void metododepago (Anuncio anuncio, Metododepago metododepago);
     
     public Set metododepago(Anuncio anuncio);
+    
+    public Tipoanuncio tipoanuncio(Anuncio anuncio);
 }
