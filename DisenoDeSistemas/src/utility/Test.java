@@ -108,7 +108,6 @@ public class Test {
         //fos.write(imagen.getArchivo());
         //fos.close();*/
     
-        AnuncioDAO anunciodao = new AnuncioDAO();
-        System.out.println(anunciodao.tipoanuncio().size());
+        
     }
 }
