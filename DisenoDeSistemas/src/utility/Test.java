@@ -45,19 +45,7 @@ public class Test {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
-        //FileInputStream fileInputStream = null;
-        //FileOutputStream fos = new FileOutputStream("C:\\Users\\Mauricio\\Desktop\\DB.jpg");
-        AnuncioDAO anunciodao = new AnuncioDAO();
-        Categoria categ = anunciodao.categorias().get(0);
-        List<Subcategoria> subca = anunciodao.subcategorias(categ);
-        System.out.println("Categoría: "+categ.getNombre()+"\n·Subcategorías:");
-        for (int i = 0; i < subca.size(); i++) {
-            System.out.println(subca.get(i).getNombre());;
-            
-        }
         
-        //Imagen imagen = new Imagen();
-        //File archivo;
         /* try {
          /*Configuration cfg = new Configuration().configure();
          SessionFactory factory = cfg.buildSessionFactory();
@@ -68,18 +56,6 @@ public class Test {
          Query query = session.createQuery(hql);
          Comprador c= (Comprador) query.list().get(0);
          tx.commit();
-         System.out.println(c.getNombre());
-         //System.out.println(u.getApellido());
-             
-            
-         archivo = new File("/home/martin/Descargas/duster.jpg");
-         byte[] bFile = new byte[(int) archivo.length()];
-         fileInputStream = new FileInputStream(archivo);
-         fileInputStream.read(bFile);
-         fileInputStream.close();
-         imagen.setArchivo(bFile);
-         } catch (Exception ex) {
-         ex.printStackTrace();
          } */
         //Anuncio anuncio;
         //anuncio = (Anuncio) anunciodao.find(2);
@@ -107,7 +83,12 @@ public class Test {
         
         //fos.write(imagen.getArchivo());
         //fos.close();*/
-    
+        AnuncioService as = new AnuncioService();
+        List<String> lista = as.tipoanuncios();
+        for (int i = 0; i < lista.size(); i++) {
+            System.out.println(lista.get(i));
+            
+        }
         
     }
 }
