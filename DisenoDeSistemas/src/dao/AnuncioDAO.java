@@ -9,6 +9,7 @@ import entidades.Anuncio;
 import entidades.Enlace;
 import entidades.Imagen;
 import entidades.Metododepago;
+import entidades.Tipoanuncio;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -18,6 +19,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -113,7 +115,8 @@ public class AnuncioDAO implements IAnuncioDAO {
         try {
 
             Transaction tx = session.beginTransaction();
-            anuncio = (Anuncio) session.load(Anuncio.class, nro);
+            //anuncio = (Anuncio) session.load(Anuncio.class, nro);
+            anuncio = (Anuncio)session.createCriteria(Anuncio.class).add(Restrictions.idEq(nro)).uniqueResult();
             tx.commit();
         } catch (HibernateException ex) {
 
@@ -201,18 +204,27 @@ public class AnuncioDAO implements IAnuncioDAO {
 
     @Override
     public void metododepago(Anuncio anuncio, Metododepago metododepago) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Configuration cfg = new Configuration().configure();
+            SessionFactory factory = cfg.buildSessionFactory();
+            Session session = factory.openSession();
+            Transaction tx = session.beginTransaction();
+            //metododepago.setAnuncios();
+            session.save(metododepago);
+            tx.commit();
+            session.close();
     }
 
     @Override
     public Set metododepago(Anuncio anuncio) {
         Set listapago = null;
+        int nro = anuncio.getNro();
         Configuration cfg = new Configuration().configure();
         SessionFactory factory = cfg.buildSessionFactory();
         Session session = factory.openSession();
         try {
             Transaction tx = session.beginTransaction();
-            listapago = anuncio.getMetododepagos();
+            anuncio = (Anuncio)session.createCriteria(Anuncio.class).add(Restrictions.idEq(nro)).uniqueResult();
+            listapago= anuncio.getMetododepagos();
             tx.commit();
         } catch (HibernateException ex) {
             session.getTransaction().rollback();
@@ -221,6 +233,29 @@ public class AnuncioDAO implements IAnuncioDAO {
             session.close();
         }
         return listapago;
+    }
+
+    @Override
+    public Tipoanuncio tipoanuncio(Anuncio anuncio) {
+        Tipoanuncio tipo = new Tipoanuncio();
+        Anuncio temp;
+        int nro = anuncio.getNro();
+        Configuration cfg = new Configuration().configure();
+        SessionFactory factory = cfg.buildSessionFactory();
+        Session session = factory.openSession();
+        try {
+            Transaction tx = session.beginTransaction();
+            temp = (Anuncio)session.createCriteria(Anuncio.class).add(Restrictions.idEq(nro)).uniqueResult();
+            tipo.setCod(temp.getTipoanuncio().getCod());
+            tipo.setNombre(temp.getTipoanuncio().getNombre());
+            tx.commit();
+        } catch (HibernateException ex) {
+            session.getTransaction().rollback();
+        } finally {
+            session.flush();
+            session.close();
+        }
+        return tipo;
     }
 
 }
