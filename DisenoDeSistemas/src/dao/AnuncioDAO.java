@@ -40,6 +40,7 @@ public class AnuncioDAO implements IAnuncioDAO {
             tx.commit();
             session.close();
         } catch (HibernateException ex) {
+            System.out.println(ex.getMessage());
 
         }
     }
