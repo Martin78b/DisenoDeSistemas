@@ -8,11 +8,20 @@ package utility;
 import dao.AnuncioDAO;
 import entidades.Anuncio;
 import entidades.Imagen;
+import entidades.Metododepago;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import org.hibernate.FetchMode;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -53,10 +62,19 @@ public class Test {
          ex.printStackTrace();
          } */
         Anuncio anuncio;
-        anuncio = (Anuncio) anunciodao.find(2);
-        System.out.print(anuncio.getMetododepagos().size());
-//imagen =(Imagen) anuncio.getImagens().toArray()[0];
-        //System.out.println(anunciodao.metododepago(anuncio).size());
+        //anuncio = (Anuncio) anunciodao.find(2);
+
+        Configuration cfg = new Configuration().configure();
+        SessionFactory factory = cfg.buildSessionFactory();
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        //Metododepago metodo;
+        //metodo = (Metododepago) session.load(Metododepago.class, 2);
+        anuncio = (Anuncio)session.createCriteria(Anuncio.class).add(Restrictions.idEq(2)).uniqueResult();
+        System.out.println(anunciodao.metododepago(anuncio).size());
+        tx.commit();
+        session.flush();
+        session.close();
         //fos.write(imagen.getArchivo());
         //fos.close();
     }
