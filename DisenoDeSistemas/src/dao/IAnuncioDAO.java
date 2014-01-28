@@ -8,9 +8,11 @@ package dao;
 
 
 import entidades.Anuncio;
+import entidades.Categoria;
 import entidades.Enlace;
 import entidades.Imagen;
 import entidades.Metododepago;
+import entidades.Subcategoria;
 import entidades.Tipoanuncio;
 import java.util.List;
 import java.util.Set;
@@ -47,4 +49,10 @@ public interface IAnuncioDAO {
     public Set metododepago(Anuncio anuncio);
     
     public Tipoanuncio tipoanuncio(Anuncio anuncio);
+    
+    public List<Categoria> categorias();
+    
+    public List<Subcategoria> subcategorias(Categoria categoria);
+    
+    public List<Tipoanuncio> tipoanuncio();
 }
