@@ -8,9 +8,13 @@ package servicios;
 import dao.AnuncioDAO;
 import java.util.List;
 import entidades.Anuncio;
+import entidades.Imagen;
 import entidades.Subcategoria;
 import entidades.Tipoanuncio;
 import entidades.Vendedor;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -20,7 +24,7 @@ import java.util.Date;
 public class AnuncioService implements IAnuncioService {
 
     AnuncioDAO anunciodao = new AnuncioDAO();
-    
+
     @Override
     public List<Anuncio> listar() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -71,10 +75,30 @@ public class AnuncioService implements IAnuncioService {
         anuncio.setFechainicio(new Date());
         anuncio.setFechafin(fechafin);
         anunciodao.save(anuncio);
-        
-        
-               
+    }
 
+    public void agregarImagen(Anuncio anuncio, String direccion) {
+        File archivo = new File(direccion);
+        FileInputStream fileInputStream;
+        byte[] bFile = new byte[(int) archivo.length()];
+        try{
+        fileInputStream = new FileInputStream(archivo);
+        fileInputStream.read(bFile);
+        fileInputStream.close();
+        } catch (IOException e){
+            
+        }
+        Imagen imagen = new Imagen();
+        imagen.setArchivo(bFile);
+        anunciodao.imagen(anuncio, imagen);
+    }
+    
+    public Imagen getImagen(Anuncio anuncio){
+        return anunciodao.imagen(anuncio).get(0);
+        //FileInputStream fileInputStream = null;
+        //FileOutputStream fos = new FileOutputStream("C:\\Users\\Mauricio\\Desktop\\DB.jpg");
+        //fos.write(imagen.getArchivo());
+        //fos.close();
     }
 
 }
