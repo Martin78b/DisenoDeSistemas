@@ -81,7 +81,8 @@ public class Test {
         SubcategoriaId subcatego = new SubcategoriaId(2, 2);
         Subcategoria subca = (Subcategoria) session.load(Subcategoria.class, subcatego);
         Calendar cal = new GregorianCalendar(2014, 1, 31);
-        Date fechafin = cal.getTime();
+        Date fechafin = (Date) cal.getTime();
+        System.out.println(fechafin.toString());
 //Metododepago metodo;
         //metodo = (Metododepago) session.load(Metododepago.class, 2);
         //anuncio = (Anuncio)session.createCriteria(Anuncio.class).add(Restrictions.idEq(2)).uniqueResult();
