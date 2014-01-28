@@ -8,7 +8,10 @@ package servicios;
 
 import java.util.List;
 import entidades.Anuncio;
+import entidades.Subcategoria;
+import entidades.Tipoanuncio;
 import entidades.Vendedor;
+import java.util.Date;
 
 /**
  *
@@ -16,11 +19,7 @@ import entidades.Vendedor;
  */
 public class AnuncioService implements IAnuncioService{
 
-    @Override
-    public void agregar(Anuncio anuncio) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+   
     @Override
     public List<Anuncio> listar() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -53,6 +52,11 @@ public class AnuncioService implements IAnuncioService{
     }
     
     public void validarCompra(){
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void agregar(Subcategoria subcate, Vendedor vendedor, Tipoanuncio tipoanuncio, String titulo, String descripcion, float preciobase, float precioactual, float preciominimo, Date fechainicio, Date fechafin, boolean estado, int cantidadart) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

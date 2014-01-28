@@ -8,6 +8,10 @@ package servicios;
 
 import java.util.List;
 import entidades.Anuncio;
+import entidades.Subcategoria;
+import entidades.Tipoanuncio;
+import entidades.Vendedor;
+import java.util.Date;
 
 /**
  *
@@ -16,7 +20,9 @@ import entidades.Anuncio;
 public interface IAnuncioService {
         
     
-    public void agregar(Anuncio anuncio); //agregar(Anuncio anuncio)
+    public void agregar(Subcategoria subcate, Vendedor vendedor, Tipoanuncio tipoanuncio, String titulo,
+            String descripcion, float preciobase, float precioactual, float preciominimo, Date fechainicio, Date fechafin, boolean estado, 
+            int cantidadart); //agregar(Anuncio anuncio)
     
     public List<Anuncio> listar(); //List<Anuncio>
     
