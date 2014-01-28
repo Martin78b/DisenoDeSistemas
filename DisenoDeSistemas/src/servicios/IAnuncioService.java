@@ -21,9 +21,9 @@ public interface IAnuncioService {
         
     
     public void agregar(Subcategoria subcate, Vendedor vendedor, Tipoanuncio tipoanuncio, String titulo,
-            String descripcion, float preciobase, float precioactual, float preciominimo, Date fechainicio, Date fechafin, boolean estado, 
-            int cantidadart); //agregar(Anuncio anuncio)
-    
+            String descripcion, float preciobase, float preciominimo, Date fechafin, boolean estado, 
+            int cantidadart);
+        
     public List<Anuncio> listar(); //List<Anuncio>
     
     public List<Anuncio> buscar(String texto); //List<Anuncio>
