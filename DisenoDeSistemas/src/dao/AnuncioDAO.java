@@ -6,10 +6,13 @@
 package dao;
 
 import entidades.Anuncio;
+import entidades.Categoria;
 import entidades.Enlace;
 import entidades.Imagen;
 import entidades.Metododepago;
+import entidades.Subcategoria;
 import entidades.Tipoanuncio;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -117,7 +120,7 @@ public class AnuncioDAO implements IAnuncioDAO {
 
             Transaction tx = session.beginTransaction();
             //anuncio = (Anuncio) session.load(Anuncio.class, nro);
-            anuncio = (Anuncio)session.createCriteria(Anuncio.class).add(Restrictions.idEq(nro)).uniqueResult();
+            anuncio = (Anuncio) session.createCriteria(Anuncio.class).add(Restrictions.idEq(nro)).uniqueResult();
             tx.commit();
         } catch (HibernateException ex) {
 
@@ -206,13 +209,13 @@ public class AnuncioDAO implements IAnuncioDAO {
     @Override
     public void metododepago(Anuncio anuncio, Metododepago metododepago) {
         Configuration cfg = new Configuration().configure();
-            SessionFactory factory = cfg.buildSessionFactory();
-            Session session = factory.openSession();
-            Transaction tx = session.beginTransaction();
-            //metododepago.setAnuncios();
-            session.save(metododepago);
-            tx.commit();
-            session.close();
+        SessionFactory factory = cfg.buildSessionFactory();
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        //metododepago.setAnuncios();
+        session.save(metododepago);
+        tx.commit();
+        session.close();
     }
 
     @Override
@@ -224,8 +227,8 @@ public class AnuncioDAO implements IAnuncioDAO {
         Session session = factory.openSession();
         try {
             Transaction tx = session.beginTransaction();
-            anuncio = (Anuncio)session.createCriteria(Anuncio.class).add(Restrictions.idEq(nro)).uniqueResult();
-            listapago= anuncio.getMetododepagos();
+            anuncio = (Anuncio) session.createCriteria(Anuncio.class).add(Restrictions.idEq(nro)).uniqueResult();
+            listapago = anuncio.getMetododepagos();
             tx.commit();
         } catch (HibernateException ex) {
             session.getTransaction().rollback();
@@ -246,7 +249,7 @@ public class AnuncioDAO implements IAnuncioDAO {
         Session session = factory.openSession();
         try {
             Transaction tx = session.beginTransaction();
-            temp = (Anuncio)session.createCriteria(Anuncio.class).add(Restrictions.idEq(nro)).uniqueResult();
+            temp = (Anuncio) session.createCriteria(Anuncio.class).add(Restrictions.idEq(nro)).uniqueResult();
             tipo.setCod(temp.getTipoanuncio().getCod());
             tipo.setNombre(temp.getTipoanuncio().getNombre());
             tx.commit();
@@ -259,4 +262,36 @@ public class AnuncioDAO implements IAnuncioDAO {
         return tipo;
     }
 
+    @Override
+    public List<Categoria> categorias() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Subcategoria> subcategorias(Categoria categoria) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Tipoanuncio> tipoanuncio() {
+        List<Tipoanuncio> tiposanuncio = new ArrayList<Tipoanuncio>();
+        Configuration cfg = new Configuration().configure();
+        SessionFactory factory = cfg.buildSessionFactory();
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            String hql = "FROM Tipoanuncio";
+            Query query = session.createQuery(hql);
+            tiposanuncio = (List) query.list();
+            tx.commit();
+            
+
+        } catch (HibernateException ex) {
+            session.getTransaction().rollback();
+        } finally {
+            session.flush();
+            session.close();
+        }
+        return tiposanuncio;
+    }
 }

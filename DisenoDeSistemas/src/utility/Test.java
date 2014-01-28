@@ -74,7 +74,7 @@ public class Test {
         //Anuncio anuncio;
         //anuncio = (Anuncio) anunciodao.find(2);
 
-        Configuration cfg = new Configuration().configure();
+   /*   Configuration cfg = new Configuration().configure();
         SessionFactory factory = cfg.buildSessionFactory();
         Session session = factory.openSession();
         Transaction tx = session.beginTransaction();
@@ -96,7 +96,9 @@ public class Test {
         anuncioserv.agregar(subca, vendedor, tipo, "Yamaha", "Impecable", 50000, 0, sdf.parse("2014-1-31"), true, 1);
         
         //fos.write(imagen.getArchivo());
-        //fos.close();
+        //fos.close();*/
+    
+        AnuncioDAO anunciodao = new AnuncioDAO();
+        System.out.println(anunciodao.tipoanuncio().size());
     }
-
 }
