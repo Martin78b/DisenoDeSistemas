@@ -6,12 +6,16 @@
 
 package ui;
 
+import servicios.AnuncioService;
+
 /**
  *
  * @author martin
  */
 public class UIAltaAnuncio extends javax.swing.JFrame {
 
+                    
+    AnuncioService anuncioservice = new AnuncioService();
     /**
      * Creates new form UIAltaAnuncio
      */
@@ -36,9 +40,14 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
 
         jLabel1.setText("Seleccione tipo de anuncio");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4" }));
 
-        jTextField1.setText("jTextField1");
+        jTextField1.setText("Título");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -50,7 +59,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
                         .addGap(34, 34, 34)
                         .addComponent(jLabel1)
                         .addGap(37, 37, 37)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(85, 85, 85)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -70,6 +79,10 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
