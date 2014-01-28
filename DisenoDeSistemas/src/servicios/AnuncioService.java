@@ -130,5 +130,14 @@ public class AnuncioService implements IAnuncioService {
         }
         return lista;
     }
+    
+    public List<String> subcategorias (Categoria cat){
+        List<Subcategoria> listasubcategoria = anunciodao.subcategorias(cat);
+        List<String> lista = new ArrayList<>();
+        for (int i = 0; i < listasubcategoria.size(); i++) {
+            lista.add(listasubcategoria.get(i).getNombre());
+        }
+        return lista;
+    }
 
 }
