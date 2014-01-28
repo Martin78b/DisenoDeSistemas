@@ -6,12 +6,15 @@
 
 package ui;
 
+import servicios.AnuncioService;
+
 /**
  *
  * @author martin
  */
 public class UIAltaAnuncio extends javax.swing.JFrame {
 
+    AnuncioService anuncioservice = new AnuncioService();
     /**
      * Creates new form UIAltaAnuncio
      */
@@ -38,7 +41,13 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jTextField1.setText("jTextField1");
+        jTextField1.setToolTipText("Título");
+        jTextField1.setName(""); // NOI18N
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -68,8 +77,14 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
                 .addContainerGap(229, Short.MAX_VALUE))
         );
 
+        jTextField1.getAccessibleContext().setAccessibleName("");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
