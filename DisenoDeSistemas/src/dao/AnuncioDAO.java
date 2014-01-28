@@ -6,10 +6,13 @@
 package dao;
 
 import entidades.Anuncio;
+import entidades.Categoria;
 import entidades.Enlace;
 import entidades.Imagen;
 import entidades.Metododepago;
+import entidades.Subcategoria;
 import entidades.Tipoanuncio;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -257,6 +260,49 @@ public class AnuncioDAO implements IAnuncioDAO {
             session.close();
         }
         return tipo;
+    }
+
+    @Override
+    public List<Categoria> categorias() {
+        List<Categoria> lista = new ArrayList<Categoria>();
+        Configuration cfg = new Configuration().configure();
+        SessionFactory factory = cfg.buildSessionFactory();
+        Session session = factory.openSession();
+        try {
+            Query query = session.createQuery("from Categoria");
+            lista = query.list();
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        } finally {
+        session.flush();
+        session.close();
+        }
+        return lista;
+    }
+
+    @Override
+    public List<Subcategoria> subcategorias(Categoria categoria) {
+        List<Subcategoria> lista = new ArrayList<Subcategoria>();
+        Configuration cfg = new Configuration().configure();
+        SessionFactory factory = cfg.buildSessionFactory();
+        Session session = factory.openSession();
+        try {
+            Query query = session.createQuery("from Subcategoria where idcategoria="+categoria.getIdcategoria());
+            lista = query.list();
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        } finally {
+        session.flush();
+        session.close();
+        }
+        return lista;
+    }
+
+    @Override
+    public List<Tipoanuncio> tipoanuncio() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
