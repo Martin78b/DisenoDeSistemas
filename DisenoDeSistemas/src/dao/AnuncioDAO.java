@@ -264,34 +264,45 @@ public class AnuncioDAO implements IAnuncioDAO {
 
     @Override
     public List<Categoria> categorias() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Categoria> lista = new ArrayList<Categoria>();
+        Configuration cfg = new Configuration().configure();
+        SessionFactory factory = cfg.buildSessionFactory();
+        Session session = factory.openSession();
+        try {
+            Query query = session.createQuery("from Categoria");
+            lista = query.list();
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        } finally {
+        session.flush();
+        session.close();
+        }
+        return lista;
     }
 
     @Override
     public List<Subcategoria> subcategorias(Categoria categoria) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Subcategoria> lista = new ArrayList<Subcategoria>();
+        Configuration cfg = new Configuration().configure();
+        SessionFactory factory = cfg.buildSessionFactory();
+        Session session = factory.openSession();
+        try {
+            Query query = session.createQuery("from Subcategoria where idcategoria="+categoria.getIdcategoria());
+            lista = query.list();
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        } finally {
+        session.flush();
+        session.close();
+        }
+        return lista;
     }
 
     @Override
     public List<Tipoanuncio> tipoanuncio() {
-        List<Tipoanuncio> tiposanuncio = new ArrayList<Tipoanuncio>();
-        Configuration cfg = new Configuration().configure();
-        SessionFactory factory = cfg.buildSessionFactory();
-        Session session = factory.openSession();
-        Transaction tx = session.beginTransaction();
-        try {
-            String hql = "FROM Tipoanuncio";
-            Query query = session.createQuery(hql);
-            tiposanuncio = (List) query.list();
-            tx.commit();
-            
-
-        } catch (HibernateException ex) {
-            session.getTransaction().rollback();
-        } finally {
-            session.flush();
-            session.close();
-        }
-        return tiposanuncio;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 }

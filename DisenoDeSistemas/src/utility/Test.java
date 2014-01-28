@@ -7,6 +7,7 @@ package utility;
 
 import dao.AnuncioDAO;
 import entidades.Anuncio;
+import entidades.Categoria;
 import entidades.Imagen;
 import entidades.Metododepago;
 import entidades.Subcategoria;
@@ -23,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -45,7 +47,15 @@ public class Test {
     public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
         //FileInputStream fileInputStream = null;
         //FileOutputStream fos = new FileOutputStream("C:\\Users\\Mauricio\\Desktop\\DB.jpg");
-        //AnuncioDAO anunciodao = new AnuncioDAO();
+        AnuncioDAO anunciodao = new AnuncioDAO();
+        Categoria categ = anunciodao.categorias().get(0);
+        List<Subcategoria> subca = anunciodao.subcategorias(categ);
+        System.out.println("Categoría: "+categ.getNombre()+"\n·Subcategorías:");
+        for (int i = 0; i < subca.size(); i++) {
+            System.out.println(subca.get(i).getNombre());;
+            
+        }
+        
         //Imagen imagen = new Imagen();
         //File archivo;
         /* try {
@@ -74,26 +84,26 @@ public class Test {
         //Anuncio anuncio;
         //anuncio = (Anuncio) anunciodao.find(2);
 
-   /*   Configuration cfg = new Configuration().configure();
-        SessionFactory factory = cfg.buildSessionFactory();
-        Session session = factory.openSession();
-        Transaction tx = session.beginTransaction();
-        Vendedor vendedor = (Vendedor) session.load(Vendedor.class, 35116194);
-        Tipoanuncio tipo = (Tipoanuncio) session.load(Tipoanuncio.class, 5);
-        SubcategoriaId subcatego = new SubcategoriaId(2, 2);
-        Subcategoria subca = (Subcategoria) session.load(Subcategoria.class, subcatego);
-        Calendar cal = new GregorianCalendar(2014, 1, 31);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date fechafin = cal.getTime();
+        //Configuration cfg = new Configuration().configure();
+        //SessionFactory factory = cfg.buildSessionFactory();
+        //Session session = factory.openSession();
+        //Transaction tx = session.beginTransaction();
+        //Vendedor vendedor = (Vendedor) session.load(Vendedor.class, 35116194);
+        //Tipoanuncio tipo = (Tipoanuncio) session.load(Tipoanuncio.class, 5);
+        //SubcategoriaId subcatego = new SubcategoriaId(2, 2);
+        //Subcategoria subca = (Subcategoria) session.load(Subcategoria.class, subcatego);
+        //Calendar cal = new GregorianCalendar(2014, 1, 31);
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        //Date fechafin = cal.getTime();
         
         //Metododepago metodo;
         //metodo = (Metododepago) session.load(Metododepago.class, 2);
         //anuncio = (Anuncio)session.createCriteria(Anuncio.class).add(Restrictions.idEq(2)).uniqueResult();
-        tx.commit();
-        session.flush();
-        session.close();
-        AnuncioService anuncioserv = new AnuncioService();
-        anuncioserv.agregar(subca, vendedor, tipo, "Yamaha", "Impecable", 50000, 0, sdf.parse("2014-1-31"), true, 1);
+       // tx.commit();
+        //session.flush();
+        //session.close();
+        //AnuncioService anuncioserv = new AnuncioService();
+        //anuncioserv.agregar(subca, vendedor, tipo, "Yamaha", "Impecable", 50000, 0, sdf.parse("2014-1-31"), true, 1);
         
         //fos.write(imagen.getArchivo());
         //fos.close();*/
