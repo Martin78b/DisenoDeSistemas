@@ -65,12 +65,9 @@ public class Test {
         //fos.close();*/
         
         UsuarioDAO ud = new UsuarioDAO();
-        AnuncioDAO ad = new AnuncioDAO();
-        AnuncioService as = new AnuncioService();
-        //List<Comprador> lista = ud.listarUsuarios();
-        //for (int i = 0; i < lista.size(); i++) {
-        SubcategoriaId id = new SubcategoriaId(2, 2);
-            System.out.println(ad.subcategoria(id).getNombre()); 
-        //}
+        List<String> lista = ud.listarUsuarios();
+        for (int i = 0; i < lista.size(); i++) {
+            System.out.println(ud.listarUsuarios().get(i)); 
+        }
     }
 }
