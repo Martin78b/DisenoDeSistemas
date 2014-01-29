@@ -66,6 +66,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         jLabel1.setText("Seleccione tipo de anuncio");
 
         jComboBox1.setModel(new DefaultComboBoxModel(anuncioservice.tipoanuncios().toArray()));
+        jComboBox1.setSelectedIndex(4);
 
         jTextField1.setText("Título");
         jTextField1.setToolTipText("Título");
@@ -78,7 +79,8 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
-        jTextArea1.setText("Descripción");
+        jTextArea1.setText(Integer.toString(jComboBox3.getSelectedIndex())
+        );
         jScrollPane1.setViewportView(jTextArea1);
 
         jLabel2.setText("Duración:");
@@ -112,11 +114,11 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         jLabel4.setText("Categoría:");
 
         jComboBox3.setModel(new DefaultComboBoxModel(anuncioservice.categorias().toArray()));
+        jComboBox3.setSelectedIndex(2);
 
         jLabel5.setText("Subcategoría:");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox4.setEnabled(false);
+        jComboBox4.setModel(new DefaultComboBoxModel(anuncioservice.subcategorias(jComboBox3.getSelectedIndex()).toArray()));
 
         jButton2.setText("Cancelar");
 
