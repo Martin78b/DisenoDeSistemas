@@ -63,7 +63,6 @@ public class UsuarioDAO implements IUsuarioDAO {
     }
 
     public List<String> listarUsuarios() {
-        //List<> lista = new ArrayList<>();
         List<String> compradores = new ArrayList<>();
         Configuration cfg = new Configuration().configure();
         SessionFactory factory = cfg.buildSessionFactory();
@@ -71,9 +70,7 @@ public class UsuarioDAO implements IUsuarioDAO {
         try {
             Query query = session.createQuery("SELECT username FROM Comprador");
             compradores = query.list();
-            //for (int i = 0; i < compradores.size(); i++) {
-                //lista.add(compradores.get(i).getUsername());
-            
+
         } catch (HibernateException e) {
             session.getTransaction().rollback();
             System.out.println(e.getMessage());
