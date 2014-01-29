@@ -66,8 +66,9 @@ public class Test {
         
         UsuarioDAO ud = new UsuarioDAO();
         List<String> lista = ud.listarUsuarios();
+        System.out.println(lista.size());
         for (int i = 0; i < lista.size(); i++) {
-            System.out.println(ud.listarUsuarios().get(i)); 
+            System.out.println(lista.get(i).toString()); 
         }
     }
 }
