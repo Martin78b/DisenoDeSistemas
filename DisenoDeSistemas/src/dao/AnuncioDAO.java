@@ -11,6 +11,7 @@ import entidades.Enlace;
 import entidades.Imagen;
 import entidades.Metododepago;
 import entidades.Subcategoria;
+import entidades.SubcategoriaId;
 import entidades.Tipoanuncio;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -320,5 +321,24 @@ public class AnuncioDAO implements IAnuncioDAO {
             session.close();
         }
         return tiposanuncio;
+    }
+    
+    public Subcategoria subcategoria(SubcategoriaId id){
+        Subcategoria subca= new Subcategoria();
+        Configuration cfg = new Configuration().configure();
+        SessionFactory factory = cfg.buildSessionFactory();
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            subca = (Subcategoria) session.get(Subcategoria.class, id);
+            tx.commit();
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            e.getMessage();
+        }finally{
+            session.flush();
+            session.close();
+        }
+        return subca;
     }
 }

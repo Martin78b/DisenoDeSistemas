@@ -62,14 +62,14 @@ public class UsuarioDAO implements IUsuarioDAO {
         return !(lista.isEmpty());
     }
 
-    public List<String> listarUsuarios() {
+    public List<Comprador> listarUsuarios() {
         List<String> lista = new ArrayList<>();
         List<Comprador> compradores = new ArrayList<>();
         Configuration cfg = new Configuration().configure();
         SessionFactory factory = cfg.buildSessionFactory();
         Session session = factory.openSession();
         try {
-            Query query = session.createQuery("from Comprador where dni=34666777");
+            Query query = session.createQuery("from Comprador");
             compradores = query.list();
             for (int i = 0; i < compradores.size(); i++) {
                 lista.add(compradores.get(i).getUsername());
@@ -81,7 +81,7 @@ public class UsuarioDAO implements IUsuarioDAO {
             session.flush();
             session.close();
         }
-        return lista;
+        return compradores;
     }
 
 }
