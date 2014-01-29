@@ -18,14 +18,11 @@ import servicios.AnuncioService;
 public class UIAltaAnuncio extends javax.swing.JFrame {
 
     
-    AnuncioService anuncioservice ;
-    List<String> lista;
+    AnuncioService anuncioservice = new AnuncioService();
     /**
      * Creates new form UIAltaAnuncio
      */
     public UIAltaAnuncio() {
-        anuncioservice= new AnuncioService();
-        lista= anuncioservice.tipoanuncios();
         initComponents();
     }
 
@@ -46,7 +43,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
 
         jLabel1.setText("Seleccione tipo de anuncio");
 
-        jComboBox1.setModel(new DefaultComboBoxModel(lista.toArray()));
+        jComboBox1.setModel(new DefaultComboBoxModel(anuncioservice.tipoanuncios().toArray()));
 
         jTextField1.setText("Título");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
