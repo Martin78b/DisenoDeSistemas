@@ -68,7 +68,7 @@ public class Test {
         List<String> lista = ud.listarUsuarios();
         System.out.println(lista.size());
         for (int i = 0; i < lista.size(); i++) {
-            System.out.println(lista.get(i).toString()); 
+            System.out.println(lista.get(i)); 
         }
     }
 }
