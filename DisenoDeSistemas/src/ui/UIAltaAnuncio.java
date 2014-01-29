@@ -6,6 +6,7 @@
 
 package ui;
 
+import javax.swing.DefaultComboBoxModel;
 import servicios.AnuncioService;
 
 /**
@@ -40,7 +41,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
 
         jLabel1.setText("Seleccione tipo de anuncio");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4" }));
+        jComboBox1.setModel(new DefaultComboBoxModel(anuncioservice.tipoanuncios().toArray()));
 
         jTextField1.setToolTipText("Título");
         jTextField1.setName(""); // NOI18N
@@ -54,17 +55,16 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(174, 174, 174))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jLabel1)
-                        .addGap(37, 37, 37)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(85, 85, 85)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addGap(99, 99, 99)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -77,8 +77,6 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(229, Short.MAX_VALUE))
         );
-
-        jTextField1.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
