@@ -5,34 +5,10 @@
  */
 package utility;
 
-import dao.AnuncioDAO;
-import entidades.Anuncio;
-import entidades.Categoria;
-import entidades.Imagen;
-import entidades.Metododepago;
-import entidades.Subcategoria;
-import entidades.SubcategoriaId;
-import entidades.Tipoanuncio;
-import entidades.Vendedor;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-import org.hibernate.FetchMode;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
 import servicios.AnuncioService;
 
 /**
@@ -83,12 +59,5 @@ public class Test {
         
         //fos.write(imagen.getArchivo());
         //fos.close();*/
-        AnuncioService as = new AnuncioService();
-        List<String> lista = as.tipoanuncios();
-        for (int i = 0; i < lista.size(); i++) {
-            System.out.println(lista.get(i));
-            
-        }
-        
     }
 }
