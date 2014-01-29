@@ -5,11 +5,15 @@
  */
 package utility;
 
+import dao.AnuncioDAO;
 import dao.UsuarioDAO;
+import entidades.Comprador;
+import entidades.SubcategoriaId;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
+import servicios.AnuncioService;
 
 /**
  *
@@ -61,9 +65,12 @@ public class Test {
         //fos.close();*/
         
         UsuarioDAO ud = new UsuarioDAO();
-        List<String> lista = ud.listarUsuarios();
-        for (int i = 0; i < lista.size(); i++) {
-            System.out.println(lista.get(i)); 
-        }
+        AnuncioDAO ad = new AnuncioDAO();
+        AnuncioService as = new AnuncioService();
+        //List<Comprador> lista = ud.listarUsuarios();
+        //for (int i = 0; i < lista.size(); i++) {
+        SubcategoriaId id = new SubcategoriaId(2, 2);
+            System.out.println(ad.subcategoria(id).getNombre()); 
+        //}
     }
 }

@@ -11,6 +11,7 @@ import entidades.Anuncio;
 import entidades.Categoria;
 import entidades.Imagen;
 import entidades.Subcategoria;
+import entidades.SubcategoriaId;
 import entidades.Tipoanuncio;
 import entidades.Vendedor;
 import java.awt.image.BufferedImage;
@@ -65,10 +66,11 @@ public class AnuncioService implements IAnuncioService {
     }
 
     @Override
-    public void agregar(Subcategoria subcate, Vendedor vendedor, Tipoanuncio tipoanuncio, String titulo,
+    public void agregar(int categoria, int subcategoria, Vendedor vendedor, Tipoanuncio tipoanuncio, String titulo,
             String descripcion, float preciobase, float preciominimo, Date fechafin, boolean estado, int cantidadart) {
         Anuncio anuncio = new Anuncio();
-        anuncio.setSubcategoria(subcate);
+        SubcategoriaId id = new SubcategoriaId(subcategoria, categoria);
+        anuncio.setSubcategoria(anunciodao.subcategoria(id));
         anuncio.setVendedor(vendedor);
         anuncio.setTipoanuncio(tipoanuncio);
         anuncio.setTitulo(titulo);
@@ -131,8 +133,9 @@ public class AnuncioService implements IAnuncioService {
         return lista;
     }
     
-    public List<String> subcategorias (Categoria cat){
-        List<Subcategoria> listasubcategoria = anunciodao.subcategorias(cat);
+    public List<String> subcategorias (int cat){
+        Categoria categoria = new Categoria(cat, null);
+        List<Subcategoria> listasubcategoria = anunciodao.subcategorias(categoria);
         List<String> lista = new ArrayList<>();
         for (int i = 0; i < listasubcategoria.size(); i++) {
             lista.add(listasubcategoria.get(i).getNombre());
