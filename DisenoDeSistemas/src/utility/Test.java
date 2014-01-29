@@ -5,11 +5,11 @@
  */
 package utility;
 
+import dao.UsuarioDAO;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
-import servicios.AnuncioService;
 
 /**
  *
@@ -59,5 +59,11 @@ public class Test {
         
         //fos.write(imagen.getArchivo());
         //fos.close();*/
+        
+        UsuarioDAO ud = new UsuarioDAO();
+        List<String> lista = ud.listarUsuarios();
+        for (int i = 0; i < lista.size(); i++) {
+            System.out.println(lista.get(i)); 
+        }
     }
 }
