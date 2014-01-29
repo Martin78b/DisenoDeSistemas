@@ -14,6 +14,7 @@ import servicios.AnuncioService;
  */
 public class UIAltaAnuncio extends javax.swing.JFrame {
 
+                    
     AnuncioService anuncioservice = new AnuncioService();
     /**
      * Creates new form UIAltaAnuncio
@@ -39,7 +40,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
 
         jLabel1.setText("Seleccione tipo de anuncio");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4" }));
 
         jTextField1.setToolTipText("Título");
         jTextField1.setName(""); // NOI18N
@@ -59,7 +60,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
                         .addGap(34, 34, 34)
                         .addComponent(jLabel1)
                         .addGap(37, 37, 37)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(85, 85, 85)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)))
