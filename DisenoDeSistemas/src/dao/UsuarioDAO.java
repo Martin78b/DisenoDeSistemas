@@ -62,7 +62,7 @@ public class UsuarioDAO implements IUsuarioDAO {
         return !(lista.isEmpty());
     }
 
-    public List<Comprador> listarUsuarios() {
+    public List<String> listarUsuarios() {
         List<String> lista = new ArrayList<>();
         List<Comprador> compradores = new ArrayList<>();
         Configuration cfg = new Configuration().configure();
@@ -81,7 +81,7 @@ public class UsuarioDAO implements IUsuarioDAO {
             session.flush();
             session.close();
         }
-        return compradores;
+        return lista;
     }
 
 }
