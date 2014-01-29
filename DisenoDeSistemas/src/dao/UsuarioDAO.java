@@ -63,17 +63,17 @@ public class UsuarioDAO implements IUsuarioDAO {
     }
 
     public List<String> listarUsuarios() {
-        List<String> lista = new ArrayList<>();
-        List<Comprador> compradores = new ArrayList<>();
+        //List<> lista = new ArrayList<>();
+        List<String> compradores = new ArrayList<>();
         Configuration cfg = new Configuration().configure();
         SessionFactory factory = cfg.buildSessionFactory();
         Session session = factory.openSession();
         try {
-            Query query = session.createQuery("from Comprador");
+            Query query = session.createQuery("SELECT username FROM Comprador");
             compradores = query.list();
-            for (int i = 0; i < compradores.size(); i++) {
-                lista.add(compradores.get(i).getUsername());
-            }
+            //for (int i = 0; i < compradores.size(); i++) {
+                //lista.add(compradores.get(i).getUsername());
+            
         } catch (HibernateException e) {
             session.getTransaction().rollback();
             System.out.println(e.getMessage());
@@ -81,7 +81,7 @@ public class UsuarioDAO implements IUsuarioDAO {
             session.flush();
             session.close();
         }
-        return lista;
+        return compradores;
     }
 
 }
