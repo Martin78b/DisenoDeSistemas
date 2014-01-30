@@ -5,15 +5,10 @@
  */
 package utility;
 
-import dao.AnuncioDAO;
 import dao.UsuarioDAO;
-import entidades.Comprador;
-import entidades.SubcategoriaId;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.List;
-import servicios.AnuncioService;
 
 /**
  *
@@ -63,8 +58,8 @@ public class Test {
         
         //fos.write(imagen.getArchivo());
         //fos.close();*/
-        String testo = "C:\\windows\\algo\\caca.jpg";
-        System.out.println(testo);
+        UsuarioDAO ud = new UsuarioDAO();
+        System.out.println(ud.validate("caca", "nandito"));
         
     }
 }
