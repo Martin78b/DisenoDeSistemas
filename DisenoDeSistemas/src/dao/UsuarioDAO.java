@@ -7,14 +7,17 @@ package dao;
 
 import entidades.Comprador;
 import entidades.Vendedor;
+import java.beans.Expression;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -43,17 +46,22 @@ public class UsuarioDAO implements IUsuarioDAO {
     }
 
     @Override
-    public Comprador validate(String user, String pass) {
-        Comprador compra = null;
+    public int validate(String user, String pass) {
+        int compra = 0;
         List<Comprador> lista = new ArrayList<>();
         try {
             Configuration cfg = new Configuration().configure();
             SessionFactory factory = cfg.buildSessionFactory();
             Session session = factory.openSession();
             Transaction tx = session.beginTransaction();
-            String hql = "FROM Comprador E WHERE E.username = '"+ user+"' AND E.contrasenia = '"+ pass +"'";
-            Query query = session.createQuery(hql);
-            compra = (Comprador)query.list().get(0);
+            //String hql = "Select dni FROM Comprador E WHERE E.username = " + user
+            //  + " AND E.contrasenia = " + pass;
+            //Query query = session.createQuery(hql);
+            //compra = (int)query.uniqueResult();
+            Criteria criterio = session.createCriteria(Comprador.class)
+            .add(Restrictions.eq("username", user));
+            criterio.add(Restrictions.eq("contrasenia", pass));
+            compra=((Comprador)criterio.uniqueResult()).getDni();
             session.flush();
             session.close();
         } catch (Exception ex) {
@@ -90,6 +98,29 @@ public class UsuarioDAO implements IUsuarioDAO {
             Query query = session.createQuery("SELECT username FROM Comprador");
             vendor = (Vendedor)query.uniqueResult();
 
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        } finally {
+            session.flush();
+            session.close();
+        }
+        return vendor;
+    }
+
+    public Vendedor getVendedor(int dni) {
+        Vendedor vendor = new Vendedor();
+        Configuration cfg = new Configuration().configure();
+        SessionFactory factory = cfg.buildSessionFactory();
+        Session session = factory.openSession();
+        try {
+            Transaction tx = session.beginTransaction();
+            //Query query = session.createQuery("FROM Vendedor WHERE dni="+dni);
+            vendor = (Vendedor)session.get(Vendedor.class, dni);
+            //Criteria crit = session.createCriteria(Vendedor.class)
+             //       .add(Restrictions.idEq(dni));
+            //vendor = (Vendedor)crit.list().get(0);
+            tx.commit();
         } catch (HibernateException e) {
             session.getTransaction().rollback();
             System.out.println(e.getMessage());

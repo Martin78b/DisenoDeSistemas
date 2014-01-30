@@ -6,6 +6,7 @@
 
 package ui;
 
+import java.awt.BorderLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -19,8 +20,9 @@ import servicios.AnuncioService;
 public class UIAltaAnuncio extends javax.swing.JFrame {
 
     
-    AnuncioService anuncioservice = new AnuncioService(); 
-    JFileChooser chooser = new JFileChooser();
+    AnuncioService anuncioservice = new AnuncioService();
+    javax.swing.JComboBox jComboBoxExtend = new JComboBox();
+    
     /**
      * Creates new form UIAltaAnuncio
      */
@@ -28,6 +30,10 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         
         
         initComponents();
+        jTextField3.setLayout(new BorderLayout());
+        jTextField3.add(jComboBoxExtend, BorderLayout.SOUTH);
+        
+        
         
     }
 
@@ -41,7 +47,6 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jFrame1 = new javax.swing.JFrame();
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
         jTextField1 = new javax.swing.JTextField();
@@ -65,17 +70,6 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
 
         buttonGroup1.add(jRadioButton1);
         buttonGroup1.add(jRadioButton2);
-
-        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
-        jFrame1.getContentPane().setLayout(jFrame1Layout);
-        jFrame1Layout.setHorizontalGroup(
-            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jFrame1Layout.setVerticalGroup(
-            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Nuevo Anuncio");
@@ -147,11 +141,6 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         });
 
         jButton1.setText("Siguiente");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                altaAnuncio(evt);
-            }
-        });
 
         jLabel4.setText("Categoría:");
 
@@ -298,17 +287,12 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
 
     private void buscarArchivo(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buscarArchivo
         // TODO add your handling code here:
-FileNameExtensionFilter filtro = new FileNameExtensionFilter("Imágenes", ".jpg");
+JFileChooser chooser = new JFileChooser();
+FileNameExtensionFilter filtro = new FileNameExtensionFilter("Imágenes", "jpg");
 chooser.setFileFilter(filtro);
 chooser.showOpenDialog(jButton3);
 System.out.println(chooser.getSelectedFile().getAbsolutePath());
     }//GEN-LAST:event_buscarArchivo
-
-    private void altaAnuncio(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_altaAnuncio
-   // TODO add your handling code here:
-    //if(chooser.getSelectedFile().getAbsolutePath()== null){
-    //anuncioservice.agregar(jComboBox2.getSelectedIndex(), jComboBox3.getSelectedIndex(), null, null, null, null, TOP_ALIGNMENT, TOP_ALIGNMENT, null, rootPaneCheckingEnabled, WIDTH);}
-    }//GEN-LAST:event_altaAnuncio
 
     private void clickeaRestringir(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clickeaRestringir
         jTextField3.setText("");
@@ -362,7 +346,6 @@ System.out.println(chooser.getSelectedFile().getAbsolutePath());
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JComboBox jComboBox3;
     private javax.swing.JComboBox jComboBox4;
-    private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
