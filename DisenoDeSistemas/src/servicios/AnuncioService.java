@@ -143,5 +143,25 @@ public class AnuncioService implements IAnuncioService {
         }
         return lista;
     }
+    
+     public void agregar(int categoria, int subcategoria, Vendedor vendedor, Tipoanuncio tipoanuncio, String titulo,
+            String descripcion, float preciobase, float preciominimo, Date fechafin, boolean estado, int cantidadart, String dirImagen) {
+        Anuncio anuncio = new Anuncio();
+        SubcategoriaId id = new SubcategoriaId(subcategoria, categoria);
+        anuncio.setSubcategoria(anunciodao.subcategoria(id));
+        anuncio.setVendedor(vendedor);
+        anuncio.setTipoanuncio(tipoanuncio);
+        anuncio.setTitulo(titulo);
+        anuncio.setDescripcion(descripcion);
+        anuncio.setPreciobase(preciobase);
+        anuncio.setPreciominimo(preciominimo);
+        anuncio.setEstado(estado);
+        anuncio.setCantarticulos(cantidadart);
+        anuncio.setFechainicio(new Date());
+        anuncio.setFechafin(fechafin);
+        anunciodao.save(anuncio);
+        this.agregarImagen(anuncio, dirImagen);
+    }
+
 
 }
