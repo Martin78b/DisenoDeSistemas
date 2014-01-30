@@ -14,7 +14,7 @@ public class Vendedor  implements java.io.Serializable {
 
      private int dni;
      private Comprador comprador;
-     private Serializable cuil;
+     private String cuil;
      private Boolean estado;
      private Set anuncios = new HashSet(0);
 
@@ -22,11 +22,11 @@ public class Vendedor  implements java.io.Serializable {
     }
 
 	
-    public Vendedor(Comprador comprador, Serializable cuil) {
+    public Vendedor(Comprador comprador,String cuil) {
         this.comprador = comprador;
         this.cuil = cuil;
     }
-    public Vendedor(Comprador comprador, Serializable cuil, Boolean estado, Set anuncios) {
+    public Vendedor(Comprador comprador, String cuil, Boolean estado, Set anuncios) {
        this.comprador = comprador;
        this.cuil = cuil;
        this.estado = estado;
@@ -51,7 +51,7 @@ public class Vendedor  implements java.io.Serializable {
         return this.cuil;
     }
     
-    public void setCuil(Serializable cuil) {
+    public void setCuil(String cuil) {
         this.cuil = cuil;
     }
     public Boolean getEstado() {
