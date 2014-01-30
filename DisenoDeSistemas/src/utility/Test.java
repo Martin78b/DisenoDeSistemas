@@ -6,6 +6,7 @@
 package utility;
 
 import dao.UsuarioDAO;
+import entidades.Vendedor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
@@ -59,7 +60,10 @@ public class Test {
         //fos.write(imagen.getArchivo());
         //fos.close();*/
         UsuarioDAO ud = new UsuarioDAO();
-        System.out.println(ud.validate("caca", "nandito"));
+        Vendedor vendor =ud.getVendedor(ud.validate("murai", "megustaelcafe"));
+        String algo=Integer.toString(vendor.getAnuncios().size());
+        
+        System.out.println(algo);
         
     }
 }

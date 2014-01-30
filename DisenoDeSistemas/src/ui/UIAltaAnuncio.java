@@ -6,6 +6,7 @@
 
 package ui;
 
+import java.awt.BorderLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -29,6 +30,10 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         
         
         initComponents();
+        jTextField3.setLayout(new BorderLayout());
+        jTextField3.add(jComboBoxExtend, BorderLayout.SOUTH);
+        
+        
         
     }
 
