@@ -59,9 +59,9 @@ public class UsuarioDAO implements IUsuarioDAO {
             //Query query = session.createQuery(hql);
             //compra = (int)query.uniqueResult();
             Criteria criterio = session.createCriteria(Comprador.class)
-            .add(Restrictions.eq("username", user));
+                    .add(Restrictions.eq("username", user));
             criterio.add(Restrictions.eq("contrasenia", pass));
-            compra=((Comprador)criterio.uniqueResult()).getDni();
+            compra = ((Comprador) criterio.uniqueResult()).getDni();
             session.flush();
             session.close();
         } catch (Exception ex) {
@@ -88,25 +88,6 @@ public class UsuarioDAO implements IUsuarioDAO {
         }
         return compradores;
     }
-    
-    public Vendedor getVendedor(int dni){
-        Vendedor vendor = new Vendedor();
-        Configuration cfg = new Configuration().configure();
-        SessionFactory factory = cfg.buildSessionFactory();
-        Session session = factory.openSession();
-        try {
-            Query query = session.createQuery("SELECT username FROM Comprador");
-            vendor = (Vendedor)query.uniqueResult();
-
-        } catch (HibernateException e) {
-            session.getTransaction().rollback();
-            System.out.println(e.getMessage());
-        } finally {
-            session.flush();
-            session.close();
-        }
-        return vendor;
-    }
 
     public Vendedor getVendedor(int dni) {
         Vendedor vendor = new Vendedor();
@@ -116,9 +97,9 @@ public class UsuarioDAO implements IUsuarioDAO {
         try {
             Transaction tx = session.beginTransaction();
             //Query query = session.createQuery("FROM Vendedor WHERE dni="+dni);
-            vendor = (Vendedor)session.get(Vendedor.class, dni);
+            vendor = (Vendedor) session.get(Vendedor.class, dni);
             //Criteria crit = session.createCriteria(Vendedor.class)
-             //       .add(Restrictions.idEq(dni));
+            //       .add(Restrictions.idEq(dni));
             //vendor = (Vendedor)crit.list().get(0);
             tx.commit();
         } catch (HibernateException e) {
