@@ -61,9 +61,8 @@ public class Test {
         //fos.close();*/
         UsuarioDAO ud = new UsuarioDAO();
         Vendedor vendor =ud.getVendedor(ud.validate("murai", "megustaelcafe"));
-        String algo=Integer.toString(vendor.getAnuncios().size());
-        
-        System.out.println(algo);
+               
+        System.out.println(vendor.getCuil());
         
     }
 }

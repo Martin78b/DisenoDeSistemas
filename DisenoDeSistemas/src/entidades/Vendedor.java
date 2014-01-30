@@ -47,7 +47,7 @@ public class Vendedor  implements java.io.Serializable {
     public void setComprador(Comprador comprador) {
         this.comprador = comprador;
     }
-    public Serializable getCuil() {
+    public String getCuil() {
         return this.cuil;
     }
     
