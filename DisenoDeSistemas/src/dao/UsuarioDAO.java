@@ -43,23 +43,23 @@ public class UsuarioDAO implements IUsuarioDAO {
     }
 
     @Override
-    public boolean validate(String user, String pass) {
+    public Comprador validate(String user, String pass) {
+        Comprador compra = null;
         List<Comprador> lista = new ArrayList<>();
         try {
             Configuration cfg = new Configuration().configure();
             SessionFactory factory = cfg.buildSessionFactory();
             Session session = factory.openSession();
             Transaction tx = session.beginTransaction();
-            String hql = "FROM Comprador E WHERE E.username = " + user
-                    + " AND E.contrasenia = " + pass;
+            String hql = "FROM Comprador E WHERE E.username = '"+ user+"' AND E.contrasenia = '"+ pass +"'";
             Query query = session.createQuery(hql);
-            lista = query.list();
+            compra = (Comprador)query.list().get(0);
             session.flush();
             session.close();
         } catch (Exception ex) {
 
         }
-        return !(lista.isEmpty());
+        return compra;
     }
 
     public List<String> listarUsuarios() {
@@ -79,6 +79,25 @@ public class UsuarioDAO implements IUsuarioDAO {
             session.close();
         }
         return compradores;
+    }
+    
+    public Vendedor getVendedor(int dni){
+        Vendedor vendor = new Vendedor();
+        Configuration cfg = new Configuration().configure();
+        SessionFactory factory = cfg.buildSessionFactory();
+        Session session = factory.openSession();
+        try {
+            Query query = session.createQuery("SELECT username FROM Comprador");
+            vendor = (Vendedor)query.uniqueResult();
+
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        } finally {
+            session.flush();
+            session.close();
+        }
+        return vendor;
     }
 
 }

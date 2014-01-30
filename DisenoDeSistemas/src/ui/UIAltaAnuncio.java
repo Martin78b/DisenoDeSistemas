@@ -7,6 +7,7 @@
 package ui;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import servicios.AnuncioService;
@@ -27,6 +28,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         
         
         initComponents();
+        
     }
 
     /**
@@ -117,6 +119,11 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         jTextField2.setText("$");
 
         jTextField3.setText("usuario1; usuario2;....");
+        jTextField3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                clickeaRestringir(evt);
+            }
+        });
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
@@ -133,6 +140,11 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         jRadioButton2.setText("Compartir solo con:");
 
         jTextField4.setText("usuario1; usuario2; ...");
+        jTextField4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                clickeaCompartir(evt);
+            }
+        });
 
         jButton1.setText("Siguiente");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -297,6 +309,14 @@ System.out.println(chooser.getSelectedFile().getAbsolutePath());
     //if(chooser.getSelectedFile().getAbsolutePath()== null){
     //anuncioservice.agregar(jComboBox2.getSelectedIndex(), jComboBox3.getSelectedIndex(), null, null, null, null, TOP_ALIGNMENT, TOP_ALIGNMENT, null, rootPaneCheckingEnabled, WIDTH);}
     }//GEN-LAST:event_altaAnuncio
+
+    private void clickeaRestringir(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clickeaRestringir
+        jTextField3.setText("");
+    }//GEN-LAST:event_clickeaRestringir
+
+    private void clickeaCompartir(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clickeaCompartir
+        jTextField4.setText("");
+    }//GEN-LAST:event_clickeaCompartir
 
     /**
      * @param args the command line arguments
