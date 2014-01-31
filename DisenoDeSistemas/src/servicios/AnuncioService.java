@@ -85,7 +85,7 @@ public class AnuncioService implements IAnuncioService {
         anunciodao.save(anuncio);
     }
 
-    public void agregarImagen(Anuncio anuncio, String direccion) {
+    public void agregarImagen(int anuncio, String direccion) {
         File archivo = new File(direccion);
         FileInputStream fileInputStream;
         byte[] bFile = new byte[(int) archivo.length()];
@@ -170,8 +170,8 @@ public class AnuncioService implements IAnuncioService {
         anuncio.setCantarticulos(cantidadart);
         anuncio.setFechainicio(new Date());
         anuncio.setFechafin(fechafin);
-        anunciodao.save(anuncio);
-        this.agregarImagen(anuncio, dirImagen);
+        int nro=anunciodao.save(anuncio);
+        this.agregarImagen(nro, dirImagen);
     }
 
 
