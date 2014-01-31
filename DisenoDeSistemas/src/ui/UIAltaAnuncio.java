@@ -3,15 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ui;
 
+import entidades.Vendedor;
 import java.awt.BorderLayout;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import servicios.AnuncioService;
+import servicios.UsuarioService;
 
 /**
  *
@@ -19,22 +24,26 @@ import servicios.AnuncioService;
  */
 public class UIAltaAnuncio extends javax.swing.JFrame {
 
-    
+    Vendedor vendedor = new Vendedor();
     AnuncioService anuncioservice = new AnuncioService();
+    UsuarioService usuarioservice = new UsuarioService();
     javax.swing.JComboBox jComboBoxExtend = new JComboBox();
+    JFileChooser chooser = new JFileChooser();
+    DateFormat formatofecha = new SimpleDateFormat("yyyy-mm-dd");
+    Calendar cal = Calendar.getInstance();
+       boolean cargaimagen = false;
     
     /**
      * Creates new form UIAltaAnuncio
      */
     public UIAltaAnuncio() {
-        
-        
+     
+        cal.setTime(new Date());
+        vendedor = usuarioservice.obtenerVendedor(usuarioservice.validar("murai", "megustaelcafe"));
         initComponents();
         jTextField3.setLayout(new BorderLayout());
         jTextField3.add(jComboBoxExtend, BorderLayout.SOUTH);
-        
-        
-        
+
     }
 
     /**
@@ -47,6 +56,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        jFrame1 = new javax.swing.JFrame();
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
         jTextField1 = new javax.swing.JTextField();
@@ -70,6 +80,17 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
 
         buttonGroup1.add(jRadioButton1);
         buttonGroup1.add(jRadioButton2);
+
+        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
+        jFrame1.getContentPane().setLayout(jFrame1Layout);
+        jFrame1Layout.setHorizontalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jFrame1Layout.setVerticalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Nuevo Anuncio");
@@ -141,6 +162,11 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         });
 
         jButton1.setText("Siguiente");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pruebaAltaAnuncio(evt);
+            }
+        });
 
         jLabel4.setText("Categoría:");
 
@@ -270,7 +296,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void cambioopcion(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cambioopcion
-        jComboBox4.setModel(new DefaultComboBoxModel(anuncioservice.subcategorias(jComboBox3.getSelectedIndex()+1).toArray()));
+        jComboBox4.setModel(new DefaultComboBoxModel(anuncioservice.subcategorias(jComboBox3.getSelectedIndex() + 1).toArray()));
     }//GEN-LAST:event_cambioopcion
 
     private void clickeaDescripcion(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clickeaDescripcion
@@ -287,11 +313,11 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
 
     private void buscarArchivo(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buscarArchivo
         // TODO add your handling code here:
-JFileChooser chooser = new JFileChooser();
-FileNameExtensionFilter filtro = new FileNameExtensionFilter("Imágenes", "jpg");
-chooser.setFileFilter(filtro);
-chooser.showOpenDialog(jButton3);
-System.out.println(chooser.getSelectedFile().getAbsolutePath());
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Imágenes", "jpg");
+        chooser.setFileFilter(filtro);
+        chooser.showOpenDialog(jButton3);
+        cargaimagen=true;
+        System.out.println(chooser.getSelectedFile().getAbsolutePath());
     }//GEN-LAST:event_buscarArchivo
 
     private void clickeaRestringir(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clickeaRestringir
@@ -301,6 +327,15 @@ System.out.println(chooser.getSelectedFile().getAbsolutePath());
     private void clickeaCompartir(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clickeaCompartir
         jTextField4.setText("");
     }//GEN-LAST:event_clickeaCompartir
+
+    private void pruebaAltaAnuncio(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pruebaAltaAnuncio
+        cal.add(Calendar.DATE,Integer.parseInt((String)jComboBox2.getSelectedItem()));
+        if (!cargaimagen) {
+            anuncioservice.agregar(jComboBox3.getSelectedIndex(), jComboBox4.getSelectedIndex(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0,cal.getTime(), true, 1);
+        }else{
+            anuncioservice.agregar(jComboBox3.getSelectedIndex(), jComboBox4.getSelectedIndex(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0,cal.getTime(), true, 1,chooser.getSelectedFile().getAbsolutePath());
+        }
+    }//GEN-LAST:event_pruebaAltaAnuncio
 
     /**
      * @param args the command line arguments
@@ -328,7 +363,7 @@ System.out.println(chooser.getSelectedFile().getAbsolutePath());
             java.util.logging.Logger.getLogger(UIAltaAnuncio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -346,6 +381,7 @@ System.out.println(chooser.getSelectedFile().getAbsolutePath());
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JComboBox jComboBox3;
     private javax.swing.JComboBox jComboBox4;
+    private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

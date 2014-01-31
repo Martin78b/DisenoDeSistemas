@@ -20,7 +20,7 @@ import java.util.Date;
 public interface IAnuncioService {
         
     
-    public void agregar(int categoria, int subcategoria, Vendedor vendedor, Tipoanuncio tipoanuncio, String titulo,
+    public void agregar(int categoria, int subcategoria, Vendedor vendedor, int tipoanuncio, String titulo,
             String descripcion, float preciobase, float preciominimo, Date fechafin, boolean estado, 
             int cantidadart);
         

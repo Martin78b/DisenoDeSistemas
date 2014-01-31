@@ -54,10 +54,6 @@ public class UsuarioDAO implements IUsuarioDAO {
             SessionFactory factory = cfg.buildSessionFactory();
             Session session = factory.openSession();
             Transaction tx = session.beginTransaction();
-            //String hql = "Select dni FROM Comprador E WHERE E.username = " + user
-            //  + " AND E.contrasenia = " + pass;
-            //Query query = session.createQuery(hql);
-            //compra = (int)query.uniqueResult();
             Criteria criterio = session.createCriteria(Comprador.class)
                     .add(Restrictions.eq("username", user));
             criterio.add(Restrictions.eq("contrasenia", pass));
@@ -96,11 +92,7 @@ public class UsuarioDAO implements IUsuarioDAO {
         Session session = factory.openSession();
         try {
             Transaction tx = session.beginTransaction();
-            //Query query = session.createQuery("FROM Vendedor WHERE dni="+dni);
             vendor = (Vendedor) session.get(Vendedor.class, dni);
-            //Criteria crit = session.createCriteria(Vendedor.class)
-            //       .add(Restrictions.idEq(dni));
-            //vendor = (Vendedor)crit.list().get(0);
             tx.commit();
         } catch (HibernateException e) {
             session.getTransaction().rollback();

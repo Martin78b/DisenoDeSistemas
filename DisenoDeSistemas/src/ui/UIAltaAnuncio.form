@@ -254,7 +254,7 @@
         <Property name="text" type="java.lang.String" value="Siguiente"/>
       </Properties>
       <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="altaAnuncio"/>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pruebaAltaAnuncio"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
