@@ -129,9 +129,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "3", "5", "7", "10" }));
 
-        jLabel3.setText("Precio:");
-
-        jTextField2.setText("$");
+        jLabel3.setText("Precio $:");
 
         jTextField3.setText("usuario1; usuario2;....");
         jTextField3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -328,6 +326,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         jTextField4.setText("");
     }//GEN-LAST:event_clickeaCompartir
 
+    
     private void pruebaAltaAnuncio(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pruebaAltaAnuncio
         cal.add(Calendar.DATE,Integer.parseInt((String)jComboBox2.getSelectedItem()));
         System.out.println("Fechas "+(String)jComboBox2.getSelectedItem()+"\n"

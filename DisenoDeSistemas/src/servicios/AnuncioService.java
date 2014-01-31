@@ -21,6 +21,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import javax.imageio.ImageIO;
 import utility.DetectorDeSO;
 
@@ -33,19 +34,21 @@ public class AnuncioService implements IAnuncioService {
     AnuncioDAO anunciodao = new AnuncioDAO();
 
     @Override
-    public List<Anuncio> listar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void listar(List lista) {
+        
     }
 
     @Override
     public List<Anuncio> buscar(String texto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+         List listaanuncio = anunciodao.find(texto);
+         return listaanuncio;
+               }
+           
     @Override
     public void comprar(int cantidad, Anuncio anuncio, int pago) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 
     @Override
     public void pujar(float monto, Anuncio anuncio) {
