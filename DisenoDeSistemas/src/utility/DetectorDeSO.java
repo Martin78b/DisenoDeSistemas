@@ -3,40 +3,147 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package utility;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+
+import javax.swing.*;
+import javax.swing.event.*;
 
 /**
  *
  * @author martin
  */
 public class DetectorDeSO {
-    
-    private static String OS = System.getProperty("os.name").toLowerCase();
-    
-    	public static boolean isWindows() {
- 
-		return (OS.indexOf("win") >= 0);
- 
-	}
- 
-	public static boolean isMac() {
- 
-		return (OS.indexOf("mac") >= 0);
- 
-	}
- 
-	public static boolean isUnix() {
- 
-		return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0 );
- 
-	}
- 
-	public static boolean isSolaris() {
- 
-		return (OS.indexOf("sunos") >= 0);
- 
-	}
- 
 
+    private static String OS = System.getProperty("os.name").toLowerCase();
+
+    public static boolean isWindows() {
+
+        return (OS.indexOf("win") >= 0);
+
+    }
+
+    public static boolean isMac() {
+
+        return (OS.indexOf("mac") >= 0);
+
+    }
+
+    public static boolean isUnix() {
+
+        return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0);
+
+    }
+
+    public static boolean isSolaris() {
+
+        return (OS.indexOf("sunos") >= 0);
+
+    }
+
+    private static boolean isAdjusting(JComboBox cbInput) {
+        if (cbInput.getClientProperty("is_adjusting") instanceof Boolean) {
+            return (Boolean) cbInput.getClientProperty("is_adjusting");
+        }
+        return false;
+    }
+
+    private static void setAdjusting(JComboBox cbInput, boolean adjusting) {
+        cbInput.putClientProperty("is_adjusting", adjusting);
+    }
+
+    public static void setupAutoComplete(final JTextField txtInput, final ArrayList<String> items) {
+        final DefaultComboBoxModel model = new DefaultComboBoxModel();
+        final JComboBox cbInput = new JComboBox(model) {
+            public Dimension getPreferredSize() {
+                return new Dimension(super.getPreferredSize().width, 0);
+            }
+        };
+        setAdjusting(cbInput, false);
+        for (String item : items) {
+            model.addElement(item);
+        }
+        cbInput.setSelectedItem(null);
+        cbInput.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!isAdjusting(cbInput)) {
+                    if (cbInput.getSelectedItem() != null) {String input = txtInput.getText();
+                        if (input.contains(";")) {
+                            int cortar = input.lastIndexOf(";");
+                            input = input.substring(0, cortar+1);
+                        } else input="";
+                        txtInput.setText(input + cbInput.getSelectedItem().toString() + ";");
+                    }
+                }
+            }
+        });
+
+        txtInput.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                setAdjusting(cbInput, true);
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    if (cbInput.isPopupVisible()) {
+                        e.setKeyCode(KeyEvent.VK_ENTER);
+                    }
+                }
+                if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_DOWN) {
+                    e.setSource(cbInput);
+                    cbInput.dispatchEvent(e);
+                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                        String input = txtInput.getText();
+                        if (input.contains(";")) {
+                            int cortar = input.lastIndexOf(";");
+                            input = input.substring(0, cortar+1);
+                        } else input="";
+                        txtInput.setText(input + cbInput.getSelectedItem().toString() + ";");
+                        cbInput.setPopupVisible(false);
+                    }
+                }
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    cbInput.setPopupVisible(false);
+                }
+                setAdjusting(cbInput, false);
+            }
+        });
+        txtInput.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) {
+                updateList();
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                updateList();
+            }
+
+            public void changedUpdate(DocumentEvent e) {
+                updateList();
+            }
+
+            private void updateList() {
+                setAdjusting(cbInput, true);
+                model.removeAllElements();
+                String input = txtInput.getText();
+                if (!input.isEmpty()) {
+                    if (input.contains(";")) {
+                        int cortar = input.lastIndexOf(";");
+                        input = input.substring(cortar + 1, input.length());
+                    }
+                    for (String item : items) {
+                        if (item.toLowerCase().startsWith(input.toLowerCase())) {
+                            model.addElement(item);
+                        }
+                    }
+                }
+                cbInput.setPopupVisible(model.getSize() > 0);
+                setAdjusting(cbInput, false);
+            }
+        });
+        txtInput.setLayout(new BorderLayout());
+        txtInput.add(cbInput, BorderLayout.SOUTH);
+    }
 }

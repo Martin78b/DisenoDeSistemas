@@ -7,6 +7,7 @@ package servicios;
 
 import dao.UsuarioDAO;
 import entidades.Vendedor;
+import java.util.List;
 
 /**
  *
@@ -24,5 +25,9 @@ public class UsuarioService {
     public Vendedor obtenerVendedor(int dniComprador) {
         
         return usuariodao.getVendedor(dniComprador);
+    }
+    
+    public List<String> getCompradores(){
+        return usuariodao.listarUsuarios();
     }
 }

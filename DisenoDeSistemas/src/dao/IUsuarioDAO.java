@@ -13,7 +13,8 @@ import entidades.Vendedor;
  *
  * @author martin
  */
-public interface IUsuarioDAO {
+public interface IUsuarioDAO 
+{
     
     public void save(Comprador usuario);
     

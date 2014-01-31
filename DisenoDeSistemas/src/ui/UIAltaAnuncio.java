@@ -7,8 +7,10 @@ package ui;
 
 import entidades.Vendedor;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
@@ -17,9 +19,10 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableModel;
+import static utility.DetectorDeSO.setupAutoComplete;
 import servicios.AnuncioService;
 import servicios.UsuarioService;
+import java.util.Iterator;
 
 /**
  *
@@ -30,7 +33,12 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
     Vendedor vendedor = new Vendedor();
     AnuncioService anuncioservice = new AnuncioService();
     UsuarioService usuarioservice = new UsuarioService();
-    javax.swing.JComboBox jComboBoxExtend = new JComboBox();
+    List<String> listaUsuarios = usuarioservice.getCompradores();
+    javax.swing.JComboBox jComboBoxExtend = new JComboBox(new DefaultComboBoxModel(listaUsuarios.toArray())) {
+        public Dimension getPreferredSize() {
+            return new Dimension(super.getPreferredSize().width, 0);
+        }
+    };
     JFileChooser chooser = new JFileChooser();
     DateFormat formatofecha = new SimpleDateFormat("yyyy-mm-dd");
     Calendar cal = Calendar.getInstance();
@@ -238,6 +246,11 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
+            }
+        });
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                apretaTecla(evt);
             }
         });
 
@@ -500,6 +513,10 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void apretaTecla(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_apretaTecla
+        // TODO add your handling code here:
+    }//GEN-LAST:event_apretaTecla
 
     /**
      * @param args the command line arguments
