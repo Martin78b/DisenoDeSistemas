@@ -7,9 +7,12 @@ package dao;
 
 import entidades.Comprador;
 import entidades.Vendedor;
+import excepciones.BaseDatosException;
 import java.beans.Expression;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -46,7 +49,7 @@ public class UsuarioDAO implements IUsuarioDAO {
     }
 
     @Override
-    public int validate(String user, String pass) {
+    public int validate(String user, String pass)  {
         int compra = 0;
         List<Comprador> lista = new ArrayList<>();
         try {
@@ -60,8 +63,7 @@ public class UsuarioDAO implements IUsuarioDAO {
             compra = ((Comprador) criterio.uniqueResult()).getDni();
             session.flush();
             session.close();
-        } catch (Exception ex) {
-
+        } catch (HibernateException ex) {
         }
         return compra;
     }

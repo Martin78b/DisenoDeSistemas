@@ -347,6 +347,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         jTextField4.setText("");
     }//GEN-LAST:event_clickeaCompartir
 
+    
     private void pruebaAltaAnuncio(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pruebaAltaAnuncio
         cal.add(Calendar.DATE, Integer.parseInt((String) jComboBox2.getSelectedItem()));
         System.out.println("Fechas " + (String) jComboBox2.getSelectedItem() + "\n"
