@@ -23,6 +23,8 @@ import static utility.DetectorDeSO.setupAutoComplete;
 import servicios.AnuncioService;
 import servicios.UsuarioService;
 import java.util.Iterator;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -56,6 +58,13 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         jTextField3.add(jComboBoxExtend, BorderLayout.SOUTH);
         jSpinner1.setVisible(false);
         jLabel6.setVisible(false);
+        ArrayList<String> listaFinal;
+        listaFinal = new ArrayList<>();
+        for (Iterator<String> it = listaUsuarios.iterator(); it.hasNext();) {
+            listaFinal.add(it.next());
+        }
+        setupAutoComplete(jTextField3, listaFinal);
+        setupAutoComplete(jTextField4, listaFinal);
     }
 
     /**
