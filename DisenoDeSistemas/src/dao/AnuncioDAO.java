@@ -41,6 +41,8 @@ public class AnuncioDAO implements IAnuncioDAO {
             SessionFactory factory = cfg.buildSessionFactory();
             Session session = factory.openSession();
             Transaction tx = session.beginTransaction();
+            int fid = (Integer)session.createQuery("select max(nro) from Anuncio").uniqueResult();
+            anuncio.setNro(fid+1);
             session.save(anuncio);
             tx.commit();
             session.close();
@@ -146,6 +148,8 @@ public class AnuncioDAO implements IAnuncioDAO {
             Session session = factory.openSession();
             Transaction tx = session.beginTransaction();
             imagen.setAnuncio(anuncio);
+            int fid = (Integer)session.createQuery("select max(id) from Imagen").uniqueResult();
+            imagen.setId(fid+1);
             session.save(imagen);
             tx.commit();
             session.close();
