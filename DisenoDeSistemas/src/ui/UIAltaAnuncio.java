@@ -7,16 +7,21 @@ package ui;
 
 import entidades.Vendedor;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import static utility.DetectorDeSO.setupAutoComplete;
 import servicios.AnuncioService;
 import servicios.UsuarioService;
+import java.util.Iterator;
 
 /**
  *
@@ -27,23 +32,34 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
     Vendedor vendedor = new Vendedor();
     AnuncioService anuncioservice = new AnuncioService();
     UsuarioService usuarioservice = new UsuarioService();
-    javax.swing.JComboBox jComboBoxExtend = new JComboBox();
+    List<String> listaUsuarios = usuarioservice.getCompradores();
+    javax.swing.JComboBox jComboBoxExtend = new JComboBox(new DefaultComboBoxModel(listaUsuarios.toArray())) {
+        public Dimension getPreferredSize() {
+            return new Dimension(super.getPreferredSize().width, 0);
+        }
+    };
     JFileChooser chooser = new JFileChooser();
     DateFormat formatofecha = new SimpleDateFormat("yyyy-mm-dd");
     Calendar cal = Calendar.getInstance();
-       boolean cargaimagen = false;
-    
+    boolean cargaimagen = false;
+
     /**
      * Creates new form UIAltaAnuncio
      */
     public UIAltaAnuncio() {
-     
+
         cal.setTime(new Date());
         vendedor = usuarioservice.obtenerVendedor(usuarioservice.validar("murai", "megustaelcafe"));
         initComponents();
         jTextField3.setLayout(new BorderLayout());
         jTextField3.add(jComboBoxExtend, BorderLayout.SOUTH);
-
+        ArrayList<String> listaFinal;
+        listaFinal = new ArrayList<>();
+        for (Iterator<String> it = listaUsuarios.iterator(); it.hasNext();) {
+            listaFinal.add(it.next());
+        }
+        setupAutoComplete(jTextField3, listaFinal);
+        setupAutoComplete(jTextField4, listaFinal);
     }
 
     /**
@@ -140,6 +156,11 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
+            }
+        });
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                apretaTecla(evt);
             }
         });
 
@@ -314,7 +335,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Imágenes", "jpg");
         chooser.setFileFilter(filtro);
         chooser.showOpenDialog(jButton3);
-        cargaimagen=true;
+        cargaimagen = true;
         System.out.println(chooser.getSelectedFile().getAbsolutePath());
     }//GEN-LAST:event_buscarArchivo
 
@@ -327,16 +348,20 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
     }//GEN-LAST:event_clickeaCompartir
 
     private void pruebaAltaAnuncio(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pruebaAltaAnuncio
-        cal.add(Calendar.DATE,Integer.parseInt((String)jComboBox2.getSelectedItem()));
-        System.out.println("Fechas "+(String)jComboBox2.getSelectedItem()+"\n"
-            +"No se:"+jComboBox1.getSelectedIndex());
+        cal.add(Calendar.DATE, Integer.parseInt((String) jComboBox2.getSelectedItem()));
+        System.out.println("Fechas " + (String) jComboBox2.getSelectedItem() + "\n"
+                + "No se:" + jComboBox1.getSelectedIndex());
         if (!cargaimagen) {
-            
-            anuncioservice.agregar(jComboBox3.getSelectedIndex()+1, (String)jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0,cal.getTime(), true, 1);
-        }else{
-            anuncioservice.agregar(jComboBox3.getSelectedIndex()+1, (String)jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0,cal.getTime(), true, 1,chooser.getSelectedFile().getAbsolutePath());
+
+            anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), true, 1);
+        } else {
+            anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), true, 1, chooser.getSelectedFile().getAbsolutePath());
         }
     }//GEN-LAST:event_pruebaAltaAnuncio
+
+    private void apretaTecla(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_apretaTecla
+        // TODO add your handling code here:
+    }//GEN-LAST:event_apretaTecla
 
     /**
      * @param args the command line arguments
