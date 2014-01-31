@@ -36,6 +36,7 @@ public class Anuncio  implements java.io.Serializable {
 
 	
     public Anuncio(Subcategoria subcategoria, Vendedor vendedor, Tipoanuncio tipoanuncio, String titulo, String descripcion, float preciobase, Date fechainicio, Date fechafin, boolean estado, int cantarticulos) {
+        
         this.subcategoria = subcategoria;
         this.vendedor = vendedor;
         this.tipoanuncio = tipoanuncio;
