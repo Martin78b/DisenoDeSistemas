@@ -336,7 +336,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         chooser.setFileFilter(filtro);
         chooser.showOpenDialog(jButton3);
         cargaimagen = true;
-        System.out.println(chooser.getSelectedFile().getAbsolutePath());
+        System.out.println(chooser.getSelectedFiles());
     }//GEN-LAST:event_buscarArchivo
 
     private void clickeaRestringir(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clickeaRestringir
@@ -355,7 +355,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
 
             anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), true, 1);
         } else {
-            anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), true, 1, chooser.getSelectedFile().getAbsolutePath());
+            anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), true, 1, chooser.getSelectedFiles());
         }
     }//GEN-LAST:event_pruebaAltaAnuncio
 
