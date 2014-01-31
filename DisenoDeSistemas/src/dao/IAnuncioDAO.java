@@ -22,7 +22,7 @@ import java.util.Set;
  */
 public interface IAnuncioDAO {
     
-    public void save(Anuncio anuncio);
+    public int save(Anuncio anuncio);
     
     public void update(Anuncio anuncio);
     
@@ -36,7 +36,7 @@ public interface IAnuncioDAO {
     
     public boolean bid(Anuncio anuncio, float monto);
  
-    public void imagen(Anuncio anuncio, Imagen imagen);
+    public void imagen(int anuncio, Imagen imagen);
     
     public List<Imagen> imagen(Anuncio anuncio);
     

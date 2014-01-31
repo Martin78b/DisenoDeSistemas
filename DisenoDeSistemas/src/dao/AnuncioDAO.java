@@ -35,12 +35,15 @@ public class AnuncioDAO implements IAnuncioDAO {
     List<Anuncio> listaanuncio = null;
 
     @Override
-    public void save(Anuncio anuncio) {
+    public int save(Anuncio anuncio) {
+        int fid=0;
         try {
             Configuration cfg = new Configuration().configure();
             SessionFactory factory = cfg.buildSessionFactory();
             Session session = factory.openSession();
             Transaction tx = session.beginTransaction();
+            fid = (Integer)session.createQuery("select max(nro) from Anuncio").uniqueResult();
+            anuncio.setNro(fid+1);
             session.save(anuncio);
             tx.commit();
             session.close();
@@ -48,6 +51,7 @@ public class AnuncioDAO implements IAnuncioDAO {
             System.out.println(ex.getMessage());
 
         }
+        return (fid+1);
     }
 
     @Override
@@ -139,13 +143,15 @@ public class AnuncioDAO implements IAnuncioDAO {
     }
 
     @Override
-    public void imagen(Anuncio anuncio, Imagen imagen) {
+    public void imagen(int anuncio, Imagen imagen) {
         try {
             Configuration cfg = new Configuration().configure();
             SessionFactory factory = cfg.buildSessionFactory();
             Session session = factory.openSession();
             Transaction tx = session.beginTransaction();
-            imagen.setAnuncio(anuncio);
+            imagen.setAnuncio((Anuncio)session.load(Anuncio.class, anuncio));
+            int fid = (Integer)session.createQuery("select max(id) from Imagen").uniqueResult();
+            imagen.setId(fid+1);
             session.save(imagen);
             tx.commit();
             session.close();

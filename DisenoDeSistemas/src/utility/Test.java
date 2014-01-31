@@ -5,7 +5,6 @@
  */
 package utility;
 
-import dao.UsuarioDAO;
 import entidades.Vendedor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
