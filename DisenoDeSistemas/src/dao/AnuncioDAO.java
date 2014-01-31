@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -340,5 +341,24 @@ public class AnuncioDAO implements IAnuncioDAO {
             session.close();
         }
         return subca;
+    }
+    
+    public int subcategorias(String nombre) {
+        Subcategoria sub = new Subcategoria();
+        Configuration cfg = new Configuration().configure();
+        SessionFactory factory = cfg.buildSessionFactory();
+        Session session = factory.openSession();
+        try {
+            //Query query = session.createQuery("from Subcategoria where idcategoria=" + categoria.getIdcategoria());
+            Criteria crit =session.createCriteria(Subcategoria.class).add(Restrictions.eq("nombre", nombre));
+            sub=(Subcategoria)crit.uniqueResult();
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        } finally {
+            session.flush();
+            session.close();
+        }
+        return sub.getId().getId();
     }
 }

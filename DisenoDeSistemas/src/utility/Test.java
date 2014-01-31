@@ -9,7 +9,13 @@ import dao.UsuarioDAO;
 import entidades.Vendedor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import servicios.AnuncioService;
+import servicios.UsuarioService;
 
 /**
  *
@@ -21,7 +27,7 @@ public class Test {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
-        
+
         /* try {
          /*Configuration cfg = new Configuration().configure();
          SessionFactory factory = cfg.buildSessionFactory();
@@ -35,7 +41,6 @@ public class Test {
          } */
         //Anuncio anuncio;
         //anuncio = (Anuncio) anunciodao.find(2);
-
         //Configuration cfg = new Configuration().configure();
         //SessionFactory factory = cfg.buildSessionFactory();
         //Session session = factory.openSession();
@@ -47,22 +52,29 @@ public class Test {
         //Calendar cal = new GregorianCalendar(2014, 1, 31);
         //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         //Date fechafin = cal.getTime();
-        
         //Metododepago metodo;
         //metodo = (Metododepago) session.load(Metododepago.class, 2);
         //anuncio = (Anuncio)session.createCriteria(Anuncio.class).add(Restrictions.idEq(2)).uniqueResult();
-       // tx.commit();
+        // tx.commit();
         //session.flush();
         //session.close();
         //AnuncioService anuncioserv = new AnuncioService();
         //anuncioserv.agregar(subca, vendedor, tipo, "Yamaha", "Impecable", 50000, 0, sdf.parse("2014-1-31"), true, 1);
-        
         //fos.write(imagen.getArchivo());
         //fos.close();*/
-        UsuarioDAO ud = new UsuarioDAO();
-        Vendedor vendor =ud.getVendedor(ud.validate("murai", "megustaelcafe"));
-               
-        System.out.println(vendor.getCuil());
-        
+        UsuarioService us = new UsuarioService();
+        Vendedor vendor = us.obtenerVendedor(us.validar("murai", "megustaelcafe"));
+
+        //System.out.println(vendor.getCuil());
+        AnuncioService as = new AnuncioService();
+        //agregar(int categoria, int subcategoria, Vendedor vendedor, int tipoanuncio, String titulo,
+        // String descripcion, float preciobase, float preciominimo, Date fechafin, boolean estado, int cantidadart) {
+        DateFormat formatofecha = new SimpleDateFormat("yyyy-mm-dd");
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.DATE, 5);
+        //anuncioservice.agregar(jComboBox3.getSelectedIndex(), jComboBox4.getSelectedIndex(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0,cal.getTime(), true, 1);
+        as.agregar(1, "Laptop", vendor, 4, "titulo", "descripcion", 5000, 0, cal.getTime(), true, 1);
+
     }
 }

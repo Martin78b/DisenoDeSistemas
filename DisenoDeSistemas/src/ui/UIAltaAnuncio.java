@@ -330,10 +330,13 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
 
     private void pruebaAltaAnuncio(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pruebaAltaAnuncio
         cal.add(Calendar.DATE,Integer.parseInt((String)jComboBox2.getSelectedItem()));
+        System.out.println("Fechas "+(String)jComboBox2.getSelectedItem()+"\n"
+            +"No se:"+jComboBox1.getSelectedIndex());
         if (!cargaimagen) {
-            anuncioservice.agregar(jComboBox3.getSelectedIndex(), jComboBox4.getSelectedIndex(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0,cal.getTime(), true, 1);
+            
+            anuncioservice.agregar(jComboBox3.getSelectedIndex()+1, (String)jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0,cal.getTime(), true, 1);
         }else{
-            anuncioservice.agregar(jComboBox3.getSelectedIndex(), jComboBox4.getSelectedIndex(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0,cal.getTime(), true, 1,chooser.getSelectedFile().getAbsolutePath());
+            anuncioservice.agregar(jComboBox3.getSelectedIndex()+1, (String)jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0,cal.getTime(), true, 1,chooser.getSelectedFile().getAbsolutePath());
         }
     }//GEN-LAST:event_pruebaAltaAnuncio
 

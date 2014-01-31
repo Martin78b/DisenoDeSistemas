@@ -67,10 +67,10 @@ public class AnuncioService implements IAnuncioService {
     }
 
     @Override
-    public void agregar(int categoria, int subcategoria, Vendedor vendedor, int tipoanuncio, String titulo,
+    public void agregar(int categoria, String subcategoria, Vendedor vendedor, int tipoanuncio, String titulo,
             String descripcion, float preciobase, float preciominimo, Date fechafin, boolean estado, int cantidadart) {
         Anuncio anuncio = new Anuncio();
-        SubcategoriaId id = new SubcategoriaId(subcategoria, categoria);
+        SubcategoriaId id = new SubcategoriaId(this.getIdSubcategoria(subcategoria), categoria);
         anuncio.setSubcategoria(anunciodao.subcategoria(id));
         anuncio.setVendedor(vendedor);
         anuncio.setTipoanuncio(this.tipoanucio(tipoanuncio));
@@ -149,11 +149,16 @@ public class AnuncioService implements IAnuncioService {
     tipo = anunciodao.tipoanuncio().get(idtipo);
     return tipo;
     }
+    
+    public int getIdSubcategoria(String nombre){
+        int resultado=anunciodao.subcategorias(nombre);
+        return resultado;
+    }
             
-    public void agregar(int categoria, int subcategoria, Vendedor vendedor, int tipoanuncio, String titulo,
+    public void agregar(int categoria, String subcategoria, Vendedor vendedor, int tipoanuncio, String titulo,
             String descripcion, float preciobase, float preciominimo, Date fechafin, boolean estado, int cantidadart, String dirImagen) {
         Anuncio anuncio = new Anuncio();
-        SubcategoriaId id = new SubcategoriaId(subcategoria, categoria);
+        SubcategoriaId id = new SubcategoriaId(this.getIdSubcategoria(subcategoria), categoria);
         anuncio.setSubcategoria(anunciodao.subcategoria(id));
         anuncio.setVendedor(vendedor);
         anuncio.setTipoanuncio(this.tipoanucio(tipoanuncio));
