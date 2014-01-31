@@ -129,9 +129,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "3", "5", "7", "10" }));
 
-        jLabel3.setText("Precio:");
-
-        jTextField2.setText("$");
+        jLabel3.setText("Precio $:");
 
         jTextField3.setText("usuario1; usuario2;....");
         jTextField3.addMouseListener(new java.awt.event.MouseAdapter() {
