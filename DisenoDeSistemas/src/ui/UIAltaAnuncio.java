@@ -447,6 +447,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         chooser.showOpenDialog(jButton3);
         cargaimagen = true;
         System.out.println(chooser.getSelectedFile().getAbsolutePath());
+        System.err.println(chooser.getSelectedFiles().length);
     }//GEN-LAST:event_buscarArchivo
 
     private void clickeaRestringir(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clickeaRestringir
@@ -470,13 +471,14 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
       Vector vector2 = new Vector(4);
       vector2.add("$ " + 20);
       vector2.add("$ "+ chooser.getSelectedFiles().length * 5);
-      vector2.add("$ ");
-      vector2.add("$ ");
+      vector2.add("$ "+ jComboBox2.getSelectedIndex()*10);
+      int suma = 20 + chooser.getSelectedFiles().length * 5 + jComboBox2.getSelectedIndex() * 10;
+      vector2.add("$ "+ suma);
       modelo.addColumn("Ítem",vector);
       modelo.addColumn("Precio",vector2);
       jDialog2.setSize(400,250);
       jDialog2.setVisible(true);
-              
+      System.out.println(chooser.getSelectedFiles().length);
     }//GEN-LAST:event_dialogoConfirmarAlta
 
     private void cambiaLabel(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cambiaLabel
