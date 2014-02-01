@@ -8,6 +8,7 @@ package ui;
 import entidades.Vendedor;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -444,10 +445,11 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         // TODO add your handling code here:
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Imágenes", "jpg");
         chooser.setFileFilter(filtro);
+        chooser.setMultiSelectionEnabled(true);
         chooser.showOpenDialog(jButton3);
         cargaimagen = true;
-        System.out.println(chooser.getSelectedFile().getAbsolutePath());
-        System.err.println(chooser.getSelectedFiles().length);
+        //System.out.println(chooser.getSelectedFile().getAbsolutePath());
+        //System.err.println(Array.getLength(chooser.getSelectedFiles()));
     }//GEN-LAST:event_buscarArchivo
 
     private void clickeaRestringir(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clickeaRestringir
@@ -472,7 +474,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
       vector2.add("$ " + 20);
       vector2.add("$ "+ chooser.getSelectedFiles().length * 5);
       vector2.add("$ "+ jComboBox2.getSelectedIndex()*10);
-      int suma = 20 + chooser.getSelectedFiles().length * 5 + jComboBox2.getSelectedIndex() * 10;
+      int suma = 20 + Array.getLength(chooser.getSelectedFiles()) * 5 + jComboBox2.getSelectedIndex() * 10;
       vector2.add("$ "+ suma);
       modelo.addColumn("Ítem",vector);
       modelo.addColumn("Precio",vector2);
