@@ -34,8 +34,17 @@ public class AnuncioService implements IAnuncioService {
     AnuncioDAO anunciodao = new AnuncioDAO();
 
     @Override
-    public void listar(List lista) {
-        
+    public List<Anuncio> listar() {
+        return anunciodao.findAll();
+    }
+    
+    public ArrayList<String> listarTitulos(){
+        List<Anuncio> listaAnuncios =this.listar();
+        ArrayList<String> listaTitulos = new ArrayList<>();
+        for (Iterator<Anuncio> it = listaAnuncios.iterator(); it.hasNext();) {
+            listaTitulos.add(it.next().getTitulo());
+        }
+        return listaTitulos;
     }
 
     @Override

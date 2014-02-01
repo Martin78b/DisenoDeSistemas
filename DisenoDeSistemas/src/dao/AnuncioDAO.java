@@ -91,7 +91,7 @@ public class AnuncioDAO implements IAnuncioDAO {
             SessionFactory factory = cfg.buildSessionFactory();
             Session session = factory.openSession();
             Transaction tx = session.beginTransaction();
-            Query query = session.createQuery("");
+            Query query = session.createQuery("from Anuncio");
             listaanuncio = query.list();
             session.close();
         } catch (HibernateException ex) {
