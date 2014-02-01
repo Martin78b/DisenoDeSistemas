@@ -469,7 +469,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
       vector.add("Total:");
       Vector vector2 = new Vector(4);
       vector2.add("$ " + 20);
-      vector2.add("$ ");
+      vector2.add("$ "+ chooser.getSelectedFiles().length * 5);
       vector2.add("$ ");
       vector2.add("$ ");
       modelo.addColumn("Ítem",vector);
