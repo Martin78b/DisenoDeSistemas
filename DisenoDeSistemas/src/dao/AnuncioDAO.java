@@ -315,17 +315,10 @@ public class AnuncioDAO implements IAnuncioDAO {
         Transaction tx = session.beginTransaction();
         try {
             Anuncio temp = (Anuncio) session.createCriteria(Anuncio.class).add(Restrictions.idEq(anuncio)).uniqueResult();
-            //Categoria cat = (Categoria) session.createCriteria(Categoria.class).add(Restrictions.idEq(anuncio)).uniqueResult();
-            /*int categ = anun.getSubcategoria
-            query = session.createQuery("select nombre from categoria where idcategoria="+categorias.get(0));
-            resultado= (String)query.uniqueResult();
-            resultado.concat("\n");
-            query = session.createQuery("select nombre from categoria where id="+categorias.get(1));
-            resultado.concat((String)query.uniqueResult());
-            */
-            resultado=(temp.getSubcategoria().getCategoria().getNombre()
-            +">\n"+
-            temp.getSubcategoria().getNombre());
+            //<html><b>Day Of<br>Week</b></html>
+            resultado=("<html>"+temp.getSubcategoria().getCategoria().getNombre()
+            +"<br>"+
+            temp.getSubcategoria().getNombre()+"</html>");
                     tx.commit();
         } catch (HibernateException e) {
             session.getTransaction().rollback();

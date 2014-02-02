@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import servicios.AnuncioService;
 import utility.DetectorDeSO;
 
@@ -45,6 +46,12 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
         ImageIcon newIcon = new ImageIcon(newimg);
         return newIcon;
     }
+    private void fixWidth(final JTable table, final int columnIndex, final int width) {
+    TableColumn column = table.getColumnModel().getColumn(columnIndex);
+    column.setMinWidth(width);
+    column.setMaxWidth(width);
+    column.setPreferredWidth(width);
+}
 
     /**
      * Creates new form UIBuscarAnuncio
@@ -78,7 +85,8 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
             if (temporal.isEstado()){
                 estado="Nuevo";
             } else estado="Usado";
-            titulos.add(temporal.getTitulo()+"\n ["+estado+"] -$\n"+temporal.getPrecioactual());
+            //<html><b>Day Of<br>Week</b></html>
+            titulos.add("<html><b>"+temporal.getTitulo()+"</b><br> ["+estado+"]<br>$"+temporal.getPrecioactual()+"</html>");
             categorias.add(anuncioService.categorias(temporal.getNro()));
         }
 
@@ -87,7 +95,9 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
         modelo.addColumn("Anuncio", titulos);
         modelo.addColumn("Categoria", categorias);
         jTable1.setModel(modelo);
-        jTable1.getColumnModel().getColumn(1).setWidth(100);
+        this.fixWidth(jTable1, 0, 100);
+        this.fixWidth(jTable1, 1, 120);
+        this.fixWidth(jTable1, 2, 80);
 
     }
 
