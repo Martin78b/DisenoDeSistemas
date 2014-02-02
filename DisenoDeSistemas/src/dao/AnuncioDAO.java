@@ -178,6 +178,24 @@ public class AnuncioDAO implements IAnuncioDAO {
         }
         return imagen;
     }
+    
+    public Imagen imagen(int anuncio) {
+        Imagen imagen = new Imagen();
+        Configuration cfg = new Configuration().configure();
+        SessionFactory factory = cfg.buildSessionFactory();
+        Session session = factory.openSession();
+        try {
+            Transaction tx = session.beginTransaction();
+            String hql = "FROM Imagen E WHERE E.anuncio =" + anuncio;
+            Query query = session.createQuery(hql);
+            imagen = (Imagen)query.uniqueResult();
+            tx.commit();
+            session.close();
+        } catch (HibernateException ex) {
+            session.getTransaction().rollback();
+        }
+        return imagen;
+    }
 
     @Override
     public void enlace(Anuncio anuncio, Enlace enlace) {

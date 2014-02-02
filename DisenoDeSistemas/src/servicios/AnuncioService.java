@@ -115,9 +115,19 @@ public class AnuncioService implements IAnuncioService {
         anunciodao.imagen(anuncio, imagen);
     }
     
+    public boolean tieneImagen(Anuncio anuncio){
+        try{
+            if(anunciodao.imagen(anuncio).isEmpty()){
+                return false;
+            } else return true;
+        } catch(Exception ex){
+            return false;
+        }
+    }
+    
     public BufferedImage getImagen(Anuncio anuncio){
         BufferedImage buff= null;
-        ByteArrayInputStream bais = new ByteArrayInputStream(anunciodao.imagen(anuncio).get(0).getArchivo());
+        ByteArrayInputStream bais = new ByteArrayInputStream(anunciodao.imagen(anuncio.getNro()).getArchivo());//anunciodao.imagen(anuncio).get(0).getArchivo());
         try{
         buff = ImageIO.read(bais);
         } catch(IOException e){

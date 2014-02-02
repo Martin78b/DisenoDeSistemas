@@ -5,11 +5,13 @@
  */
 package ui;
 
+import entidades.Anuncio;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
@@ -28,36 +30,43 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
 
     ImageIcon icono = new ImageIcon(getClass().getClassLoader().getResource("resources/noimage.jpg"));
     AnuncioService anuncioService = new AnuncioService();
-    /*
      ArrayList<String> listaSugerencias = anuncioService.listarTitulos();
      javax.swing.JComboBox jComboBoxExtend = new JComboBox(new DefaultComboBoxModel(listaSugerencias.toArray())) {
      public Dimension getPreferredSize() {
      return new Dimension(super.getPreferredSize().width, 0);
      }
-     };*/
+     };
     
     DefaultTableModel modelo = new DefaultTableModel();
 
+    
+    
+    
+    public final ImageIcon achicar(ImageIcon icon){
+        Image img = icono.getImage();  
+        Image newimg = img.getScaledInstance(100, 100,  java.awt.Image.SCALE_SMOOTH);  
+        ImageIcon newIcon = new ImageIcon(newimg); 
+        return newIcon;
+    }
+    
     /**
      * Creates new form UIBuscarAnuncio
      */
     public UIBuscarAnuncio() {
         initComponents();
-        //DetectorDeSO.autocompletar(jTextField1, listaSugerencias);
-        
-        
-        /*BufferedImage bi = new BufferedImage(icono.getImage().getWidth(null), icono.getImage().getHeight(null), BufferedImage.TYPE_INT_ARGB);
-        Graphics g = bi.createGraphics();
-        g.drawImage(icono.getImage(), 0, 0, 100, 100, null);
-        ImageIcon newIcon = new ImageIcon(bi);*/
-        
-        Image img = icono.getImage();  
-        Image newimg = img.getScaledInstance(100, 100,  java.awt.Image.SCALE_SMOOTH);  
-        ImageIcon newIcon = new ImageIcon(newimg); 
+        DetectorDeSO.autocompletar(jTextField1, listaSugerencias);
         Vector imagenes = new Vector();
-
-        imagenes.add(newIcon);
-
+        
+        List<Anuncio> listaCompleta = anuncioService.listar();
+        for (Iterator<Anuncio> it = listaCompleta.iterator(); it.hasNext();) {
+            Anuncio temporal = it.next();
+            if(anuncioService.tieneImagen(temporal)){
+                ImageIcon imagenTemp = new ImageIcon(anuncioService.getImagen(temporal));
+                imagenes.add(achicar(imagenTemp));
+              } else  imagenes.add(achicar(icono));
+             
+            
+        }
         modelo.addColumn(
                 "Imagen", imagenes);
         jTable1.setModel(modelo);
