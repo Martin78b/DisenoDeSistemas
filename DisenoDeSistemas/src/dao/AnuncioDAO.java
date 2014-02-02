@@ -306,6 +306,33 @@ public class AnuncioDAO implements IAnuncioDAO {
         }
         return lista;
     }
+    
+    public String categorias(int anuncio){
+        String resultado="";
+        Configuration cfg = new Configuration().configure();
+        SessionFactory factory = cfg.buildSessionFactory();
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            Query query = session.createQuery("select idcategoria from anuncio where nro="+anuncio);
+            int idcat = (int)query.uniqueResult();
+            query = session.createQuery("select idsubcategoria from anuncio where nro="+anuncio);
+            int subcat= (int)query.uniqueResult();
+            query = session.createQuery("select nombre from categoria where idcategoria="+idcat);
+            resultado= (String)query.uniqueResult();
+            resultado.concat("\n");
+            query = session.createQuery("select nombre from categoria where id="+subcat);
+            resultado.concat((String)query.uniqueResult());
+            tx.commit();
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        } finally {
+            session.flush();
+            session.close();
+        }
+        return resultado;
+    }
 
     @Override
     public List<Subcategoria> subcategorias(Categoria categoria) {

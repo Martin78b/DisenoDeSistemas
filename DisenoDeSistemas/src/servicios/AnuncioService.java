@@ -164,6 +164,10 @@ public class AnuncioService implements IAnuncioService {
         return lista;
     }
     
+    public String categorias(int anuncio){
+        return anunciodao.categorias(anuncio);
+    }
+    
     public List<String> subcategorias (int cat){
         Categoria categoria = new Categoria(cat, null);
         List<Subcategoria> listasubcategoria = anunciodao.subcategorias(categoria);

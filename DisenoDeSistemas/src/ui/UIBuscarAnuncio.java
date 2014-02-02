@@ -62,6 +62,8 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
 
         Vector imagenes = new Vector();
         Vector titulos = new Vector();
+        Vector categorias = new Vector();
+        Vector tipos = new Vector();
 
         List<Anuncio> listaCompleta = anuncioService.listar();
         for (Iterator<Anuncio> it = listaCompleta.iterator(); it.hasNext();) {
@@ -72,12 +74,18 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
             } else {
                 imagenes.add(achicar(icono));
             }
-            titulos.add(temporal.getNro() + " " + temporal.getTitulo());
+            String estado;
+            if (temporal.isEstado()){
+                estado="Nuevo";
+            } else estado="Usado";
+            titulos.add(temporal.getTitulo()+"\n"+estado+"\n"+temporal.getPrecioactual());
+            categorias.add(anuncioService.categorias(temporal.getNro()));
         }
 
         modelo.addColumn(
                 "Imagen", imagenes);
         modelo.addColumn("Anuncio", titulos);
+        modelo.addColumn("Categoria", categorias);
         jTable1.setModel(modelo);
 
     }
