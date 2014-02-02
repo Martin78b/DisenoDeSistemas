@@ -162,7 +162,7 @@ public class AnuncioDAO implements IAnuncioDAO {
 
     @Override
     public List<Imagen> imagen(Anuncio anuncio) {
-        List<Imagen> imagen = null;
+        List<Imagen> imagen = new ArrayList<>();
         Configuration cfg = new Configuration().configure();
         SessionFactory factory = cfg.buildSessionFactory();
         Session session = factory.openSession();

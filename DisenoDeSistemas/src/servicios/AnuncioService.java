@@ -46,6 +46,8 @@ public class AnuncioService implements IAnuncioService {
         }
         return listaTitulos;
     }
+    
+    //public 
 
     @Override
     public List<Anuncio> buscar(String texto) {
