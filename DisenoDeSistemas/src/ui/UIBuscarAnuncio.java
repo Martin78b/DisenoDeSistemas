@@ -88,15 +88,17 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
             //<html><b>Day Of<br>Week</b></html>
             titulos.add("<html><b>"+temporal.getTitulo()+"</b><br> ["+estado+"]<br>$"+temporal.getPrecioactual()+"</html>");
             categorias.add(anuncioService.categorias(temporal.getNro()));
+            tipos.add(anuncioService.tipoanucio(temporal));
         }
 
         modelo.addColumn(
                 "Imagen", imagenes);
         modelo.addColumn("Anuncio", titulos);
         modelo.addColumn("Categoria", categorias);
+        modelo.addColumn("Tipo anuncio", tipos);
         jTable1.setModel(modelo);
         this.fixWidth(jTable1, 0, 100);
-        this.fixWidth(jTable1, 1, 120);
+        this.fixWidth(jTable1, 1, 150);
         this.fixWidth(jTable1, 2, 80);
 
     }

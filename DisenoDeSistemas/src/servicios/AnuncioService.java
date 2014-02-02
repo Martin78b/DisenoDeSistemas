@@ -184,6 +184,12 @@ public class AnuncioService implements IAnuncioService {
     return tipo;
     }
     
+    public String tipoanucio(Anuncio anuncio){
+    Tipoanuncio tipo;
+    tipo = anunciodao.tipoanuncio(anuncio);
+    return tipo.getNombre();
+    }
+    
     public int getIdSubcategoria(String nombre){
         int resultado=anunciodao.subcategorias(nombre);
         return resultado;
