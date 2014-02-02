@@ -77,7 +77,7 @@ public class Test {
         AnuncioDAO ad = new AnuncioDAO();
  //       agregar(int categoria, int subcategoria, Vendedor vendedor, int tipoanuncio, String titulo,
     //    String descripcion, float preciobase, float preciominimo, Date fechafin, boolean estado, int cantidadart) {
-        System.out.println(as.tieneImagen(7));
+        System.out.println(ad.categorias(7));
      //   cal.setTime(new Date());
      //   cal.add(Calendar.DATE, 5);
       //  anuncioservice.agregar(jComboBox3.getSelectedIndex(), jComboBox4.getSelectedIndex(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0,cal.getTime(), true, 1);

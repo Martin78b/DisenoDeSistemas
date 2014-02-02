@@ -78,7 +78,7 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
             if (temporal.isEstado()){
                 estado="Nuevo";
             } else estado="Usado";
-            titulos.add(temporal.getTitulo()+"\n"+estado+"\n"+temporal.getPrecioactual());
+            titulos.add(temporal.getTitulo()+"\n ["+estado+"] -$\n"+temporal.getPrecioactual());
             categorias.add(anuncioService.categorias(temporal.getNro()));
         }
 
@@ -87,6 +87,7 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
         modelo.addColumn("Anuncio", titulos);
         modelo.addColumn("Categoria", categorias);
         jTable1.setModel(modelo);
+        jTable1.getColumnModel().getColumn(1).setWidth(100);
 
     }
 

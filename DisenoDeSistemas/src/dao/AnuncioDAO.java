@@ -314,16 +314,19 @@ public class AnuncioDAO implements IAnuncioDAO {
         Session session = factory.openSession();
         Transaction tx = session.beginTransaction();
         try {
-            Query query = session.createQuery("select idcategoria from anuncio where nro="+anuncio);
-            int idcat = (int)query.uniqueResult();
-            query = session.createQuery("select idsubcategoria from anuncio where nro="+anuncio);
-            int subcat= (int)query.uniqueResult();
-            query = session.createQuery("select nombre from categoria where idcategoria="+idcat);
+            Anuncio temp = (Anuncio) session.createCriteria(Anuncio.class).add(Restrictions.idEq(anuncio)).uniqueResult();
+            //Categoria cat = (Categoria) session.createCriteria(Categoria.class).add(Restrictions.idEq(anuncio)).uniqueResult();
+            /*int categ = anun.getSubcategoria
+            query = session.createQuery("select nombre from categoria where idcategoria="+categorias.get(0));
             resultado= (String)query.uniqueResult();
             resultado.concat("\n");
-            query = session.createQuery("select nombre from categoria where id="+subcat);
+            query = session.createQuery("select nombre from categoria where id="+categorias.get(1));
             resultado.concat((String)query.uniqueResult());
-            tx.commit();
+            */
+            resultado=(temp.getSubcategoria().getCategoria().getNombre()
+            +">\n"+
+            temp.getSubcategoria().getNombre());
+                    tx.commit();
         } catch (HibernateException e) {
             session.getTransaction().rollback();
             System.out.println(e.getMessage());
