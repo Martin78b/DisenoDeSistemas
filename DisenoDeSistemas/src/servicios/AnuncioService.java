@@ -51,8 +51,14 @@ public class AnuncioService implements IAnuncioService {
 
     @Override
     public List<Anuncio> buscar(String texto) {
-         List listaanuncio = anunciodao.find(texto);
-         return listaanuncio;
+         List<Anuncio> listaanuncio = this.listar();
+         List<Anuncio> listaresultados = new ArrayList<>();
+         for (Iterator<Anuncio> it = listaanuncio.iterator(); it.hasNext();) {
+             if (it.next().getTitulo().toLowerCase().contains(texto.toLowerCase())){
+                 listaresultados.add(it.next());
+             }
+        }
+         return listaresultados;
                }
            
     @Override
@@ -115,9 +121,9 @@ public class AnuncioService implements IAnuncioService {
         anunciodao.imagen(anuncio, imagen);
     }
     
-    public boolean tieneImagen(Anuncio anuncio){
+    public boolean tieneImagen(int anuncio){
         try{
-            if(anunciodao.imagen(anuncio).isEmpty()){
+            if(anunciodao.imagen(anuncio)==null){
                 return false;
             } else return true;
         } catch(Exception ex){

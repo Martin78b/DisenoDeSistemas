@@ -30,45 +30,54 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
 
     ImageIcon icono = new ImageIcon(getClass().getClassLoader().getResource("resources/noimage.jpg"));
     AnuncioService anuncioService = new AnuncioService();
-     ArrayList<String> listaSugerencias = anuncioService.listarTitulos();
-     javax.swing.JComboBox jComboBoxExtend = new JComboBox(new DefaultComboBoxModel(listaSugerencias.toArray())) {
-     public Dimension getPreferredSize() {
-     return new Dimension(super.getPreferredSize().width, 0);
-     }
-     };
-    
+    ArrayList<String> listaSugerencias = anuncioService.listarTitulos();
+    javax.swing.JComboBox jComboBoxExtend = new JComboBox(new DefaultComboBoxModel(listaSugerencias.toArray())) {
+        public Dimension getPreferredSize() {
+            return new Dimension(super.getPreferredSize().width, 0);
+        }
+    };
+
     DefaultTableModel modelo = new DefaultTableModel();
 
-    
-    
-    
-    public final ImageIcon achicar(ImageIcon icon){
-        Image img = icono.getImage();  
-        Image newimg = img.getScaledInstance(100, 100,  java.awt.Image.SCALE_SMOOTH);  
-        ImageIcon newIcon = new ImageIcon(newimg); 
+    public final ImageIcon achicar(ImageIcon icon) {
+        Image img = icon.getImage();
+        Image newimg = img.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+        ImageIcon newIcon = new ImageIcon(newimg);
         return newIcon;
     }
-    
+
     /**
      * Creates new form UIBuscarAnuncio
      */
     public UIBuscarAnuncio() {
         initComponents();
         DetectorDeSO.autocompletar(jTextField1, listaSugerencias);
+        /*
+         Se necesita mostrar:
+         imagen
+         titulo, estado, precio
+         categoria, subcategoria
+         tipo anuncio
+         */
+
         Vector imagenes = new Vector();
-        
+        Vector titulos = new Vector();
+
         List<Anuncio> listaCompleta = anuncioService.listar();
         for (Iterator<Anuncio> it = listaCompleta.iterator(); it.hasNext();) {
             Anuncio temporal = it.next();
-            if(anuncioService.tieneImagen(temporal)){
+            if (anuncioService.tieneImagen(temporal.getNro())) {
                 ImageIcon imagenTemp = new ImageIcon(anuncioService.getImagen(temporal));
                 imagenes.add(achicar(imagenTemp));
-              } else  imagenes.add(achicar(icono));
-             
-            
+            } else {
+                imagenes.add(achicar(icono));
+            }
+            titulos.add(temporal.getNro() + " " + temporal.getTitulo());
         }
+
         modelo.addColumn(
                 "Imagen", imagenes);
+        modelo.addColumn("Anuncio", titulos);
         jTable1.setModel(modelo);
 
     }
