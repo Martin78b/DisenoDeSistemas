@@ -5,6 +5,7 @@
  */
 package utility;
 
+import dao.AnuncioDAO;
 import entidades.Vendedor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -73,10 +74,10 @@ public class Test {
 
         //System.out.println(vendor.getCuil());
         AnuncioService as = new AnuncioService();
+        AnuncioDAO ad = new AnuncioDAO();
  //       agregar(int categoria, int subcategoria, Vendedor vendedor, int tipoanuncio, String titulo,
     //    String descripcion, float preciobase, float preciominimo, Date fechafin, boolean estado, int cantidadart) {
-        DateFormat formatofecha = new SimpleDateFormat("yyyy-mm-dd");
-        Calendar cal = Calendar.getInstance();
+        System.out.println(ad.categorias(7));
      //   cal.setTime(new Date());
      //   cal.add(Calendar.DATE, 5);
       //  anuncioservice.agregar(jComboBox3.getSelectedIndex(), jComboBox4.getSelectedIndex(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0,cal.getTime(), true, 1);

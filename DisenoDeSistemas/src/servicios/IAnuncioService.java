@@ -24,7 +24,7 @@ public interface IAnuncioService {
             String descripcion, float preciobase, float preciominimo, Date fechafin, boolean estado, 
             int cantidadart);
         
-    public void listar(List lista); //List<Anuncio>
+    public List<Anuncio> listar(); //List<Anuncio>
     
     public List<Anuncio> buscar(String texto); //List<Anuncio>
     

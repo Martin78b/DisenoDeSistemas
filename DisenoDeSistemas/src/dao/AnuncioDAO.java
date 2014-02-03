@@ -91,7 +91,7 @@ public class AnuncioDAO implements IAnuncioDAO {
             SessionFactory factory = cfg.buildSessionFactory();
             Session session = factory.openSession();
             Transaction tx = session.beginTransaction();
-            Query query = session.createQuery("");
+            Query query = session.createQuery("from Anuncio");
             listaanuncio = query.list();
             session.close();
         } catch (HibernateException ex) {
@@ -162,7 +162,7 @@ public class AnuncioDAO implements IAnuncioDAO {
 
     @Override
     public List<Imagen> imagen(Anuncio anuncio) {
-        List<Imagen> imagen = null;
+        List<Imagen> imagen = new ArrayList<>();
         Configuration cfg = new Configuration().configure();
         SessionFactory factory = cfg.buildSessionFactory();
         Session session = factory.openSession();
@@ -171,6 +171,24 @@ public class AnuncioDAO implements IAnuncioDAO {
             String hql = "FROM Imagen E WHERE E.anuncio =" + anuncio.getNro();
             Query query = session.createQuery(hql);
             imagen = query.list();
+            tx.commit();
+            session.close();
+        } catch (HibernateException ex) {
+            session.getTransaction().rollback();
+        }
+        return imagen;
+    }
+    
+    public Imagen imagen(int anuncio) {
+        Imagen imagen = new Imagen();
+        Configuration cfg = new Configuration().configure();
+        SessionFactory factory = cfg.buildSessionFactory();
+        Session session = factory.openSession();
+        try {
+            Transaction tx = session.beginTransaction();
+            String hql = "FROM Imagen E WHERE E.anuncio =" + anuncio;
+            Query query = session.createQuery(hql);
+            imagen = (Imagen)query.uniqueResult();
             tx.commit();
             session.close();
         } catch (HibernateException ex) {
@@ -287,6 +305,29 @@ public class AnuncioDAO implements IAnuncioDAO {
             session.close();
         }
         return lista;
+    }
+    
+    public String categorias(int anuncio){
+        String resultado="";
+        Configuration cfg = new Configuration().configure();
+        SessionFactory factory = cfg.buildSessionFactory();
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            Anuncio temp = (Anuncio) session.createCriteria(Anuncio.class).add(Restrictions.idEq(anuncio)).uniqueResult();
+            //<html><b>Day Of<br>Week</b></html>
+            resultado=("<html>"+temp.getSubcategoria().getCategoria().getNombre()
+            +"<br>"+
+            temp.getSubcategoria().getNombre()+"</html>");
+                    tx.commit();
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        } finally {
+            session.flush();
+            session.close();
+        }
+        return resultado;
     }
 
     @Override

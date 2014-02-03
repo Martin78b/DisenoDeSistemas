@@ -34,14 +34,31 @@ public class AnuncioService implements IAnuncioService {
     AnuncioDAO anunciodao = new AnuncioDAO();
 
     @Override
-    public void listar(List lista) {
-        
+    public List<Anuncio> listar() {
+        return anunciodao.findAll();
     }
+    
+    public ArrayList<String> listarTitulos(){
+        List<Anuncio> listaAnuncios =this.listar();
+        ArrayList<String> listaTitulos = new ArrayList<>();
+        for (Iterator<Anuncio> it = listaAnuncios.iterator(); it.hasNext();) {
+            listaTitulos.add(it.next().getTitulo());
+        }
+        return listaTitulos;
+    }
+    
+    //public 
 
     @Override
     public List<Anuncio> buscar(String texto) {
-         List listaanuncio = anunciodao.find(texto);
-         return listaanuncio;
+         List<Anuncio> listaanuncio = this.listar();
+         List<Anuncio> listaresultados = new ArrayList<>();
+         for (Iterator<Anuncio> it = listaanuncio.iterator(); it.hasNext();) {
+             if (it.next().getTitulo().toLowerCase().contains(texto.toLowerCase())){
+                 listaresultados.add(it.next());
+             }
+        }
+         return listaresultados;
                }
            
     @Override
@@ -104,9 +121,19 @@ public class AnuncioService implements IAnuncioService {
         anunciodao.imagen(anuncio, imagen);
     }
     
+    public boolean tieneImagen(int anuncio){
+        try{
+            if(anunciodao.imagen(anuncio)==null){
+                return false;
+            } else return true;
+        } catch(Exception ex){
+            return false;
+        }
+    }
+    
     public BufferedImage getImagen(Anuncio anuncio){
         BufferedImage buff= null;
-        ByteArrayInputStream bais = new ByteArrayInputStream(anunciodao.imagen(anuncio).get(0).getArchivo());
+        ByteArrayInputStream bais = new ByteArrayInputStream(anunciodao.imagen(anuncio.getNro()).getArchivo());//anunciodao.imagen(anuncio).get(0).getArchivo());
         try{
         buff = ImageIO.read(bais);
         } catch(IOException e){
@@ -137,6 +164,10 @@ public class AnuncioService implements IAnuncioService {
         return lista;
     }
     
+    public String categorias(int anuncio){
+        return anunciodao.categorias(anuncio);
+    }
+    
     public List<String> subcategorias (int cat){
         Categoria categoria = new Categoria(cat, null);
         List<Subcategoria> listasubcategoria = anunciodao.subcategorias(categoria);
@@ -151,6 +182,12 @@ public class AnuncioService implements IAnuncioService {
     Tipoanuncio tipo;
     tipo = anunciodao.tipoanuncio().get(idtipo);
     return tipo;
+    }
+    
+    public String tipoanucio(Anuncio anuncio){
+    Tipoanuncio tipo;
+    tipo = anunciodao.tipoanuncio(anuncio);
+    return tipo.getNombre();
     }
     
     public int getIdSubcategoria(String nombre){
