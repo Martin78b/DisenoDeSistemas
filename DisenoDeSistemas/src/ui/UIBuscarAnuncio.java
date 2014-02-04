@@ -7,9 +7,7 @@ package ui;
 
 import entidades.Anuncio;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -37,7 +35,10 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
             return new Dimension(super.getPreferredSize().width, 0);
         }
     };
-
+    Vector imagenes;
+    Vector titulos;
+    Vector categorias;
+    Vector tipos;
     DefaultTableModel modelo = new DefaultTableModel();
 
     public final ImageIcon achicar(ImageIcon icon) {
@@ -46,51 +47,16 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
         ImageIcon newIcon = new ImageIcon(newimg);
         return newIcon;
     }
+
     private void fixWidth(final JTable table, final int columnIndex, final int width) {
-    TableColumn column = table.getColumnModel().getColumn(columnIndex);
-    column.setMinWidth(width);
-    column.setMaxWidth(width);
-    column.setPreferredWidth(width);
-}
+        TableColumn column = table.getColumnModel().getColumn(columnIndex);
+        column.setMinWidth(width);
+        column.setMaxWidth(width);
+        column.setPreferredWidth(width);
+    }
 
-    /**
-     * Creates new form UIBuscarAnuncio
-     */
-    public UIBuscarAnuncio() {
-        initComponents();
-        DetectorDeSO.autocompletar(jTextField1, listaSugerencias);
-        /*
-         Se necesita mostrar:
-         imagen
-         titulo, estado, precio
-         categoria, subcategoria
-         tipo anuncio
-         */
-
-        Vector imagenes = new Vector();
-        Vector titulos = new Vector();
-        Vector categorias = new Vector();
-        Vector tipos = new Vector();
-
-        List<Anuncio> listaCompleta = anuncioService.listar();
-        for (Iterator<Anuncio> it = listaCompleta.iterator(); it.hasNext();) {
-            Anuncio temporal = it.next();
-            if (anuncioService.tieneImagen(temporal.getNro())) {
-                ImageIcon imagenTemp = new ImageIcon(anuncioService.getImagen(temporal));
-                imagenes.add(achicar(imagenTemp));
-            } else {
-                imagenes.add(achicar(icono));
-            }
-            String estado;
-            if (temporal.isEstado()){
-                estado="Nuevo";
-            } else estado="Usado";
-            //<html><b>Day Of<br>Week</b></html>
-            titulos.add("<html><b>"+temporal.getTitulo()+"</b><br> ["+estado+"]<br>$"+temporal.getPrecioactual()+"</html>");
-            categorias.add(anuncioService.categorias(temporal.getNro()));
-            tipos.add(anuncioService.tipoanucio(temporal));
-        }
-
+    private final void mostrarTabla(JTable jTable, Vector imagenes, Vector titulos,
+            Vector categorias, Vector tipos) {
         modelo.addColumn(
                 "Imagen", imagenes);
         modelo.addColumn("Anuncio", titulos);
@@ -100,7 +66,77 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
         this.fixWidth(jTable1, 0, 100);
         this.fixWidth(jTable1, 1, 150);
         this.fixWidth(jTable1, 2, 80);
+    }
 
+    private void buscar(String texto) {
+        imagenes = new Vector();
+        titulos = new Vector();
+        categorias = new Vector();
+        tipos = new Vector();
+        List<Anuncio> lista = anuncioService.buscar(texto);
+        modelo = new DefaultTableModel();
+        this.cargar(lista, imagenes, titulos, categorias, tipos);
+        this.mostrarTabla(jTable1, imagenes, titulos, categorias, tipos);
+    }
+    
+    private void cargar(List<Anuncio> listaCompleta, Vector imagenes,
+            Vector titulos, Vector categorias, Vector tipos){
+        for (Iterator<Anuncio> it = listaCompleta.iterator(); it.hasNext();) {
+            Anuncio temporal = it.next();
+            if (anuncioService.tieneImagen(temporal.getNro())) {
+                ImageIcon imagenTemp = new ImageIcon(anuncioService.getImagen(temporal));
+                imagenes.add(achicar(imagenTemp));
+            } else {
+                imagenes.add(achicar(icono));
+            }
+            String estado;
+            if (temporal.isEstado()) {
+                estado = "Nuevo";
+            } else {
+                estado = "Usado";
+            }
+            //<html><b>Day Of<br>Week</b></html>
+            titulos.add("<html><b>" + temporal.getTitulo() + "</b><br> [" + estado + "]<br>$" + temporal.getPrecioactual() + "</html>");
+            categorias.add(anuncioService.categorias(temporal.getNro()));
+            tipos.add(anuncioService.tipoanucio(temporal));
+        }
+    }
+
+    /**
+     * Creates new form UIBuscarAnuncio
+     */
+    public UIBuscarAnuncio() {
+        initComponents();
+        DetectorDeSO.autocompletar(jTextField1, listaSugerencias);
+        imagenes = new Vector();
+        titulos = new Vector();
+        categorias = new Vector();
+        tipos = new Vector();
+
+        //List<Anuncio> listaCompleta = anuncioService.listar();
+        List<Anuncio> listaCompleta = anuncioService.novedades(1);
+       /* for (Iterator<Anuncio> it = listaCompleta.iterator(); it.hasNext();) {
+            Anuncio temporal = it.next();
+            if (anuncioService.tieneImagen(temporal.getNro())) {
+                ImageIcon imagenTemp = new ImageIcon(anuncioService.getImagen(temporal));
+                imagenes.add(achicar(imagenTemp));
+            } else {
+                imagenes.add(achicar(icono));
+            }
+            String estado;
+            if (temporal.isEstado()) {
+                estado = "Nuevo";
+            } else {
+                estado = "Usado";
+            }
+            //<html><b>Day Of<br>Week</b></html>
+            titulos.add("<html><b>" + temporal.getTitulo() + "</b><br> [" + estado + "]<br>$" + temporal.getPrecioactual() + "</html>");
+            categorias.add(anuncioService.categorias(temporal.getNro()));
+            tipos.add(anuncioService.tipoanucio(temporal));
+        }
+*/
+        this.cargar(listaCompleta, imagenes, titulos, categorias, tipos);
+        this.mostrarTabla(jTable1, imagenes, titulos, categorias, tipos);
     }
 
     /**
@@ -153,6 +189,11 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
         });
 
         jButton1.setText("Buscar");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buscar(evt);
+            }
+        });
 
         jLabel1.setText("Categorias");
 
@@ -306,6 +347,11 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton1ActionPerformed
+
+    private void buscar(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buscar
+        
+        this.buscar(jTextField1.getText());
+    }//GEN-LAST:event_buscar
 
     /**
      * @param args the command line arguments

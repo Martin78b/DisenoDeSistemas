@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Random;
 import javax.imageio.ImageIO;
 import utility.DetectorDeSO;
 
@@ -32,40 +33,59 @@ import utility.DetectorDeSO;
 public class AnuncioService implements IAnuncioService {
 
     AnuncioDAO anunciodao = new AnuncioDAO();
+    List<Anuncio> listaCompleta = anunciodao.findAll();
 
     @Override
     public List<Anuncio> listar() {
-        return anunciodao.findAll();
+       /* List<Anuncio> listaFiltrada = new ArrayList<>();
+        for (Iterator<Anuncio> it = listaCompleta.iterator(); it.hasNext();) {
+            Anuncio temporal= it.next();
+            if(temporal.getFechafin().after(new Date())){
+                listaFiltrada.add(temporal);
+            }
+        }
+        return listaFiltrada;
+        */
+        return listaCompleta;
     }
-    
-    public ArrayList<String> listarTitulos(){
-        List<Anuncio> listaAnuncios =this.listar();
+
+    public ArrayList<String> listarTitulos() {
+        List<Anuncio> listaAnuncios = this.listar();
         ArrayList<String> listaTitulos = new ArrayList<>();
         for (Iterator<Anuncio> it = listaAnuncios.iterator(); it.hasNext();) {
             listaTitulos.add(it.next().getTitulo());
         }
         return listaTitulos;
     }
-    
-    //public 
+
+    public List<Anuncio> novedades(int i) {
+        List<Anuncio> resultado = new ArrayList<>();
+        List<Anuncio> temporal = this.listar();
+        Random aleatoreador = new Random();
+        for (int j = 0; j < i; j++) {
+            resultado.add(temporal.get(aleatoreador.nextInt(temporal.size())));
+        }
+        return resultado;
+    }
 
     @Override
     public List<Anuncio> buscar(String texto) {
-         List<Anuncio> listaanuncio = this.listar();
-         List<Anuncio> listaresultados = new ArrayList<>();
-         for (Iterator<Anuncio> it = listaanuncio.iterator(); it.hasNext();) {
-             if (it.next().getTitulo().toLowerCase().contains(texto.toLowerCase())){
-                 listaresultados.add(it.next());
-             }
+        List<Anuncio> listaanuncio = this.listar();
+        List<Anuncio> listaresultados = new ArrayList<>();
+        for (Iterator<Anuncio> it = listaanuncio.iterator(); it.hasNext();) {
+            Anuncio temporal = (Anuncio)it.next();
+            if (temporal.getTitulo().toLowerCase().contains(texto.toLowerCase())) {
+                listaresultados.add(temporal);
+            }
         }
-         return listaresultados;
-               }
-           
+        return listaresultados;
+
+    }
+
     @Override
     public void comprar(int cantidad, Anuncio anuncio, int pago) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 
     @Override
     public void pujar(float monto, Anuncio anuncio) {
@@ -109,34 +129,36 @@ public class AnuncioService implements IAnuncioService {
         File archivo = new File(direccion);
         FileInputStream fileInputStream;
         byte[] bFile = new byte[(int) archivo.length()];
-        try{
-        fileInputStream = new FileInputStream(archivo);
-        fileInputStream.read(bFile);
-        fileInputStream.close();
-        } catch (IOException e){
-            
+        try {
+            fileInputStream = new FileInputStream(archivo);
+            fileInputStream.read(bFile);
+            fileInputStream.close();
+        } catch (IOException e) {
+
         }
         Imagen imagen = new Imagen();
         imagen.setArchivo(bFile);
         anunciodao.imagen(anuncio, imagen);
     }
-    
-    public boolean tieneImagen(int anuncio){
-        try{
-            if(anunciodao.imagen(anuncio)==null){
+
+    public boolean tieneImagen(int anuncio) {
+        try {
+            if (anunciodao.imagen(anuncio) == null) {
                 return false;
-            } else return true;
-        } catch(Exception ex){
+            } else {
+                return true;
+            }
+        } catch (Exception ex) {
             return false;
         }
     }
-    
-    public BufferedImage getImagen(Anuncio anuncio){
-        BufferedImage buff= null;
+
+    public BufferedImage getImagen(Anuncio anuncio) {
+        BufferedImage buff = null;
         ByteArrayInputStream bais = new ByteArrayInputStream(anunciodao.imagen(anuncio.getNro()).getArchivo());//anunciodao.imagen(anuncio).get(0).getArchivo());
-        try{
-        buff = ImageIO.read(bais);
-        } catch(IOException e){
+        try {
+            buff = ImageIO.read(bais);
+        } catch (IOException e) {
             //e.printStackTrace();
         }
         return buff;
@@ -145,8 +167,8 @@ public class AnuncioService implements IAnuncioService {
         //fos.write(imagen.getArchivo());
         //fos.close();
     }
-    
-    public List<String> tipoanuncios(){
+
+    public List<String> tipoanuncios() {
         List<Tipoanuncio> listatipos = anunciodao.tipoanuncio();
         List<String> lista = new ArrayList<>();
         for (int i = 0; i < listatipos.size(); i++) {
@@ -154,8 +176,8 @@ public class AnuncioService implements IAnuncioService {
         }
         return lista;
     }
-    
-    public List<String> categorias (){
+
+    public List<String> categorias() {
         List<Categoria> listacategoria = anunciodao.categorias();
         List<String> lista = new ArrayList<>();
         for (int i = 0; i < listacategoria.size(); i++) {
@@ -163,12 +185,12 @@ public class AnuncioService implements IAnuncioService {
         }
         return lista;
     }
-    
-    public String categorias(int anuncio){
+
+    public String categorias(int anuncio) {
         return anunciodao.categorias(anuncio);
     }
-    
-    public List<String> subcategorias (int cat){
+
+    public List<String> subcategorias(int cat) {
         Categoria categoria = new Categoria(cat, null);
         List<Subcategoria> listasubcategoria = anunciodao.subcategorias(categoria);
         List<String> lista = new ArrayList<>();
@@ -177,24 +199,24 @@ public class AnuncioService implements IAnuncioService {
         }
         return lista;
     }
-    
-    public Tipoanuncio tipoanucio(int idtipo){
-    Tipoanuncio tipo;
-    tipo = anunciodao.tipoanuncio().get(idtipo);
-    return tipo;
+
+    public Tipoanuncio tipoanucio(int idtipo) {
+        Tipoanuncio tipo;
+        tipo = anunciodao.tipoanuncio().get(idtipo);
+        return tipo;
     }
-    
-    public String tipoanucio(Anuncio anuncio){
-    Tipoanuncio tipo;
-    tipo = anunciodao.tipoanuncio(anuncio);
-    return tipo.getNombre();
+
+    public String tipoanucio(Anuncio anuncio) {
+        Tipoanuncio tipo;
+        tipo = anunciodao.tipoanuncio(anuncio);
+        return tipo.getNombre();
     }
-    
-    public int getIdSubcategoria(String nombre){
-        int resultado=anunciodao.subcategorias(nombre);
+
+    public int getIdSubcategoria(String nombre) {
+        int resultado = anunciodao.subcategorias(nombre);
         return resultado;
     }
-            
+
     public void agregar(int categoria, String subcategoria, Vendedor vendedor, int tipoanuncio, String titulo,
             String descripcion, float preciobase, float preciominimo, Date fechafin, boolean estado, int cantidadart, File[] dirImagenes) {
         Anuncio anuncio = new Anuncio();
@@ -210,11 +232,10 @@ public class AnuncioService implements IAnuncioService {
         anuncio.setCantarticulos(cantidadart);
         anuncio.setFechainicio(new Date());
         anuncio.setFechafin(fechafin);
-        int nro=anunciodao.save(anuncio);
+        int nro = anunciodao.save(anuncio);
         for (File dirImagen : dirImagenes) {
             this.agregarImagen(nro, dirImagen.getAbsolutePath());
         }
     }
-
 
 }
