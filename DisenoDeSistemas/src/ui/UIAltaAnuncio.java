@@ -25,6 +25,7 @@ import servicios.AnuncioService;
 import servicios.UsuarioService;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
@@ -615,7 +616,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
                 }
             break;
         }
-
+        jDialog2.dispose();
 
     }//GEN-LAST:event_agregarAnuncio
 
