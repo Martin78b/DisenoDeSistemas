@@ -25,6 +25,9 @@ import servicios.AnuncioService;
 import servicios.UsuarioService;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -86,6 +89,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
         jTextField1 = new javax.swing.JTextField();
@@ -108,6 +112,8 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jSpinner1 = new javax.swing.JSpinner();
         jLabel6 = new javax.swing.JLabel();
+        jRadioButton3 = new javax.swing.JRadioButton();
+        jRadioButton4 = new javax.swing.JRadioButton();
 
         buttonGroup1.add(jRadioButton1);
         buttonGroup1.add(jRadioButton2);
@@ -149,6 +155,11 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         );
 
         jButton5.setText("Confirmar y Publicar");
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                agregarAnuncio(evt);
+            }
+        });
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -316,51 +327,86 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
 
         jLabel6.setText("Cantidad de artículos:");
 
+        buttonGroup2.add(jRadioButton3);
+        jRadioButton3.setSelected(true);
+        jRadioButton3.setText("Nuevo");
+
+        buttonGroup2.add(jRadioButton4);
+        jRadioButton4.setText("Usado");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(307, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
                 .addGap(41, 41, 41))
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
                 .addGap(65, 65, 65)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                .addComponent(jTextField1)
+                .addGap(64, 64, 64))
+            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
+                .addGap(65, 65, 65)
+                .addComponent(jScrollPane1)
+                .addGap(64, 64, 64))
+            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
+                .addGap(65, 65, 65)
+                .addComponent(jTextField3)
+                .addGap(64, 64, 64))
+            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
+                .addGap(65, 65, 65)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton3)
+                .addGap(64, 64, 64))
+            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
+                .addGap(65, 65, 65)
+                .addComponent(jTextField4)
+                .addGap(64, 64, 64))
+            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
+                .addGap(65, 65, 65)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(64, 64, 64))
+            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
+                .addGap(65, 65, 65)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(64, 64, 64))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(65, 65, 65)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jRadioButton2)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jRadioButton2)
-                    .addComponent(jTextField4)
+                        .addGap(64, 64, 64)
+                        .addComponent(jRadioButton3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jRadioButton4))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3))
-                    .addComponent(jTextField3)
-                    .addComponent(jRadioButton1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(3, 3, 3)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1)
-                    .addComponent(jTextField1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(92, 92, 92)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(65, 65, 65)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(3, 3, 3)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(92, 92, 92)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -372,9 +418,13 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton3)
+                    .addComponent(jRadioButton4))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -395,9 +445,9 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
                         .addComponent(jLabel6)
                         .addComponent(jButton3)
                         .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
                 .addComponent(jRadioButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jRadioButton2)
@@ -461,26 +511,26 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
     }//GEN-LAST:event_clickeaCompartir
 
     private void dialogoConfirmarAlta(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dialogoConfirmarAlta
-      
-      DefaultTableModel modelo = new DefaultTableModel();
-      
-      jTable1.setModel(modelo);
-      Vector vector = new Vector(4);
-      vector.add("Precio por anunciar:");
-      vector.add("Precio por imagenes adjuntas:");
-      vector.add("Precio por cantidad de días:");
-      vector.add("Total:");
-      Vector vector2 = new Vector(4);
-      vector2.add("$ " + 20);
-      vector2.add("$ "+ chooser.getSelectedFiles().length * 5);
-      vector2.add("$ "+ jComboBox2.getSelectedIndex()*10);
-      int suma = 20 + Array.getLength(chooser.getSelectedFiles()) * 5 + jComboBox2.getSelectedIndex() * 10;
-      vector2.add("$ "+ suma);
-      modelo.addColumn("Ítem",vector);
-      modelo.addColumn("Precio",vector2);
-      jDialog2.setSize(400,250);
-      jDialog2.setVisible(true);
-      System.out.println(chooser.getSelectedFiles().length);
+
+        DefaultTableModel modelo = new DefaultTableModel();
+
+        jTable1.setModel(modelo);
+        Vector vector = new Vector(4);
+        vector.add("Precio por anunciar:");
+        vector.add("Precio por imagenes adjuntas:");
+        vector.add("Precio por cantidad de días:");
+        vector.add("Total:");
+        Vector vector2 = new Vector(4);
+        vector2.add("$ " + 20);
+        vector2.add("$ " + chooser.getSelectedFiles().length * 5);
+        vector2.add("$ " + jComboBox2.getSelectedIndex() * 10);
+        int suma = 20 + Array.getLength(chooser.getSelectedFiles()) * 5 + jComboBox2.getSelectedIndex() * 10;
+        vector2.add("$ " + suma);
+        modelo.addColumn("Ítem", vector);
+        modelo.addColumn("Precio", vector2);
+        jDialog2.setSize(400, 250);
+        jDialog2.setVisible(true);
+        System.out.println(chooser.getSelectedFiles().length);
     }//GEN-LAST:event_dialogoConfirmarAlta
 
     private void cambiaLabel(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cambiaLabel
@@ -491,6 +541,10 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         }
         if (jComboBox1.getSelectedIndex() == 2) {
             jLabel3.setText("Precio de salida $:");
+            SpinnerNumberModel modelito = new SpinnerNumberModel();
+            jSpinner1.setModel(modelito);
+            modelito.setValue(1);
+            modelito.setMinimum(1);
             jSpinner1.setVisible(true);
             jLabel6.setVisible(true);
         }
@@ -510,13 +564,13 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
             jLabel6.setVisible(false);
             jDialog1.setSize(575, 250);
             jDialog1.setVisible(true);
-            
+
         }
 
     }//GEN-LAST:event_cambiaLabel
 
     private void cerrarDialog(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerrarDialog
-     jDialog1.dispose();
+        jDialog1.dispose();
     }//GEN-LAST:event_cerrarDialog
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -530,6 +584,41 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
     private void apretaTecla(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_apretaTecla
         // TODO add your handling code here:
     }//GEN-LAST:event_apretaTecla
+
+    private void agregarAnuncio(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarAnuncio
+
+        cal.add(Calendar.DATE, Integer.parseInt((String) jComboBox2.getSelectedItem()));
+        boolean nuevo = true;
+        if (buttonGroup2.getSelection() == jRadioButton4) {
+            nuevo = false;
+        }
+        switch (jComboBox1.getSelectedIndex()) {
+
+            case 1:
+                if (!cargaimagen) {
+                    anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex() , jTextField1.getText(), jTextArea1.getText(), 0, Float.parseFloat(jTextField2.getText()), cal.getTime(), nuevo, 1);
+                } else {
+                    anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex() , jTextField1.getText(), jTextArea1.getText(), 0, Float.parseFloat(jTextField2.getText()), cal.getTime(), nuevo, 1, chooser.getSelectedFiles());
+                }
+                break;
+            case 2:
+                if (!cargaimagen) {
+                    anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex() , jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), nuevo, (int) jSpinner1.getValue());
+                } else {
+                    anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex() , jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), nuevo, (int) jSpinner1.getValue(), chooser.getSelectedFiles());
+                }
+            break;
+            default:
+                if (!cargaimagen) {
+                    anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex() , jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), nuevo, 1);
+                } else {
+                    anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex() , jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), nuevo, 1, chooser.getSelectedFiles());
+                }
+            break;
+        }
+        jDialog2.dispose();
+
+    }//GEN-LAST:event_agregarAnuncio
 
     /**
      * @param args the command line arguments
@@ -568,6 +657,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -589,6 +679,8 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSpinner jSpinner1;
