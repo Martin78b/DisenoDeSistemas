@@ -188,7 +188,7 @@ public class AnuncioDAO implements IAnuncioDAO {
             Transaction tx = session.beginTransaction();
             String hql = "FROM Imagen E WHERE E.anuncio =" + anuncio;
             Query query = session.createQuery(hql);
-            imagen = (Imagen)query.uniqueResult();
+            imagen = (Imagen)query.list().get(0);
             tx.commit();
             session.close();
         } catch (HibernateException ex) {
