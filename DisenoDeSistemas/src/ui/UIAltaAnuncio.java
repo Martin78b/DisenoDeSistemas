@@ -8,6 +8,7 @@ package ui;
 import entidades.Vendedor;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -25,7 +26,9 @@ import servicios.AnuncioService;
 import servicios.UsuarioService;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
@@ -81,9 +84,6 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jDialog1 = new javax.swing.JDialog();
-        jLabel7 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
         jDialog2 = new javax.swing.JDialog();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
@@ -118,42 +118,6 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         buttonGroup1.add(jRadioButton1);
         buttonGroup1.add(jRadioButton2);
 
-        jDialog1.setTitle("Subasta Privada");
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel7.setText("Subasta Privada: Los participantes de la subasta serán anónimos ");
-
-        jButton4.setText("Aceptar");
-        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cerrarDialog(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
-        jDialog1.getContentPane().setLayout(jDialog1Layout);
-        jDialog1Layout.setHorizontalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDialog1Layout.createSequentialGroup()
-                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jDialog1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel7))
-                    .addGroup(jDialog1Layout.createSequentialGroup()
-                        .addGap(238, 238, 238)
-                        .addComponent(jButton4)))
-                .addContainerGap(32, Short.MAX_VALUE))
-        );
-        jDialog1Layout.setVerticalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDialog1Layout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addComponent(jLabel7)
-                .addGap(65, 65, 65)
-                .addComponent(jButton4)
-                .addContainerGap(44, Short.MAX_VALUE))
-        );
-
         jButton5.setText("Confirmar y Publicar");
         jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -167,6 +131,11 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         });
 
         jButton6.setText("Atrás");
+        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                atras(evt);
+            }
+        });
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -312,6 +281,11 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         jComboBox4.setModel(new DefaultComboBoxModel(anuncioservice.subcategorias(jComboBox3.getSelectedIndex()+1).toArray()));
 
         jButton2.setText("Cancelar");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cancelar(evt);
+            }
+        });
 
         jButton3.setText("Agregar Imagen...");
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -344,42 +318,6 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
                 .addGap(41, 41, 41))
-            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(jTextField1)
-                .addGap(64, 64, 64))
-            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(jScrollPane1)
-                .addGap(64, 64, 64))
-            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(jTextField3)
-                .addGap(64, 64, 64))
-            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addGap(64, 64, 64))
-            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(jTextField4)
-                .addGap(64, 64, 64))
-            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(64, 64, 64))
-            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(64, 64, 64))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -408,6 +346,28 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
+                .addGap(65, 65, 65)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.CENTER)
+                    .addGroup(javax.swing.GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3))
+                    .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.CENTER)
+                    .addGroup(javax.swing.GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(64, 64, 64))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -497,9 +457,19 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         chooser.setFileFilter(filtro);
         chooser.setMultiSelectionEnabled(true);
         chooser.showOpenDialog(jButton3);
-        cargaimagen = true;
-        //System.out.println(chooser.getSelectedFile().getAbsolutePath());
-        //System.err.println(Array.getLength(chooser.getSelectedFiles()));
+        if (chooser.getSelectedFiles().length > 0) {
+            cargaimagen = true;
+        } else {
+            cargaimagen = false;
+        }
+        if (chooser.getSelectedFiles().length > 3) {
+            JOptionPane.showMessageDialog(chooser, "No se pueden seleccionar más de 3 imágenes");
+            chooser.showOpenDialog(this);
+             }
+        if(evt.getButton()== 1){
+        chooser = new JFileChooser();}
+
+       
     }//GEN-LAST:event_buscarArchivo
 
     private void clickeaRestringir(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clickeaRestringir
@@ -562,16 +532,12 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
             jLabel3.setText("Precio de salida $:");
             jSpinner1.setVisible(false);
             jLabel6.setVisible(false);
-            jDialog1.setSize(575, 250);
-            jDialog1.setVisible(true);
+            JOptionPane.showMessageDialog(this, "Los compradores seran anónimos");
+            
 
         }
 
     }//GEN-LAST:event_cambiaLabel
-
-    private void cerrarDialog(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerrarDialog
-        jDialog1.dispose();
-    }//GEN-LAST:event_cerrarDialog
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
@@ -596,29 +562,37 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
 
             case 1:
                 if (!cargaimagen) {
-                    anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex() , jTextField1.getText(), jTextArea1.getText(), 0, Float.parseFloat(jTextField2.getText()), cal.getTime(), nuevo, 1);
+                    anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), 0, Float.parseFloat(jTextField2.getText()), cal.getTime(), nuevo, 1);
                 } else {
-                    anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex() , jTextField1.getText(), jTextArea1.getText(), 0, Float.parseFloat(jTextField2.getText()), cal.getTime(), nuevo, 1, chooser.getSelectedFiles());
+                    anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), 0, Float.parseFloat(jTextField2.getText()), cal.getTime(), nuevo, 1, chooser.getSelectedFiles());
                 }
                 break;
             case 2:
                 if (!cargaimagen) {
-                    anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex() , jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), nuevo, (int) jSpinner1.getValue());
+                    anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), nuevo, (int) jSpinner1.getValue());
                 } else {
-                    anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex() , jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), nuevo, (int) jSpinner1.getValue(), chooser.getSelectedFiles());
+                    anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), nuevo, (int) jSpinner1.getValue(), chooser.getSelectedFiles());
                 }
-            break;
+                break;
             default:
                 if (!cargaimagen) {
-                    anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex() , jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), nuevo, 1);
+                    anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), nuevo, 1);
                 } else {
-                    anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex() , jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), nuevo, 1, chooser.getSelectedFiles());
+                    anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), nuevo, 1, chooser.getSelectedFiles());
                 }
-            break;
+                break;
         }
         jDialog2.dispose();
 
     }//GEN-LAST:event_agregarAnuncio
+
+    private void atras(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atras
+        jDialog2.dispose();
+    }//GEN-LAST:event_atras
+
+    private void cancelar(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelar
+        this.dispose();
+    }//GEN-LAST:event_cancelar
 
     /**
      * @param args the command line arguments
@@ -661,14 +635,12 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JComboBox jComboBox3;
     private javax.swing.JComboBox jComboBox4;
-    private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -676,7 +648,6 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;

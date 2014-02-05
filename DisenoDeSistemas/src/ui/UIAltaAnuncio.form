@@ -7,60 +7,6 @@
         <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="buttonGroup1.add(jRadioButton1);&#xa;buttonGroup1.add(jRadioButton2);"/>
       </AuxValues>
     </Component>
-    <Container class="javax.swing.JDialog" name="jDialog1">
-      <Properties>
-        <Property name="title" type="java.lang.String" value="Subasta Privada"/>
-      </Properties>
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="238" max="-2" attributes="0"/>
-                          <Component id="jButton4" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <EmptySpace pref="32" max="32767" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
-                  <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
-                  <Component id="jButton4" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="44" max="32767" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-      <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabel7">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="18" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Subasta Privada: Los participantes de la subasta ser&#xe1;n an&#xf3;nimos "/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButton4">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Aceptar"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cerrarDialog"/>
-          </Events>
-        </Component>
-      </SubComponents>
-    </Container>
     <Container class="javax.swing.JDialog" name="jDialog2">
 
       <Layout>
@@ -113,6 +59,7 @@
             <Property name="text" type="java.lang.String" value="Atr&#xe1;s"/>
           </Properties>
           <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="atras"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6ActionPerformed"/>
           </Events>
         </Component>
@@ -175,49 +122,6 @@
               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
           </Group>
-          <Group type="102" alignment="2" attributes="0">
-              <EmptySpace min="65" pref="65" max="-2" attributes="0"/>
-              <Component id="jTextField1" max="32767" attributes="0"/>
-              <EmptySpace min="64" pref="64" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="2" attributes="0">
-              <EmptySpace min="65" pref="65" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" max="32767" attributes="0"/>
-              <EmptySpace min="64" pref="64" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="2" attributes="0">
-              <EmptySpace min="65" pref="65" max="-2" attributes="0"/>
-              <Component id="jTextField3" max="32767" attributes="0"/>
-              <EmptySpace min="64" pref="64" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="2" attributes="0">
-              <EmptySpace min="65" pref="65" max="-2" attributes="0"/>
-              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jSpinner1" min="-2" pref="44" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="jButton3" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="64" pref="64" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="2" attributes="0">
-              <EmptySpace min="65" pref="65" max="-2" attributes="0"/>
-              <Component id="jTextField4" max="32767" attributes="0"/>
-              <EmptySpace min="64" pref="64" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="2" attributes="0">
-              <EmptySpace min="65" pref="65" max="-2" attributes="0"/>
-              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jComboBox3" max="32767" attributes="0"/>
-              <EmptySpace min="64" pref="64" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="2" attributes="0">
-              <EmptySpace min="65" pref="65" max="-2" attributes="0"/>
-              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jComboBox4" max="32767" attributes="0"/>
-              <EmptySpace min="64" pref="64" max="-2" attributes="0"/>
-          </Group>
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
@@ -254,6 +158,33 @@
                   </Group>
               </Group>
               <EmptySpace min="117" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="2" attributes="0">
+              <EmptySpace min="65" pref="65" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jTextField1" alignment="2" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" alignment="2" max="32767" attributes="0"/>
+                  <Component id="jTextField3" alignment="2" max="32767" attributes="0"/>
+                  <Group type="102" alignment="2" attributes="0">
+                      <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jSpinner1" min="-2" pref="44" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="jTextField4" alignment="2" max="32767" attributes="0"/>
+                  <Group type="102" alignment="2" attributes="0">
+                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jComboBox3" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="2" attributes="0">
+                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jComboBox4" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace min="64" pref="64" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -462,6 +393,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Cancelar"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cancelar"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton3">
       <Properties>
