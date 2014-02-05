@@ -5,24 +5,11 @@
  */
 package utility;
 
-import dao.AnuncioDAO;
-import entidades.Vendedor;
+import dao.UsuarioDAO;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import servicios.AnuncioService;
-import servicios.UsuarioService;
-
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-
-import javax.swing.*;
-import javax.swing.event.*;
+import java.util.Iterator;
 
 /**
  *
@@ -80,5 +67,9 @@ public class Test {
      //   cal.add(Calendar.DATE, 5);
       //  anuncioservice.agregar(jComboBox3.getSelectedIndex(), jComboBox4.getSelectedIndex(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0,cal.getTime(), true, 1);
      //   as.agregar(1, "Laptop", vendor, 4, "titulo", "descripcion", 5000, 0, cal.getTime(), true, 1);
-}
+        UsuarioDAO ud = new UsuarioDAO();
+        for (Iterator it = ud.listaProvincias().iterator(); it.hasNext();) {
+            System.out.println(it.next().toString());
+        }
+    }
 }

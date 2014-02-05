@@ -6,12 +6,14 @@
 package ui;
 
 import entidades.Anuncio;
+import excepciones.FunctionalException;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -19,6 +21,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import servicios.AnuncioService;
+import servicios.UsuarioService;
 import utility.DetectorDeSO;
 
 /**
@@ -28,7 +31,9 @@ import utility.DetectorDeSO;
 public class UIBuscarAnuncio extends javax.swing.JFrame {
 
     ImageIcon icono = new ImageIcon(getClass().getClassLoader().getResource("resources/noimage.jpg"));
+    ImageIcon search = new ImageIcon(getClass().getClassLoader().getResource("resources/search.png"));
     AnuncioService anuncioService = new AnuncioService();
+    UsuarioService usuarioService = new UsuarioService();
     ArrayList<String> listaSugerencias = anuncioService.listarTitulos();
     javax.swing.JComboBox jComboBoxExtend = new JComboBox(new DefaultComboBoxModel(listaSugerencias.toArray())) {
         public Dimension getPreferredSize() {
@@ -40,10 +45,21 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
     Vector categorias;
     Vector tipos;
     DefaultTableModel modelo = new DefaultTableModel();
+    Vector categoriasTexto = new Vector();
 
-    public final ImageIcon achicar(ImageIcon icon) {
+    private List<String> cargaCombo(List<String> categorias) {
+        //new DefaultComboBoxModel(anuncioservice.categorias().toArray())
+        List<String> retorno = new ArrayList<>();
+        retorno.add("Todas");
+        for (Iterator<String> it = categorias.iterator(); it.hasNext();) {
+            retorno.add(it.next());
+        }
+        return retorno;
+    }
+
+    public final ImageIcon achicar(ImageIcon icon, int alto, int ancho) {
         Image img = icon.getImage();
-        Image newimg = img.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+        Image newimg = img.getScaledInstance(alto, ancho, java.awt.Image.SCALE_SMOOTH);
         ImageIcon newIcon = new ImageIcon(newimg);
         return newIcon;
     }
@@ -78,16 +94,16 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
         this.cargar(lista, imagenes, titulos, categorias, tipos);
         this.mostrarTabla(jTable1, imagenes, titulos, categorias, tipos);
     }
-    
+
     private void cargar(List<Anuncio> listaCompleta, Vector imagenes,
-            Vector titulos, Vector categorias, Vector tipos){
+            Vector titulos, Vector categorias, Vector tipos) {
         for (Iterator<Anuncio> it = listaCompleta.iterator(); it.hasNext();) {
             Anuncio temporal = it.next();
             if (anuncioService.tieneImagen(temporal.getNro())) {
                 ImageIcon imagenTemp = new ImageIcon(anuncioService.getImagen(temporal));
-                imagenes.add(achicar(imagenTemp));
+                imagenes.add(achicar(imagenTemp, 100, 100));
             } else {
-                imagenes.add(achicar(icono));
+                imagenes.add(achicar(icono, 100, 100));
             }
             String estado;
             if (temporal.isEstado()) {
@@ -107,34 +123,13 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
      */
     public UIBuscarAnuncio() {
         initComponents();
+        jButton1.setIcon(this.achicar(search, 30, 30));
         DetectorDeSO.autocompletar(jTextField1, listaSugerencias);
         imagenes = new Vector();
         titulos = new Vector();
         categorias = new Vector();
         tipos = new Vector();
-
-        //List<Anuncio> listaCompleta = anuncioService.listar();
         List<Anuncio> listaCompleta = anuncioService.novedades(1);
-       /* for (Iterator<Anuncio> it = listaCompleta.iterator(); it.hasNext();) {
-            Anuncio temporal = it.next();
-            if (anuncioService.tieneImagen(temporal.getNro())) {
-                ImageIcon imagenTemp = new ImageIcon(anuncioService.getImagen(temporal));
-                imagenes.add(achicar(imagenTemp));
-            } else {
-                imagenes.add(achicar(icono));
-            }
-            String estado;
-            if (temporal.isEstado()) {
-                estado = "Nuevo";
-            } else {
-                estado = "Usado";
-            }
-            //<html><b>Day Of<br>Week</b></html>
-            titulos.add("<html><b>" + temporal.getTitulo() + "</b><br> [" + estado + "]<br>$" + temporal.getPrecioactual() + "</html>");
-            categorias.add(anuncioService.categorias(temporal.getNro()));
-            tipos.add(anuncioService.tipoanucio(temporal));
-        }
-*/
         this.cargar(listaCompleta, imagenes, titulos, categorias, tipos);
         this.mostrarTabla(jTable1, imagenes, titulos, categorias, tipos);
     }
@@ -188,7 +183,6 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Buscar");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 buscar(evt);
@@ -216,19 +210,29 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
 
         jLabel4.setText("Ubicacion");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new DefaultComboBoxModel(this.cargaCombo(usuarioService.getProvincias()).toArray()));
 
         jLabel5.setText("Tipo de venta");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new DefaultComboBoxModel((this.cargaCombo(anuncioService.tipoanuncios())).toArray()));
 
         jButton3.setText("Filtrar");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                filtrar(evt);
+            }
+        });
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox3.setModel(new DefaultComboBoxModel(this.cargaCombo(anuncioService.categorias()).toArray()));
+        jComboBox3.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cambiaCategoria(evt);
+            }
+        });
 
         jLabel6.setText("Subcategorias");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas" }));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -253,8 +257,8 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jTextField1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -272,9 +276,6 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(30, 30, 30)
                                 .addComponent(jLabel4))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel3))
                             .addComponent(jLabel6)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -286,20 +287,27 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
                                     .addComponent(jRadioButton1)))
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jLabel2)))
+                                .addComponent(jLabel2))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel3)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 14, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -315,9 +323,9 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
                         .addComponent(jRadioButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jRadioButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -332,7 +340,7 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton3))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 1, Short.MAX_VALUE)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -349,9 +357,119 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void buscar(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buscar
-        
         this.buscar(jTextField1.getText());
     }//GEN-LAST:event_buscar
+
+    private void filtrar(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_filtrar
+        imagenes = new Vector();
+        titulos = new Vector();
+        categorias = new Vector();
+        tipos = new Vector();
+        List<Anuncio> lista = anuncioService.buscar(jTextField1.getText());
+        List<Anuncio> filtrado = new CopyOnWriteArrayList<>(lista);
+        modelo = new DefaultTableModel();
+
+        while(!filtrado.isEmpty()){
+        if (jComboBox3.getSelectedItem() != "Todas" && jComboBox4.getSelectedItem() == "Todas") {
+            for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
+                Anuncio temporal = it.next();
+                if (!anuncioService.categorias(temporal.getNro()).contains(jComboBox3.getSelectedItem().toString())) {
+                    filtrado.remove(temporal);
+                }
+            }
+        }
+        if (jComboBox4.getSelectedItem() != "Todas") {
+            for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
+                Anuncio temporal = it.next();
+                if (!anuncioService.categorias(temporal.getNro()).contains(jComboBox4.getSelectedItem().toString())) {
+                    filtrado.remove(temporal);
+                }
+            }
+        }
+        if((jRadioButton1.isSelected() && !jRadioButton2.isSelected())){
+            for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
+                Anuncio temporal= it.next();
+                if(!temporal.isEstado()){
+                   filtrado.remove(temporal);
+                }
+            }
+        }
+        if((!jRadioButton1.isSelected() && jRadioButton2.isSelected())){
+            for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
+                Anuncio temporal= it.next();
+                if(temporal.isEstado()){
+                   filtrado.remove(temporal);
+                }
+            }
+        }
+        if(jTextField2.getText()!="min"){
+            try{
+                for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
+                   Anuncio temporal = it.next();
+                   if(temporal.getPrecioactual()<Float.parseFloat(jTextField2.getText())){
+                       filtrado.remove(temporal);
+                   }
+                }
+            } catch(NumberFormatException ex){
+                System.err.println(ex.getMessage());
+            }
+        }
+        if(jTextField3.getText() != "max"){
+            try{
+                for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
+                    Anuncio anuncio = it.next();
+                    if(anuncio.getPrecioactual()> Float.parseFloat(jTextField3.getText())){
+                        filtrado.remove(anuncio);
+                    }
+                }
+            }catch (NumberFormatException ex){
+                System.err.println(ex.getMessage());
+            }
+        }
+        if(jComboBox2.getSelectedItem()!="Todas"){
+            for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
+                Anuncio anuncio = it.next();
+                if(!anuncioService.tipoanucio(anuncio).contains(jComboBox2.getSelectedItem().toString())){
+                    filtrado.remove(anuncio);
+                }
+                
+            }
+            
+        }
+        break;
+        }
+        
+        
+        
+        for (Iterator<Anuncio> it = filtrado.iterator(); it.hasNext();) {
+            Anuncio temporal = it.next();
+            if (anuncioService.tieneImagen(temporal.getNro())) {
+                ImageIcon imagenTemp = new ImageIcon(anuncioService.getImagen(temporal));
+                imagenes.add(achicar(imagenTemp, 100, 100));
+            } else {
+                imagenes.add(achicar(icono, 100, 100));
+            }
+            String estado;
+            if (temporal.isEstado()) {
+                estado = "Nuevo";
+            } else {
+                estado = "Usado";
+            }
+            //<html><b>Day Of<br>Week</b></html>
+            titulos.add("<html><b>" + temporal.getTitulo() + "</b><br> [" + estado + "]<br>$" + temporal.getPrecioactual() + "</html>");
+            categorias.add(anuncioService.categorias(temporal.getNro()));
+            tipos.add(anuncioService.tipoanucio(temporal));
+        }
+        this.mostrarTabla(jTable1, imagenes, titulos, categorias, tipos);
+    }//GEN-LAST:event_filtrar
+    
+    private void cambiaCategoria(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cambiaCategoria
+        if (((String) jComboBox3.getSelectedItem()).equals("Todas")) {
+            jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Todas"}));
+        } else {
+            jComboBox4.setModel(new DefaultComboBoxModel(this.cargaCombo(anuncioService.subcategorias(jComboBox3.getSelectedIndex())).toArray()));
+        }
+    }//GEN-LAST:event_cambiaCategoria
 
     /**
      * @param args the command line arguments

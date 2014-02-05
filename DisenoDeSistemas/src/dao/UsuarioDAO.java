@@ -6,10 +6,13 @@
 package dao;
 
 import entidades.Comprador;
+import entidades.Pais;
+import entidades.Provincia;
 import entidades.Vendedor;
 import excepciones.BaseDatosException;
 import java.beans.Expression;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -85,6 +88,30 @@ public class UsuarioDAO implements IUsuarioDAO {
             session.close();
         }
         return compradores;
+    }
+     
+    public List<String> listaProvincias() {
+        List<String> provincias = new ArrayList<>();
+        Configuration cfg = new Configuration().configure();
+        SessionFactory factory = cfg.buildSessionFactory();
+        Session session = factory.openSession();
+        try {
+            Transaction tx = session.beginTransaction();
+            //Query query = session.createQuery("SELECT nombre FROM provincia");
+            //provincias = query.list();
+            Pais pais =(Pais)session.load(Pais.class, 1);
+            for (Iterator<Provincia> it = pais.getProvincias().iterator(); it.hasNext();) {
+                provincias.add(it.next().getNombre());
+            }
+            tx.commit();
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        } finally {
+            session.flush();
+            session.close();
+        }
+        return provincias;
     }
 
     public Vendedor getVendedor(int dni) {
