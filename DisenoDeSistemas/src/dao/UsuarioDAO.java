@@ -86,6 +86,26 @@ public class UsuarioDAO implements IUsuarioDAO {
         }
         return compradores;
     }
+     
+    public List<String> listaProvincias() {
+        List<String> provincias = new ArrayList<>();
+        Configuration cfg = new Configuration().configure();
+        SessionFactory factory = cfg.buildSessionFactory();
+        Session session = factory.openSession();
+        try {
+            Transaction tx = session.beginTransaction();
+            Query query = session.createQuery("SELECT nombre FROM provincia");
+            provincias = query.list();
+            tx.commit();
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        } finally {
+            session.flush();
+            session.close();
+        }
+        return provincias;
+    }
 
     public Vendedor getVendedor(int dni) {
         Vendedor vendor = new Vendedor();

@@ -30,4 +30,8 @@ public class UsuarioService {
     public List<String> getCompradores(){
         return usuariodao.listarUsuarios();
     }
+    
+    public List<String> getProvincias(){
+        return usuariodao.listaProvincias();
+    }
 }
