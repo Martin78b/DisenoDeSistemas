@@ -6,6 +6,7 @@
 package dao;
 
 import entidades.Comprador;
+import entidades.Localidad;
 import entidades.Pais;
 import entidades.Provincia;
 import entidades.Vendedor;
@@ -112,6 +113,29 @@ public class UsuarioDAO implements IUsuarioDAO {
             session.close();
         }
         return provincias;
+    }
+    
+    public String provincia(int dni) {
+        Configuration cfg = new Configuration().configure();
+        SessionFactory factory = cfg.buildSessionFactory();
+        Session session = factory.openSession();
+        String provincia="";
+        try {
+            Transaction tx = session.beginTransaction();
+            //Query query = session.createQuery("SELECT cp FROM comprador where dni="+dni);
+            //int codigopostal = (int)query.uniqueResult();
+            //Localidad ciudad =(Localidad)session.load(Localidad.class, codigopostal);
+            Localidad ciudad=((Comprador) session.load(Comprador.class, dni)).getLocalidad();
+            provincia=ciudad.getProvincia().getNombre();
+            tx.commit();
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        } finally {
+            session.flush();
+            session.close();
+        }
+        return provincia;
     }
 
     public Vendedor getVendedor(int dni) {

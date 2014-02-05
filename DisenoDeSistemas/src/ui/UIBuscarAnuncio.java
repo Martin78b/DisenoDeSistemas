@@ -436,9 +436,19 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
             }
             
         }
+        if(jComboBox1.getSelectedItem()!="Todas"){
+            for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
+                Anuncio anuncio = it.next();
+                if(!anuncioService.provincia(anuncio).contains(jComboBox1.getSelectedItem().toString())){
+                    filtrado.remove(anuncio);
+                }
+            }
+        }
         break;
         }
-        
+        if(filtrado.isEmpty()){
+            System.out.println("Está vacía negro.");
+        }
         
         
         for (Iterator<Anuncio> it = filtrado.iterator(); it.hasNext();) {

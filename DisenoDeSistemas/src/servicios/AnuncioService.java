@@ -33,6 +33,7 @@ import utility.DetectorDeSO;
 public class AnuncioService implements IAnuncioService {
 
     AnuncioDAO anunciodao = new AnuncioDAO();
+    UsuarioService usuarioService = new UsuarioService();
     List<Anuncio> listaCompleta = anunciodao.findAll();
 
     @Override
@@ -215,6 +216,10 @@ public class AnuncioService implements IAnuncioService {
     public int getIdSubcategoria(String nombre) {
         int resultado = anunciodao.subcategorias(nombre);
         return resultado;
+    }
+    
+    public String provincia(Anuncio anuncio){
+       return usuarioService.provincia(anuncio.getVendedor().getDni());
     }
 
     public void agregar(int categoria, String subcategoria, Vendedor vendedor, int tipoanuncio, String titulo,

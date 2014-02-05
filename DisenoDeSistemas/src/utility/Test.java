@@ -6,10 +6,12 @@
 package utility;
 
 import dao.UsuarioDAO;
+import entidades.Anuncio;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Iterator;
+import servicios.AnuncioService;
 
 /**
  *
@@ -67,9 +69,8 @@ public class Test {
      //   cal.add(Calendar.DATE, 5);
       //  anuncioservice.agregar(jComboBox3.getSelectedIndex(), jComboBox4.getSelectedIndex(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0,cal.getTime(), true, 1);
      //   as.agregar(1, "Laptop", vendor, 4, "titulo", "descripcion", 5000, 0, cal.getTime(), true, 1);
-        UsuarioDAO ud = new UsuarioDAO();
-        for (Iterator it = ud.listaProvincias().iterator(); it.hasNext();) {
-            System.out.println(it.next().toString());
-        }
+        AnuncioService us = new AnuncioService();
+        Anuncio anun =us.novedades(1).get(0);
+        System.out.println(us.provincia(anun));
     }
 }

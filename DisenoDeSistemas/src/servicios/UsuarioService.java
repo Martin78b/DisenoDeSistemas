@@ -34,4 +34,8 @@ public class UsuarioService {
     public List<String> getProvincias(){
         return usuariodao.listaProvincias();
     }
+    
+    public String provincia(int dni){
+        return usuariodao.provincia(dni);
+    }
 }
