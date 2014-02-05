@@ -6,12 +6,14 @@
 package ui;
 
 import entidades.Anuncio;
+import excepciones.FunctionalException;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -364,29 +366,82 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
         categorias = new Vector();
         tipos = new Vector();
         List<Anuncio> lista = anuncioService.buscar(jTextField1.getText());
+        List<Anuncio> filtrado = new CopyOnWriteArrayList<>(lista);
         modelo = new DefaultTableModel();
-        List<Anuncio> filtrada = new ArrayList<>();
-        Iterator itera;
+
+        while(!filtrado.isEmpty()){
         if (jComboBox3.getSelectedItem() != "Todas" && jComboBox4.getSelectedItem() == "Todas") {
-            itera = lista.iterator();
             for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
                 Anuncio temporal = it.next();
-                if (anuncioService.categorias(temporal.getNro()).contains(jComboBox3.getSelectedItem().toString())) {
-                    filtrada.add(temporal);
+                if (!anuncioService.categorias(temporal.getNro()).contains(jComboBox3.getSelectedItem().toString())) {
+                    filtrado.remove(temporal);
                 }
             }
         }
         if (jComboBox4.getSelectedItem() != "Todas") {
-            itera = lista.iterator();
             for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
                 Anuncio temporal = it.next();
                 if (!anuncioService.categorias(temporal.getNro()).contains(jComboBox4.getSelectedItem().toString())) {
-                    lista.remove(temporal);
+                    filtrado.remove(temporal);
                 }
             }
-
         }
-        for (Iterator<Anuncio> it = filtrada.iterator(); it.hasNext();) {
+        if((jRadioButton1.isSelected() && !jRadioButton2.isSelected())){
+            for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
+                Anuncio temporal= it.next();
+                if(!temporal.isEstado()){
+                   filtrado.remove(temporal);
+                }
+            }
+        }
+        if((!jRadioButton1.isSelected() && jRadioButton2.isSelected())){
+            for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
+                Anuncio temporal= it.next();
+                if(temporal.isEstado()){
+                   filtrado.remove(temporal);
+                }
+            }
+        }
+        if(jTextField2.getText()!="min"){
+            try{
+                for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
+                   Anuncio temporal = it.next();
+                   if(temporal.getPrecioactual()<Float.parseFloat(jTextField2.getText())){
+                       filtrado.remove(temporal);
+                   }
+                }
+            } catch(NumberFormatException ex){
+                System.err.println(ex.getMessage());
+            }
+        }
+        if(jTextField3.getText() != "max"){
+            try{
+                for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
+                    Anuncio anuncio = it.next();
+                    if(anuncio.getPrecioactual()> Float.parseFloat(jTextField3.getText())){
+                        filtrado.remove(anuncio);
+                    }
+                }
+            }catch (NumberFormatException ex){
+                System.err.println(ex.getMessage());
+            }
+        }
+        if(jComboBox2.getSelectedItem()!="Todas"){
+            for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
+                Anuncio anuncio = it.next();
+                if(!anuncioService.tipoanucio(anuncio).contains(jComboBox2.getSelectedItem().toString())){
+                    filtrado.remove(anuncio);
+                }
+                
+            }
+            
+        }
+        break;
+        }
+        
+        
+        
+        for (Iterator<Anuncio> it = filtrado.iterator(); it.hasNext();) {
             Anuncio temporal = it.next();
             if (anuncioService.tieneImagen(temporal.getNro())) {
                 ImageIcon imagenTemp = new ImageIcon(anuncioService.getImagen(temporal));
@@ -407,7 +462,7 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
         }
         this.mostrarTabla(jTable1, imagenes, titulos, categorias, tipos);
     }//GEN-LAST:event_filtrar
-
+    
     private void cambiaCategoria(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cambiaCategoria
         if (((String) jComboBox3.getSelectedItem()).equals("Todas")) {
             jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Todas"}));
