@@ -43,18 +43,18 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
     Vector categorias;
     Vector tipos;
     DefaultTableModel modelo = new DefaultTableModel();
-    Vector categoriasTexto= new Vector();
+    Vector categoriasTexto = new Vector();
 
-    private List<String> cargaCombo(List<String> categorias){
+    private List<String> cargaCombo(List<String> categorias) {
         //new DefaultComboBoxModel(anuncioservice.categorias().toArray())
         List<String> retorno = new ArrayList<>();
         retorno.add("Todas");
         for (Iterator<String> it = categorias.iterator(); it.hasNext();) {
-             retorno.add(it.next());       
+            retorno.add(it.next());
         }
         return retorno;
     }
-    
+
     public final ImageIcon achicar(ImageIcon icon, int alto, int ancho) {
         Image img = icon.getImage();
         Image newimg = img.getScaledInstance(alto, ancho, java.awt.Image.SCALE_SMOOTH);
@@ -92,16 +92,16 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
         this.cargar(lista, imagenes, titulos, categorias, tipos);
         this.mostrarTabla(jTable1, imagenes, titulos, categorias, tipos);
     }
-    
+
     private void cargar(List<Anuncio> listaCompleta, Vector imagenes,
-            Vector titulos, Vector categorias, Vector tipos){
+            Vector titulos, Vector categorias, Vector tipos) {
         for (Iterator<Anuncio> it = listaCompleta.iterator(); it.hasNext();) {
             Anuncio temporal = it.next();
             if (anuncioService.tieneImagen(temporal.getNro())) {
                 ImageIcon imagenTemp = new ImageIcon(anuncioService.getImagen(temporal));
                 imagenes.add(achicar(imagenTemp, 100, 100));
             } else {
-                imagenes.add(achicar(icono,100,100));
+                imagenes.add(achicar(icono, 100, 100));
             }
             String estado;
             if (temporal.isEstado()) {
@@ -355,17 +355,63 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void buscar(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buscar
-    this.buscar(jTextField1.getText());
+        this.buscar(jTextField1.getText());
     }//GEN-LAST:event_buscar
 
     private void filtrar(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_filtrar
-        // TODO add your handling code here:
+        imagenes = new Vector();
+        titulos = new Vector();
+        categorias = new Vector();
+        tipos = new Vector();
+        List<Anuncio> lista = anuncioService.buscar(jTextField1.getText());
+        modelo = new DefaultTableModel();
+        List<Anuncio> filtrada = new ArrayList<>();
+        Iterator itera;
+        if (jComboBox3.getSelectedItem() != "Todas" && jComboBox4.getSelectedItem() == "Todas") {
+            itera = lista.iterator();
+            for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
+                Anuncio temporal = it.next();
+                if (anuncioService.categorias(temporal.getNro()).contains(jComboBox3.getSelectedItem().toString())) {
+                    filtrada.add(temporal);
+                }
+            }
+        }
+        if (jComboBox4.getSelectedItem() != "Todas") {
+            itera = lista.iterator();
+            for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
+                Anuncio temporal = it.next();
+                if (!anuncioService.categorias(temporal.getNro()).contains(jComboBox4.getSelectedItem().toString())) {
+                    lista.remove(temporal);
+                }
+            }
+
+        }
+        for (Iterator<Anuncio> it = filtrada.iterator(); it.hasNext();) {
+            Anuncio temporal = it.next();
+            if (anuncioService.tieneImagen(temporal.getNro())) {
+                ImageIcon imagenTemp = new ImageIcon(anuncioService.getImagen(temporal));
+                imagenes.add(achicar(imagenTemp, 100, 100));
+            } else {
+                imagenes.add(achicar(icono, 100, 100));
+            }
+            String estado;
+            if (temporal.isEstado()) {
+                estado = "Nuevo";
+            } else {
+                estado = "Usado";
+            }
+            //<html><b>Day Of<br>Week</b></html>
+            titulos.add("<html><b>" + temporal.getTitulo() + "</b><br> [" + estado + "]<br>$" + temporal.getPrecioactual() + "</html>");
+            categorias.add(anuncioService.categorias(temporal.getNro()));
+            tipos.add(anuncioService.tipoanucio(temporal));
+        }
+        this.mostrarTabla(jTable1, imagenes, titulos, categorias, tipos);
     }//GEN-LAST:event_filtrar
 
     private void cambiaCategoria(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cambiaCategoria
-        if(((String)jComboBox3.getSelectedItem()).equals("Todas")){
-            jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas" }));
-        }else{
+        if (((String) jComboBox3.getSelectedItem()).equals("Todas")) {
+            jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Todas"}));
+        } else {
             jComboBox4.setModel(new DefaultComboBoxModel(this.cargaCombo(anuncioService.subcategorias(jComboBox3.getSelectedIndex())).toArray()));
         }
     }//GEN-LAST:event_cambiaCategoria
