@@ -23,7 +23,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import utility.DetectorDeSO;
+import utility.AutoComplete;
 import servicios.AnuncioService;
 import servicios.UsuarioService;
 import javax.swing.JOptionPane;
@@ -156,7 +156,7 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
              public void keyPressed(KeyEvent e) {
              }*/
         });
-        DetectorDeSO.autocompletar(jTextField1, listaSugerencias);
+        AutoComplete.autocompletar(jTextField1, listaSugerencias);
         imagenes = new Vector();
         titulos = new Vector();
         categorias = new Vector();
@@ -213,12 +213,6 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 buscar(evt);
@@ -230,11 +224,6 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
         jLabel2.setText("Estado");
 
         jRadioButton1.setText("Nuevo");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
-            }
-        });
 
         jRadioButton2.setText("Usado");
 
@@ -383,14 +372,6 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void buscar(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buscar
         if (jTextField1.getText().isEmpty()) {

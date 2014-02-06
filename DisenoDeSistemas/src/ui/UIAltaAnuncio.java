@@ -21,7 +21,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import static utility.DetectorDeSO.setupAutoComplete;
+import static utility.AutoComplete.setupAutoComplete;
 import servicios.AnuncioService;
 import servicios.UsuarioService;
 import java.util.Iterator;
@@ -40,6 +40,7 @@ import javax.swing.table.DefaultTableModel;
 public class UIAltaAnuncio extends javax.swing.JFrame {
 
     Vendedor vendedor = new Vendedor();
+    Float precio;
     AnuncioService anuncioservice = new AnuncioService();
     UsuarioService usuarioservice = new UsuarioService();
     List<String> listaUsuarios = usuarioservice.getCompradores();
@@ -124,21 +125,11 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
                 agregarAnuncio(evt);
             }
         });
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
 
         jButton6.setText("Atrás");
         jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 atras(evt);
-            }
-        });
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
             }
         });
 
@@ -205,15 +196,10 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
                 clickeaTitulo(evt);
             }
         });
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
-        jTextArea1.setText("Descripcion");
+        jTextArea1.setText("Descripción");
         jTextArea1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 clickeaDescripcion(evt);
@@ -233,11 +219,6 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
                 clickeaRestringir(evt);
             }
         });
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
         jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 apretaTecla(evt);
@@ -245,11 +226,6 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         });
 
         jRadioButton1.setText("Restingir usuario:");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
-            }
-        });
 
         jRadioButton2.setText("Compartir solo con:");
 
@@ -291,11 +267,6 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 buscarArchivo(evt);
-            }
-        });
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
             }
         });
 
@@ -423,18 +394,6 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
-
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
-
     private void cambioopcion(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cambioopcion
         jComboBox4.setModel(new DefaultComboBoxModel(anuncioservice.subcategorias(jComboBox3.getSelectedIndex() + 1).toArray()));
     }//GEN-LAST:event_cambioopcion
@@ -446,10 +405,6 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
     private void clickeaTitulo(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clickeaTitulo
         jTextField1.setText("");
     }//GEN-LAST:event_clickeaTitulo
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void buscarArchivo(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buscarArchivo
         // TODO add your handling code here:
@@ -464,12 +419,13 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         }
         if (chooser.getSelectedFiles().length > 3) {
             JOptionPane.showMessageDialog(chooser, "No se pueden seleccionar más de 3 imágenes");
-            chooser.showOpenDialog(this);
-             }
-        if(evt.getButton()== 1){
-        chooser = new JFileChooser();}
+            chooser.showOpenDialog(jButton3);
+        }
+        if (evt.getButton() == 1) {
+            chooser = new JFileChooser();
+        }
 
-       
+
     }//GEN-LAST:event_buscarArchivo
 
     private void clickeaRestringir(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clickeaRestringir
@@ -482,25 +438,36 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
 
     private void dialogoConfirmarAlta(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dialogoConfirmarAlta
 
-        DefaultTableModel modelo = new DefaultTableModel();
-
-        jTable1.setModel(modelo);
-        Vector vector = new Vector(4);
-        vector.add("Precio por anunciar:");
-        vector.add("Precio por imagenes adjuntas:");
-        vector.add("Precio por cantidad de días:");
-        vector.add("Total:");
-        Vector vector2 = new Vector(4);
-        vector2.add("$ " + 20);
-        vector2.add("$ " + chooser.getSelectedFiles().length * 5);
-        vector2.add("$ " + jComboBox2.getSelectedIndex() * 10);
-        int suma = 20 + Array.getLength(chooser.getSelectedFiles()) * 5 + jComboBox2.getSelectedIndex() * 10;
-        vector2.add("$ " + suma);
-        modelo.addColumn("Ítem", vector);
-        modelo.addColumn("Precio", vector2);
-        jDialog2.setSize(400, 250);
-        jDialog2.setVisible(true);
-        System.out.println(chooser.getSelectedFiles().length);
+        if (jTextField1.getText().isEmpty() || jTextField1.getText().equals("Título")
+                || jTextArea1.getText().isEmpty() || jTextArea1.getText().equals("Descripción")
+                || jTextField2.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Falta llenar alguno de estos campos: Título, Descripción o Precio");
+        } else { 
+            try{
+                precio=Float.parseFloat(jTextField2.getText());
+                if(precio<0) throw new NumberFormatException();
+            DefaultTableModel modelo = new DefaultTableModel();
+            jTable1.setModel(modelo);
+            Vector vector = new Vector(4);
+            vector.add("Precio por anunciar:");
+            vector.add("Precio por imagenes adjuntas:");
+            vector.add("Precio por cantidad de días:");
+            vector.add("Total:");
+            Vector vector2 = new Vector(4);
+            vector2.add("$ " + 20);
+            vector2.add("$ " + chooser.getSelectedFiles().length * 5);
+            vector2.add("$ " + jComboBox2.getSelectedIndex() * 10);
+            int suma = 20 + Array.getLength(chooser.getSelectedFiles()) * 5 + jComboBox2.getSelectedIndex() * 10;
+            vector2.add("$ " + suma);
+            modelo.addColumn("Ítem", vector);
+            modelo.addColumn("Precio", vector2);
+            jDialog2.setSize(400, 250);
+            jDialog2.setVisible(true);
+            System.out.println(chooser.getSelectedFiles().length);
+            } catch (NumberFormatException ex){
+                JOptionPane.showMessageDialog(this, "Error en el precio.");
+            }
+        }
     }//GEN-LAST:event_dialogoConfirmarAlta
 
     private void cambiaLabel(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cambiaLabel
@@ -533,19 +500,10 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
             jSpinner1.setVisible(false);
             jLabel6.setVisible(false);
             JOptionPane.showMessageDialog(this, "Los compradores seran anónimos");
-            
 
         }
 
     }//GEN-LAST:event_cambiaLabel
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
 
     private void apretaTecla(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_apretaTecla
         // TODO add your handling code here:
