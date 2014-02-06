@@ -175,15 +175,15 @@ public class DetectorDeSO {
             @Override
             public void keyPressed(KeyEvent e) {
                 setAdjusting(cbInput, true);
-                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     if (cbInput.isPopupVisible()) {
-                        e.setKeyCode(KeyEvent.VK_ENTER);
+                        e.setKeyCode(KeyEvent.VK_SPACE);
                     }
                 }
-                if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_DOWN) {
+                if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_DOWN) {
                     e.setSource(cbInput);
                     cbInput.dispatchEvent(e);
-                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                         txtInput.setText(cbInput.getSelectedItem().toString());
                         cbInput.setPopupVisible(false);
                     }
