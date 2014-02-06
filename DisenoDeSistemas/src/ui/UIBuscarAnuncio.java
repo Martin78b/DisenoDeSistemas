@@ -9,6 +9,9 @@ import entidades.Anuncio;
 import excepciones.FunctionalException;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -20,9 +23,10 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import utility.DetectorDeSO;
 import servicios.AnuncioService;
 import servicios.UsuarioService;
-import utility.DetectorDeSO;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -73,15 +77,25 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
 
     private final void mostrarTabla(JTable jTable, Vector imagenes, Vector titulos,
             Vector categorias, Vector tipos) {
-        modelo.addColumn(
-                "Imagen", imagenes);
-        modelo.addColumn("Anuncio", titulos);
-        modelo.addColumn("Categoria", categorias);
-        modelo.addColumn("Tipo anuncio", tipos);
-        jTable1.setModel(modelo);
-        this.fixWidth(jTable1, 0, 100);
-        this.fixWidth(jTable1, 1, 150);
-        this.fixWidth(jTable1, 2, 80);
+        if (imagenes.isEmpty()) {
+            imagenes = new Vector();
+            imagenes.add("No se encontraron coincidencias");
+            modelo = new DefaultTableModel();
+            modelo.addColumn("", imagenes);
+            modelo.addColumn("Resultado", imagenes);
+            jTable1.setModel(modelo);
+            this.fixWidth(jTable, 0, 0);
+        } else {
+            modelo.addColumn(
+                    "Imagen", imagenes);
+            modelo.addColumn("Anuncio", titulos);
+            modelo.addColumn("Categoria", categorias);
+            modelo.addColumn("Tipo anuncio", tipos);
+            jTable1.setModel(modelo);
+            this.fixWidth(jTable1, 0, 100);
+            this.fixWidth(jTable1, 1, 150);
+            this.fixWidth(jTable1, 2, 80);
+        }
     }
 
     private void buscar(String texto) {
@@ -124,11 +138,33 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
     public UIBuscarAnuncio() {
         initComponents();
         jButton1.setIcon(this.achicar(search, 30, 30));
+        jTextField1.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                int key = e.getKeyCode();
+                if (key == KeyEvent.VK_ENTER) {
+                    if (jTextField1.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Escribe algo en el buscador");
+                    } else {
+                        buscar(jTextField1.getText());
+                    }
+
+                }
+            }
+            /*
+             public void keyTyped(KeyEvent e) {
+             public void keyPressed(KeyEvent e) {
+             }*/
+        });
         DetectorDeSO.autocompletar(jTextField1, listaSugerencias);
         imagenes = new Vector();
         titulos = new Vector();
         categorias = new Vector();
         tipos = new Vector();
+
+        /**
+         * Cambiar el parámetro para que muestre más resultados al comienzo.
+         */
         List<Anuncio> listaCompleta = anuncioService.novedades(1);
         this.cargar(listaCompleta, imagenes, titulos, categorias, tipos);
         this.mostrarTabla(jTable1, imagenes, titulos, categorias, tipos);
@@ -357,7 +393,11 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void buscar(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buscar
-        this.buscar(jTextField1.getText());
+        if (jTextField1.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Escribe algo en el buscador");
+        } else {
+            this.buscar(jTextField1.getText());
+        }
     }//GEN-LAST:event_buscar
 
     private void filtrar(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_filtrar
@@ -369,88 +409,84 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
         List<Anuncio> filtrado = new CopyOnWriteArrayList<>(lista);
         modelo = new DefaultTableModel();
 
-        while(!filtrado.isEmpty()){
-        if (jComboBox3.getSelectedItem() != "Todas" && jComboBox4.getSelectedItem() == "Todas") {
-            for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
-                Anuncio temporal = it.next();
-                if (!anuncioService.categorias(temporal.getNro()).contains(jComboBox3.getSelectedItem().toString())) {
-                    filtrado.remove(temporal);
-                }
-            }
-        }
-        if (jComboBox4.getSelectedItem() != "Todas") {
-            for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
-                Anuncio temporal = it.next();
-                if (!anuncioService.categorias(temporal.getNro()).contains(jComboBox4.getSelectedItem().toString())) {
-                    filtrado.remove(temporal);
-                }
-            }
-        }
-        if((jRadioButton1.isSelected() && !jRadioButton2.isSelected())){
-            for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
-                Anuncio temporal= it.next();
-                if(!temporal.isEstado()){
-                   filtrado.remove(temporal);
-                }
-            }
-        }
-        if((!jRadioButton1.isSelected() && jRadioButton2.isSelected())){
-            for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
-                Anuncio temporal= it.next();
-                if(temporal.isEstado()){
-                   filtrado.remove(temporal);
-                }
-            }
-        }
-        if(jTextField2.getText()!="min"){
-            try{
+        while (!filtrado.isEmpty()) {
+            if (jComboBox3.getSelectedItem() != "Todas" && jComboBox4.getSelectedItem() == "Todas") {
                 for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
-                   Anuncio temporal = it.next();
-                   if(temporal.getPrecioactual()<Float.parseFloat(jTextField2.getText())){
-                       filtrado.remove(temporal);
-                   }
+                    Anuncio temporal = it.next();
+                    if (!anuncioService.categorias(temporal.getNro()).contains(jComboBox3.getSelectedItem().toString())) {
+                        filtrado.remove(temporal);
+                    }
                 }
-            } catch(NumberFormatException ex){
-                System.err.println(ex.getMessage());
             }
-        }
-        if(jTextField3.getText() != "max"){
-            try{
+            if (jComboBox4.getSelectedItem() != "Todas") {
+                for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
+                    Anuncio temporal = it.next();
+                    if (!anuncioService.categorias(temporal.getNro()).contains(jComboBox4.getSelectedItem().toString())) {
+                        filtrado.remove(temporal);
+                    }
+                }
+            }
+            if ((jRadioButton1.isSelected() && !jRadioButton2.isSelected())) {
+                for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
+                    Anuncio temporal = it.next();
+                    if (!temporal.isEstado()) {
+                        filtrado.remove(temporal);
+                    }
+                }
+            }
+            if ((!jRadioButton1.isSelected() && jRadioButton2.isSelected())) {
+                for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
+                    Anuncio temporal = it.next();
+                    if (temporal.isEstado()) {
+                        filtrado.remove(temporal);
+                    }
+                }
+            }
+            if (jTextField2.getText() != "min") {
+                try {
+                    for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
+                        Anuncio temporal = it.next();
+                        if (temporal.getPrecioactual() < Float.parseFloat(jTextField2.getText())) {
+                            filtrado.remove(temporal);
+                        }
+                    }
+                } catch (NumberFormatException ex) {
+                    System.err.println(ex.getMessage());
+                }
+            }
+            if (jTextField3.getText() != "max") {
+                try {
+                    for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
+                        Anuncio anuncio = it.next();
+                        if (anuncio.getPrecioactual() > Float.parseFloat(jTextField3.getText())) {
+                            filtrado.remove(anuncio);
+                        }
+                    }
+                } catch (NumberFormatException ex) {
+                    System.err.println(ex.getMessage());
+                }
+            }
+            if (jComboBox2.getSelectedItem() != "Todas") {
                 for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
                     Anuncio anuncio = it.next();
-                    if(anuncio.getPrecioactual()> Float.parseFloat(jTextField3.getText())){
+                    if (!anuncioService.tipoanucio(anuncio).contains(jComboBox2.getSelectedItem().toString())) {
+                        filtrado.remove(anuncio);
+                    }
+
+                }
+
+            }
+            if (jComboBox1.getSelectedItem() != "Todas") {
+                for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
+                    Anuncio anuncio = it.next();
+                    if (!anuncioService.provincia(anuncio).contains(jComboBox1.getSelectedItem().toString())) {
                         filtrado.remove(anuncio);
                     }
                 }
-            }catch (NumberFormatException ex){
-                System.err.println(ex.getMessage());
             }
+            break;
         }
-        if(jComboBox2.getSelectedItem()!="Todas"){
-            for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
-                Anuncio anuncio = it.next();
-                if(!anuncioService.tipoanucio(anuncio).contains(jComboBox2.getSelectedItem().toString())){
-                    filtrado.remove(anuncio);
-                }
-                
-            }
-            
-        }
-        if(jComboBox1.getSelectedItem()!="Todas"){
-            for (Iterator<Anuncio> it = lista.iterator(); it.hasNext();) {
-                Anuncio anuncio = it.next();
-                if(!anuncioService.provincia(anuncio).contains(jComboBox1.getSelectedItem().toString())){
-                    filtrado.remove(anuncio);
-                }
-            }
-        }
-        break;
-        }
-        if(filtrado.isEmpty()){
-            System.out.println("Está vacía negro.");
-        }
-        
-        
+
         for (Iterator<Anuncio> it = filtrado.iterator(); it.hasNext();) {
             Anuncio temporal = it.next();
             if (anuncioService.tieneImagen(temporal.getNro())) {
@@ -472,7 +508,7 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
         }
         this.mostrarTabla(jTable1, imagenes, titulos, categorias, tipos);
     }//GEN-LAST:event_filtrar
-    
+
     private void cambiaCategoria(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cambiaCategoria
         if (((String) jComboBox3.getSelectedItem()).equals("Todas")) {
             jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Todas"}));
