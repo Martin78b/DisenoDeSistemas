@@ -165,7 +165,7 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
         /**
          * Cambiar el parámetro para que muestre más resultados al comienzo.
          */
-        List<Anuncio> listaCompleta = anuncioService.novedades(1);
+        List<Anuncio> listaCompleta = anuncioService.novedades(4);
         this.cargar(listaCompleta, imagenes, titulos, categorias, tipos);
         this.mostrarTabla(jTable1, imagenes, titulos, categorias, tipos);
     }
