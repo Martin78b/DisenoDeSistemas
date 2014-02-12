@@ -38,7 +38,7 @@ public class AnuncioService implements IAnuncioService {
 
     @Override
     public List<Anuncio> listar() {
-       /* List<Anuncio> listaFiltrada = new ArrayList<>();
+       List<Anuncio> listaFiltrada = new ArrayList<>();
         for (Iterator<Anuncio> it = listaCompleta.iterator(); it.hasNext();) {
             Anuncio temporal= it.next();
             if(temporal.getFechafin().after(new Date())){
@@ -46,8 +46,7 @@ public class AnuncioService implements IAnuncioService {
             }
         }
         return listaFiltrada;
-        */
-        return listaCompleta;
+        
     }
 
     public ArrayList<String> listarTitulos() {

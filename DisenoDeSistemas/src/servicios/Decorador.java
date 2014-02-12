@@ -7,6 +7,9 @@
 package servicios;
 
 import entidades.Anuncio;
+import entidades.Enlace;
+import entidades.Imagen;
+import entidades.Metododepago;
 
 /**
  *
@@ -15,7 +18,13 @@ import entidades.Anuncio;
 public abstract class Decorador extends Anuncio{
     
     public void agregar (Object elemento){
-        
+        if(elemento.getClass()==Imagen.class){
+            super.getImagens().add(elemento);
+        } else if (elemento.getClass()==Metododepago.class){
+            super.getMetododepagos().add(elemento);
+        } else if (elemento.getClass()==Enlace.class){
+            super.getEnlaces().add(elemento);
+        }
     }
     
     public void comentar (String texto){
