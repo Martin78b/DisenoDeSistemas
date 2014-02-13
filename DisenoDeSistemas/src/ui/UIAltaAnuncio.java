@@ -562,6 +562,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
                 }
                 break;
         }
+        cal.setTime(new Date());
         jDialog2.dispose();
 
     }//GEN-LAST:event_agregarAnuncio
