@@ -433,7 +433,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Imágenes", "jpg");
         chooser.setFileFilter(filtro);
         chooser.setMultiSelectionEnabled(true);
-        chooser.showOpenDialog(jButton3);
+        int resultado= chooser.showOpenDialog(jButton3);
         if (chooser.getSelectedFiles().length > 0) {
             cargaimagen = true;
         } else {
@@ -443,7 +443,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(chooser, "No se pueden seleccionar más de 3 imágenes");
             chooser.showOpenDialog(jButton3);
         }
-        if (evt.getButton() == 1) {
+        if (resultado == JFileChooser.CANCEL_OPTION) {
             chooser = new JFileChooser();
         }
 
