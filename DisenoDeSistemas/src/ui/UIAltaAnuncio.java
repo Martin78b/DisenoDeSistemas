@@ -266,7 +266,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
 
         jLabel5.setText("Subcategoría:");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione categoría" }));
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione una categoría" }));
 
         jButton2.setText("Cancelar");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -475,8 +475,9 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
 
         if (jTextField1.getText().isEmpty() || jTextField1.getText().equals("Título")
                 || jTextArea1.getText().isEmpty() || jTextArea1.getText().equals("Descripción")
-                || jTextField2.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Falta llenar alguno de estos campos: Título, Descripción o Precio");
+                || jTextField2.getText().isEmpty() || jComboBox3.getSelectedItem().toString().equals("Seleccione una categoría") || 
+                 jComboBox4.getSelectedItem().toString().equals("Seleccione una subcategoria")    ) {
+            JOptionPane.showMessageDialog(this, "Falta llenar alguno de estos campos: Título, Descripción, Precio, Categoría o Subcategoría");
         } else { 
             try{
                 precio=Float.parseFloat(jTextField2.getText());
@@ -556,23 +557,23 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
 
             case 1:
                 if (!cargaimagen) {
-                    anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), 0, Float.parseFloat(jTextField2.getText()), cal.getTime(), nuevo, 1);
+                    anuncioservice.agregar(jComboBox3.getSelectedIndex() , (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), 0, Float.parseFloat(jTextField2.getText()), cal.getTime(), nuevo, 1);
                 } else {
-                    anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), 0, Float.parseFloat(jTextField2.getText()), cal.getTime(), nuevo, 1, chooser.getSelectedFiles());
+                    anuncioservice.agregar(jComboBox3.getSelectedIndex() , (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), 0, Float.parseFloat(jTextField2.getText()), cal.getTime(), nuevo, 1, chooser.getSelectedFiles());
                 }
                 break;
             case 2:
                 if (!cargaimagen) {
-                    anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), nuevo, (int) jSpinner1.getValue());
+                    anuncioservice.agregar(jComboBox3.getSelectedIndex() , (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), nuevo, (int) jSpinner1.getValue());
                 } else {
-                    anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), nuevo, (int) jSpinner1.getValue(), chooser.getSelectedFiles());
+                    anuncioservice.agregar(jComboBox3.getSelectedIndex() , (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), nuevo, (int) jSpinner1.getValue(), chooser.getSelectedFiles());
                 }
                 break;
             default:
                 if (!cargaimagen) {
-                    anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), nuevo, 1);
+                    anuncioservice.agregar(jComboBox3.getSelectedIndex() , (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), nuevo, 1);
                 } else {
-                    anuncioservice.agregar(jComboBox3.getSelectedIndex() + 1, (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), nuevo, 1, chooser.getSelectedFiles());
+                    anuncioservice.agregar(jComboBox3.getSelectedIndex() , (String) jComboBox4.getSelectedItem(), vendedor, jComboBox1.getSelectedIndex(), jTextField1.getText(), jTextArea1.getText(), Float.parseFloat(jTextField2.getText()), 0, cal.getTime(), nuevo, 1, chooser.getSelectedFiles());
                 }
                 break;
         }
