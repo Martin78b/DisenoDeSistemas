@@ -54,10 +54,10 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
     Calendar cal = Calendar.getInstance();
     boolean cargaimagen = false;
 
-     private List<String> cargaCombo(List<String> categorias) {
+     private List<String> cargaCombo(List<String> categorias, String texto) {
         //new DefaultComboBoxModel(anuncioservice.categorias().toArray())
         List<String> retorno = new ArrayList<>();
-        retorno.add("Seleccione una categoria");
+        retorno.add(texto);
         for (Iterator<String> it = categorias.iterator(); it.hasNext();) {
             retorno.add(it.next());
         }
@@ -257,7 +257,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
 
         jLabel4.setText("Categoría:");
 
-        jComboBox3.setModel(new DefaultComboBoxModel(this.cargaCombo(anuncioservice.categorias()).toArray()));
+        jComboBox3.setModel(new DefaultComboBoxModel(this.cargaCombo(anuncioservice.categorias(), "Seleccione una categoria").toArray()));
         jComboBox3.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cambioopcion(evt);
@@ -266,7 +266,7 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
 
         jLabel5.setText("Subcategoría:");
 
-        jComboBox4.setModel(new DefaultComboBoxModel(anuncioservice.subcategorias(jComboBox3.getSelectedIndex()+1).toArray()));
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione categoría" }));
 
         jButton2.setText("Cancelar");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -425,7 +425,12 @@ public class UIAltaAnuncio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cambioopcion(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cambioopcion
-        jComboBox4.setModel(new DefaultComboBoxModel(anuncioservice.subcategorias(jComboBox3.getSelectedIndex() + 1).toArray()));
+        //jComboBox4.setModel(new DefaultComboBoxModel(anuncioservice.subcategorias(jComboBox3.getSelectedIndex() + 1).toArray()));
+         if (((String) jComboBox3.getSelectedItem()).equals("Seleccione una categoria")) {
+            jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Seleccione una categoria"}));
+        } else {
+            jComboBox4.setModel(new DefaultComboBoxModel(this.cargaCombo(anuncioservice.subcategorias(jComboBox3.getSelectedIndex()),"Seleccione una subcategoria").toArray()));
+        }
     }//GEN-LAST:event_cambioopcion
 
     private void clickeaDescripcion(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clickeaDescripcion
