@@ -139,7 +139,7 @@
                                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jComboBox2" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
                                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jTextField2" min="-2" pref="103" max="-2" attributes="0"/>
@@ -172,7 +172,7 @@
                               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jSpinner1" min="-2" pref="44" max="-2" attributes="0"/>
-                              <EmptySpace pref="7" max="32767" attributes="0"/>
+                              <EmptySpace pref="16" max="32767" attributes="0"/>
                               <Component id="jButton3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jTextField4" alignment="2" max="32767" attributes="0"/>
@@ -282,7 +282,7 @@
     <Component class="javax.swing.JTextField" name="jTextField1">
       <Properties>
         <Property name="text" type="java.lang.String" value="T&#xed;tulo"/>
-        <Property name="toolTipText" type="java.lang.String" value="T&#xed;tulo"/>
+        <Property name="toolTipText" type="java.lang.String" value="Ingrese el el nombre de lo que va a publicar"/>
         <Property name="name" type="java.lang.String" value="" noResource="true"/>
       </Properties>
       <Events>
@@ -301,6 +301,7 @@
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
             <Property name="text" type="java.lang.String" value="Descripci&#xf3;n"/>
+            <Property name="toolTipText" type="java.lang.String" value="Agregue una descripci&#xf3;n para convencer de que compren su producto"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="clickeaDescripcion"/>
@@ -317,10 +318,10 @@
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="4">
-            <StringItem index="0" value="3"/>
-            <StringItem index="1" value="5"/>
-            <StringItem index="2" value="7"/>
-            <StringItem index="3" value="10"/>
+            <StringItem index="0" value="3 d&#xed;as"/>
+            <StringItem index="1" value="5 d&#xed;as"/>
+            <StringItem index="2" value="7 d&#xed;as"/>
+            <StringItem index="3" value="10 d&#xed;as"/>
           </StringArray>
         </Property>
       </Properties>
@@ -375,7 +376,7 @@
     <Component class="javax.swing.JComboBox" name="jComboBox3">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new DefaultComboBoxModel(anuncioservice.categorias().toArray())" type="code"/>
+          <Connection code="new DefaultComboBoxModel(this.cargaCombo(anuncioservice.categorias()).toArray())" type="code"/>
         </Property>
       </Properties>
       <Events>
