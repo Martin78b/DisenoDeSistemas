@@ -48,7 +48,11 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
     Vector titulos;
     Vector categorias;
     Vector tipos;
-    DefaultTableModel modelo = new DefaultTableModel();
+    DefaultTableModel modelo = new DefaultTableModel() {
+                    public boolean isCellEditable(int rowIndex, int vColIndex) {
+                        return false;
+                    }
+                };
     Vector categoriasTexto = new Vector();
 
     private List<String> cargaCombo(List<String> categorias) {
@@ -80,7 +84,11 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
         if (imagenes.isEmpty()) {
             imagenes = new Vector();
             imagenes.add("No se encontraron coincidencias");
-            modelo = new DefaultTableModel();
+            modelo = new DefaultTableModel() {
+                    public boolean isCellEditable(int rowIndex, int vColIndex) {
+                        return false;
+                    }
+                };
             modelo.addColumn("", imagenes);
             modelo.addColumn("Resultado", imagenes);
             jTable1.setModel(modelo);
@@ -104,7 +112,12 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
         categorias = new Vector();
         tipos = new Vector();
         List<Anuncio> lista = anuncioService.buscar(texto);
-        modelo = new DefaultTableModel();
+        modelo = new DefaultTableModel() {
+                    public boolean isCellEditable(int rowIndex, int vColIndex) {
+                        return false;
+                    }
+                };
+        
         this.cargar(lista, imagenes, titulos, categorias, tipos);
         this.mostrarTabla(jTable1, imagenes, titulos, categorias, tipos);
     }
@@ -165,7 +178,7 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
         /**
          * Cambiar el parámetro para que muestre más resultados al comienzo.
          */
-        List<Anuncio> listaCompleta = anuncioService.novedades(4);
+        List<Anuncio> listaCompleta = anuncioService.listar();
         this.cargar(listaCompleta, imagenes, titulos, categorias, tipos);
         this.mostrarTabla(jTable1, imagenes, titulos, categorias, tipos);
     }
@@ -388,7 +401,11 @@ public class UIBuscarAnuncio extends javax.swing.JFrame {
         tipos = new Vector();
         List<Anuncio> lista = anuncioService.buscar(jTextField1.getText());
         List<Anuncio> filtrado = new CopyOnWriteArrayList<>(lista);
-        modelo = new DefaultTableModel();
+        modelo = new DefaultTableModel(){
+                    public boolean isCellEditable(int rowIndex, int vColIndex) {
+                        return false;
+                    }
+                };
 
         while (!filtrado.isEmpty()) {
             if (jComboBox3.getSelectedItem() != "Todas" && jComboBox4.getSelectedItem() == "Todas") {
